@@ -30,8 +30,6 @@ export default class TeamPage extends Component {
             return <Loading />;
         }
 
-        console.log(this.props)
-
         return (
             <div className="team-page">
                 <div className="team-page__team-item-for-header-container">

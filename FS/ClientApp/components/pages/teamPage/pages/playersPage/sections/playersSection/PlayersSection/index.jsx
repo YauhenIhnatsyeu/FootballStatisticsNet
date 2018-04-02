@@ -13,8 +13,6 @@ export default class PlayersSection extends Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props);
-
         this.props.fetchPlayers(this.props.team._links.self.href);
     }
 
