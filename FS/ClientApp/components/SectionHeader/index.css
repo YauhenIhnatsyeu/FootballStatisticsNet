@@ -1,0 +1,13 @@
+.section-header {
+    padding: 1.5rem 1rem;
+
+    color: #ffffff;
+
+    background: #209030;
+
+    box-shadow: 0 4px 0 -2px #c6c6c6;
+}
+
+.section-header__title {
+    font-size: 1.5rem;
+}

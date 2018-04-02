@@ -1,0 +1,11 @@
+.selector__select {
+    padding: 0.5rem;
+
+    font-weight: 600;
+
+    background: #eeeeee;
+
+    border-color: #eeeeee;
+
+    box-shadow: 0 4px 0 -2px #c6c6c6;
+}

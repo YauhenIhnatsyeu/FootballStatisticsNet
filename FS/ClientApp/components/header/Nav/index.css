@@ -1,0 +1,30 @@
+.nav__list {
+    display: flex;
+
+    align-items: flex-end;
+}
+
+.nav__item {
+    margin-right: 1rem;
+}
+
+.nav__item:last-child {
+    margin-right: 0;
+}
+
+.nav__link {
+    padding: 2.7rem 2rem 1.7rem 2rem;
+
+    text-decoration: none;
+    text-transform: uppercase;
+
+    color: #ffffff;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.nav__link_state_active {
+    background: #166522;
+    pointer-events: none;
+}

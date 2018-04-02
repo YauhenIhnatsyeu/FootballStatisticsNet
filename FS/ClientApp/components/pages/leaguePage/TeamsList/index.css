@@ -1,0 +1,13 @@
+.teams-list {
+    display: flex;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+}
+
+.teams-list__team-item-container {
+    margin-bottom: 1rem;
+
+    flex-basis: 49%;
+}

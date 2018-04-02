@@ -1,0 +1,17 @@
+.team-item-for-header__team {
+    display: flex;
+}
+
+.team-item-for-header__img {
+    width: 6rem;
+    height: 6rem;
+}
+
+.team-item-for-header__name {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.team-item-for-header__tabs-container {
+    margin-top: 1rem;
+}

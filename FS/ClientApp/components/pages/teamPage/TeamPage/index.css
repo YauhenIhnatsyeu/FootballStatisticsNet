@@ -1,0 +1,23 @@
+.team-page__team-item-for-header-container {
+    width: 49%;
+}
+
+.team-page__info-container {
+    display: flex;
+
+    margin-top: 1rem;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+}
+
+.team-page__section {
+    margin-bottom: 1rem;
+
+    flex-basis: 49%;
+}
+
+.team-page__section-content {
+    margin-top: 1.5rem;
+}

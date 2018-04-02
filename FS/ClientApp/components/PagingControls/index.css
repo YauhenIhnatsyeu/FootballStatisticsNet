@@ -1,0 +1,35 @@
+.paging-controls {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    background: #209030;
+
+    box-shadow: 0 4px 0 -2px #c6c6c6;
+}
+
+.paging-controls__item {
+    margin: 0 0.5rem;
+    padding: 0.5rem 0.25rem;
+
+    color: #ffffff;
+
+    text-align: center;
+
+    flex-grow: 1;
+}
+
+.paging-controls__select {
+    background: #209030;
+    border-color: #209030;
+}
+
+.paging-controls__link {
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.paging-controls__indicator {
+    cursor: default;
+}

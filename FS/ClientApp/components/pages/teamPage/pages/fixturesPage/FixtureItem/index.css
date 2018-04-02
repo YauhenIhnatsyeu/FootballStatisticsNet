@@ -1,0 +1,7 @@
+.fixture-item {
+    line-height: 1.4;
+}
+
+.fixture-item_clickable {
+    cursor: pointer;
+}
