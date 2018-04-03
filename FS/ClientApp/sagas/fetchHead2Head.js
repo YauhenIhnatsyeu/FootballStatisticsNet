@@ -24,12 +24,12 @@ export default function* fetchHead2Head(action) {
         const head2HeadUrl = createHead2HeadUrl(action.payload);
         const data = yield call(fetchUrl, head2HeadUrl);
         const { head2head } = data;
-
         const { fixtures } = head2head;
         yield call(addIdToEachFixture, fixtures);
         head2head.fixtures = fixtures;
+        data.head2head = head2head;
 
-        yield put(onHead2HeadFetchSucceeded(head2head));
+        yield put(onHead2HeadFetchSucceeded(data));
     } catch (error) {
         yield put(onFetchFailed(error));
     }

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 
 import { createStore, applyMiddleware, compose } from "redux";
@@ -14,8 +14,6 @@ import "./css/reset.css";
 import "./css/wrapper.css";
 import "./css/font-size.css";
 import "./css/item.css";
-
-//import TablePageContainer from "Containers/TablePageContainer";
 
 const defaultState = {};
 

@@ -11,6 +11,12 @@ import { createFixturesUrl } from "Utilities/fetchingUrlsCreators";
 
 import fetchUrl from "Utilities/fetchFootballData";
 
+const filterFixturesByDate = (fixtures, dates) =>
+    fixtures.filter((f) => {
+        const fixtureDate = new Date(f.date);
+        return fixtureDate >= dates.from && fixtureDate <= dates.to;
+    });
+
 const addIdToEachFixture = fixtures =>
     fixtures.map((fixtureParam) => {
         const fixture = fixtureParam;
@@ -21,9 +27,10 @@ const addIdToEachFixture = fixtures =>
 
 export default function* fetchFixtures(action) {
     try {
-        const fixturesUrl = createFixturesUrl(action.payload);
+        const fixturesUrl = createFixturesUrl(action.payload.teamId);
         const data = yield call(fetchUrl, fixturesUrl);
-        const { fixtures } = data;
+        let { fixtures } = data;
+        fixtures = yield call(filterFixturesByDate, fixtures, action.payload.dates);
         yield call(addIdToEachFixture, fixtures);
         yield put(onFixturesFetchSucceeded(fixtures));
     } catch (error) {

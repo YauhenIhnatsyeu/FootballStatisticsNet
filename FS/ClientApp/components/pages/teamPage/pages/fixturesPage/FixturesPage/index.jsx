@@ -14,7 +14,13 @@ export default class FixturesPage extends Component {
     constructor(props) {
         super(props);
 
-        this.props.fetchFixtures(this.props.teamId);
+        this.props.fetchFixtures(this.props.teamId, this.props.dates);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (JSON.stringify(this.props.dates) !== JSON.stringify(nextProps.dates)) {
+            this.props.fetchFixtures(this.props.teamId, nextProps.dates);
+        }
     }
 
     render() {
@@ -31,7 +37,7 @@ export default class FixturesPage extends Component {
                 <Section title="Fixtures">
                     <FixturesSection
                         fixtures={this.props.fixtures}
-                        fixtureIndex={this.props.fixtureIndex}
+                        currentFixtureId={this.props.fixtures[this.props.fixtureIndex].id}
                         fixturesPageIndex={this.props.fixturesPageIndex}
                         dates={this.props.dates}
                         updateFixtureIndex={this.props.updateFixtureIndex}
@@ -58,14 +64,22 @@ FixturesPage.propTypes = {
     fixtures: PropTypes.arrayOf(PropTypes.object),
     fixtureIndex: PropTypes.number.isRequired,
     fixturesPageIndex: PropTypes.number.isRequired,
+    head2Head: PropTypes.shape({
+        head2head: PropTypes.shape({
+            fixtures: PropTypes.arrayOf(PropTypes.object).isRequired,
+        }).isRequired,
+    }),
     fetchFixtures: PropTypes.func.isRequired,
     fetchHead2Head: PropTypes.func.isRequired,
     fetchingErrorOccured: PropTypes.bool.isRequired,
+    dates: PropTypes.shape({
+        from: PropTypes.object.isRequired,
+        to: PropTypes.object,
+    }).isRequired,
     updateFixtureIndex: PropTypes.func.isRequired,
     updateFixturesPageIndex: PropTypes.func.isRequired,
-    head2Head: PropTypes.shape({
-        fixtures: PropTypes.arrayOf(PropTypes.object).isRequired,
-    }),
+    updateFromDate: PropTypes.func.isRequired,
+    updateToDate: PropTypes.func.isRequired,
 };
 
 FixturesPage.defaultProps = {

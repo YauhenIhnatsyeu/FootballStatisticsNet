@@ -16,14 +16,9 @@ export default class PlayersSection extends Component {
         this.props.fetchPlayers(this.props.team._links.self.href);
     }
 
-    componentWillReceiveProps = (nextProps) => {
-        if (JSON.stringify(this.props.team) !== JSON.stringify(nextProps.team)) {
-            this.props.fetchPlayers(nextProps.team._links.self.href)
-        }
+    handlePageChanged = (pageIndex) => {
+        this.props.updatePlayersPageIndex(pageIndex);
     }
-
-    handlePageChanged = pageIndex =>
-        this.props.updatePlayersPageIndex(pageIndex)
 
     render() {
         if (this.props.fetchingErrorOccured) {

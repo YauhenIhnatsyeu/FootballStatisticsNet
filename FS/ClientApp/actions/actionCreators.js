@@ -60,10 +60,10 @@ export function onPlayersFetchSucceeded(data) {
 }
 
 
-export function fetchFixtures(teamId) {
+export function fetchFixtures(teamId, dates) {
     return {
         type: actionTypes.FIXTURES_FETCH_REQUESTED,
-        payload: teamId,
+        payload: { teamId, dates },
     };
 }
 

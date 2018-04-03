@@ -13,6 +13,8 @@ namespace FS {
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+            //var rou
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
         }

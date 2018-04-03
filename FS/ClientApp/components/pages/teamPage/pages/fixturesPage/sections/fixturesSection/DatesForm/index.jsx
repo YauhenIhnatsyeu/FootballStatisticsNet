@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import PropTypes from "prop-types";
+
 import { dateToString } from "Utilities/formatDate";
 
 import "./index.css";
@@ -14,15 +16,13 @@ export default class DatesForm extends Component {
         };
     }
 
-    stringToDate = str =>
-        new Date(+str.slice(0, 4), +str.slice(-5).slice(0, 2), +str.slice(-2))
 
     handleFromDateChange = (e) => {
         this.setState({
             fromDate: e.target.value,
         });
 
-        this.props.updateFromDate(this.stringToDate(e.target.value));
+        this.props.updateFromDate(new Date(e.target.value));
     }
 
     handleToDateChange = (e) => {
@@ -30,7 +30,9 @@ export default class DatesForm extends Component {
             toDate: e.target.value,
         });
 
-        this.props.updateToDate(this.stringToDate(e.target.value));
+        // 1 day - 86400000 milliseconds
+        // Getting new date and adding a day to it
+        this.props.updateToDate(new Date(new Date(e.target.value).getTime() + 86400000));
     }
 
     render() {
@@ -53,3 +55,12 @@ export default class DatesForm extends Component {
         );
     }
 }
+
+DatesForm.propTypes = {
+    dates: PropTypes.shape({
+        from: PropTypes.object.isRequired,
+        to: PropTypes.object,
+    }).isRequired,
+    updateFromDate: PropTypes.func.isRequired,
+    updateToDate: PropTypes.func.isRequired,
+};

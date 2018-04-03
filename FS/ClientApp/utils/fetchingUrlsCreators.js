@@ -1,5 +1,3 @@
-import head2HeadsOnOnePageCount from "Constants/head2HeadsOnOnePageCount";
-
 export function createLeagueUrl(leagueId) {
     return `http://api.football-data.org/v1/competitions/${leagueId}/leagueTable`;
 }
@@ -21,5 +19,5 @@ export function createFixturesUrl(teamId) {
 }
 
 export function createHead2HeadUrl(fixtureId) {
-    return `http://api.football-data.org/v1/fixtures/${fixtureId}?head2head=1${head2HeadsOnOnePageCount}`;
+    return `http://api.football-data.org/v1/fixtures/${fixtureId}?head2head=10`;
 }

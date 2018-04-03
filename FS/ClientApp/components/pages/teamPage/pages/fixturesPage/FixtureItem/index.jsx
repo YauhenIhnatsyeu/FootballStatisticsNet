@@ -27,7 +27,13 @@ export default class FixtureItem extends Component {
             "fixture-item";
 
         return (
-            <div className={style} onClick={this.handleClick}>
+            <div
+                className={style}
+                onClick={this.handleClick}
+                onKeyDown={this.handleClick}
+                role="link"
+                tabIndex="0"
+            >
                 <p>
                     {this.props.fixture.homeTeamName}
                     {" - "}

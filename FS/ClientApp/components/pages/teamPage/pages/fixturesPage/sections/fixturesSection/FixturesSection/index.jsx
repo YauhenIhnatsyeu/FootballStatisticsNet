@@ -25,7 +25,7 @@ export default class FixturesSection extends Component {
     render() {
         const fixtureItem = (
             <FixtureItem
-                currentFixtureId={this.props.fixtures[this.props.fixtureIndex].id}
+                currentFixtureId={this.props.currentFixtureId}
                 onClick={this.handleFixtureClick}
             />
         );
@@ -54,10 +54,16 @@ export default class FixturesSection extends Component {
 
 FixturesSection.propTypes = {
     fixtures: PropTypes.arrayOf(PropTypes.object),
-    fixtureIndex: PropTypes.number.isRequired,
+    currentFixtureId: PropTypes.number.isRequired,
     fixturesPageIndex: PropTypes.number.isRequired,
+    dates: PropTypes.shape({
+        from: PropTypes.object.isRequired,
+        to: PropTypes.object,
+    }).isRequired,
     updateFixtureIndex: PropTypes.func.isRequired,
     updateFixturesPageIndex: PropTypes.func.isRequired,
+    updateFromDate: PropTypes.func.isRequired,
+    updateToDate: PropTypes.func.isRequired,
 };
 
 FixturesSection.defaultProps = {

@@ -1,0 +1,12 @@
+.details-header__header {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+
+    border-bottom: 1px solid #a6a6a6;
+}
+
+.details-header__statistics-title {
+    display: block;
+
+    padding-bottom: 0.5rem;
+}
