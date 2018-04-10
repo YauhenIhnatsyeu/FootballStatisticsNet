@@ -4,22 +4,18 @@ import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 
-import extractIdFromUrl from "Utilities/extractIdFromUrl";
-
 import Loading from "Components/messages/Loading";
 import Error from "Components/messages/Error";
 
 import leaguesData from "Constants/leaguesData";
 import leagueTable from "Constants/leagueTable";
 
-import createTeamPath from "Utilities/pathesCreators";
+import createTeamUrl from "Utilities/urlsCreators";
 
 import "./index.css";
 
 export default class LeagueTable extends Component {
-    constructor(props) {
-        super(props);
-
+    componentDidMount() {
         this.props.fetchLeague(leaguesData[this.props.leagueIndex].id);
     }
 
@@ -30,7 +26,7 @@ export default class LeagueTable extends Component {
     }
 
     render() {
-        if (this.props.fetchingErrorOccured) {
+        if (this.props.leagueFetchingErrorOccured) {
             return <Error />;
         }
 
@@ -51,18 +47,17 @@ export default class LeagueTable extends Component {
                         }
                     </tr>
 
-                    {this.props.league.standing.map((team, rowIndex) => {
-                        const teamId = extractIdFromUrl(team._links.team.href);
-                        const teamUrl = createTeamPath(teamId);
+                    {this.props.league.map((team, rowIndex) => {
+                        const teamUrl = createTeamUrl(team.id);
                         return (
                             <tr className="league-table__row" key={rowIndex + 1}>
                                 {leagueTable.map((attribute, colIndex) =>
                                     (
                                         <td className="league-table__col" key={colIndex}>
-                                            {attribute.property === "teamName" ?
-                                                <Link to={teamUrl}>{team[attribute.property]}</Link>
-                                                :
-                                                team[attribute.property]}
+                                            {attribute.property === "teamName"
+                                                ? <Link to={teamUrl}>{team[attribute.property]}</Link>
+                                                : team[attribute.property]
+                                            }
                                         </td>
                                     ))
                                 }
@@ -76,25 +71,13 @@ export default class LeagueTable extends Component {
 }
 
 LeagueTable.propTypes = {
-    fetchLeague: PropTypes.func.isRequired,
-    fetchingErrorOccured: PropTypes.bool,
-    league: PropTypes.shape({
-        standing: PropTypes.arrayOf(PropTypes.shape({
-            _link: PropTypes.shape({
-                team: PropTypes.shape({
-                    href: PropTypes.string,
-                }).isRequired,
-            }),
-        })).isRequired,
-    }),
+    league: PropTypes.arrayOf(PropTypes.object),
     leagueIndex: PropTypes.number.isRequired,
+    leagueFetchingErrorOccured: PropTypes.bool,
+    fetchLeague: PropTypes.func.isRequired,
 };
 
 LeagueTable.defaultProps = {
-    fetchingErrorOccured: false,
-    league: PropTypes.shape({
-        standing: PropTypes.arrayOf(PropTypes.shape({
-            _link: null,
-        })),
-    }),
+    league: PropTypes.shape({}),
+    leagueFetchingErrorOccured: false,
 };

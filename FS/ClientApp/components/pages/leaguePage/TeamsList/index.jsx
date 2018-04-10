@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import TeamItemContainer from "Containers/TeamItemContainer";
+import TeamItem from "Pages/leaguePage/TeamItem";
 
 import Loading from "Components/messages/Loading";
 import Error from "Components/messages/Error";
@@ -10,10 +10,12 @@ import Error from "Components/messages/Error";
 import "./index.css";
 
 export default class TeamsList extends Component {
-    render() {
-        this.props.getTeamsFromFavourites();
+    componentDidMount() {
+        this.props.getTeamsFromFavorites();
+    }
 
-        if (this.props.fetchingError) {
+    render() {
+        if (this.props.teamsFetchingErrorOccured) {
             return <Error />;
         }
 
@@ -26,7 +28,12 @@ export default class TeamsList extends Component {
                 {this.props.teams.map((team, index) =>
                     (
                         <div className="teams-list__team-item-container" key={index}>
-                            <TeamItemContainer team={team} />
+                            <TeamItem
+                                team={team}
+                                favoriteTeams={this.props.favoriteTeams}
+                                addTeamToFavorites={this.props.addTeamToFavorites}
+                                removeTeamFromFavorites={this.props.removeTeamFromFavorites}
+                            />
                         </div>
                     ))
                 }
@@ -37,11 +44,14 @@ export default class TeamsList extends Component {
 
 TeamsList.propTypes = {
     teams: PropTypes.arrayOf(PropTypes.object),
-    fetchingError: PropTypes.bool,
-    getTeamsFromFavourites: PropTypes.func.isRequired,
+    teamsFetchingErrorOccured: PropTypes.bool,
+    getTeamsFromFavorites: PropTypes.func.isRequired,
+    favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
+    removeTeamFromFavorites: PropTypes.func.isRequired,
+    addTeamToFavorites: PropTypes.func.isRequired,
 };
 
 TeamsList.defaultProps = {
     teams: null,
-    fetchingError: false,
+    teamsFetchingErrorOccured: false,
 };

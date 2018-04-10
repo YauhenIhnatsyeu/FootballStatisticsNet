@@ -12,7 +12,7 @@ import rootSaga from "./sagas";
 
 import "./css/reset.css";
 import "./css/wrapper.css";
-import "./css/font-size.css";
+import "./css/font.css";
 import "./css/item.css";
 
 const defaultState = {};

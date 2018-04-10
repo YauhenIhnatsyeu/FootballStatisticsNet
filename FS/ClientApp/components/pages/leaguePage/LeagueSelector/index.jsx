@@ -7,20 +7,12 @@ import leaguesData from "Constants/leaguesData";
 import "./index.css";
 
 export default class LeagueSelector extends Component {
-    constructor(props) {
-        super(props);
-
-        const leagueId = leaguesData[this.props.leagueIndex].id;
-
-        this.props.fetchTeams(leagueId);
-    }
-
     handleChange = (event) => {
         const leagueIndex = leaguesData.findIndex(l => l.title === event.target.value);
 
-        this.props.updateLeagueIndex(leagueIndex);
-
-        this.props.fetchTeams(leaguesData[leagueIndex].id);
+        if (this.props.onChange) {
+            this.props.onChange(leagueIndex);
+        }
     }
 
     render() {
@@ -45,7 +37,10 @@ export default class LeagueSelector extends Component {
 }
 
 LeagueSelector.propTypes = {
-    fetchTeams: PropTypes.func.isRequired,
-    updateLeagueIndex: PropTypes.func.isRequired,
+    onChange: PropTypes.func,
     leagueIndex: PropTypes.number.isRequired,
+};
+
+LeagueSelector.defaultProps = {
+    onChange: null,
 };

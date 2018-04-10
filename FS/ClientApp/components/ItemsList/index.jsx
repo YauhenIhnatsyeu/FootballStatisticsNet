@@ -5,24 +5,23 @@ import PropTypes from "prop-types";
 import "./index.css";
 
 export default class ItemsList extends Component {
+    itemHOC = (props, extraProps) => ItemComponent =>
+        <ItemComponent {...props} {...extraProps} />
+
     render() {
+        const { itemComponent } = this.props;
+
         const extraProps = {};
 
         return (
             <div className="items-list">
                 {this.props.items
                     .map((item, index) => {
-                        extraProps.index = index;
                         extraProps[this.props.itemKey] = item;
-
-                        const newItem = React.cloneElement(
-                            this.props.itemComponent,
-                            extraProps,
-                        );
 
                         return (
                             <div className="items-list__item-container" key={index}>
-                                {newItem}
+                                {this.itemHOC(itemComponent.props, extraProps)(itemComponent.type)}
                             </div>
                         );
                     })

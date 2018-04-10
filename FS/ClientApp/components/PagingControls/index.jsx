@@ -23,8 +23,8 @@ export default class PagingControls extends Component {
 
     newIndexIsValid = newIndex => (
         newIndex >= 0
-        && newIndex < this.props.pagesCount
-        && newIndex !== this.props.currentPageIndex
+            && newIndex < this.props.pagesCount
+            && newIndex !== this.props.currentPageIndex
     )
 
     handleClickBase = (newIndex) => {
@@ -56,37 +56,33 @@ export default class PagingControls extends Component {
                 >
                     {this.getOptions()}
                 </select>
-                <a
-                    className="paging-controls__item paging-controls__link"
-                    href="#"
+                <button
+                    className="paging-controls__item paging-controls__button"
                     onClick={e => this.handleClick(e, 0)}
                 >
                     first
-                </a>
-                <a
-                    className="paging-controls__item paging-controls__link"
-                    href="#"
+                </button>
+                <button
+                    className="paging-controls__item paging-controls__button"
                     onClick={e => this.handleClick(e, this.props.currentPageIndex - 1)}
                 >
                     prev
-                </a>
+                </button>
                 <span className="paging-controls__item paging-controls__indicator">
                     {`${this.props.currentPageIndex + 1}/${this.props.pagesCount}`}
                 </span>
-                <a
-                    className="paging-controls__item paging-controls__link"
-                    href="#"
+                <button
+                    className="paging-controls__item paging-controls__button"
                     onClick={e => this.handleClick(e, this.props.currentPageIndex + 1)}
                 >
                     next
-                </a>
-                <a
-                    className="paging-controls__item paging-controls__link"
-                    href="#"
+                </button>
+                <button
+                    className="paging-controls__item paging-controls__button"
                     onClick={e => this.handleClick(e, this.props.pagesCount - 1)}
                 >
                     last
-                </a>
+                </button>
             </div>
         );
     }

@@ -2,19 +2,19 @@ import React, { Component } from "react";
 
 import { NavLink } from "react-router-dom";
 
-import routePathes from "Constants/routePathes";
+import routes from "Constants/routes";
 
 import "./index.css";
 
 export default class Nav extends Component {
-    renderNavItem = path => (
+    renderNavItem = route => (
         <li className="nav__item">
             <NavLink
-                to={path}
+                to={route.path}
                 className="nav__link"
                 activeClassName="nav__link_state_active"
             >
-                Table
+                {route.caption}
             </NavLink>
         </li>
     )
@@ -23,8 +23,8 @@ export default class Nav extends Component {
         return (
             <nav className="nav">
                 <ul className="nav__list">
-                    {this.renderNavItem(routePathes.table)}
-                    {this.renderNavItem(routePathes.teams)}
+                    {this.renderNavItem(routes[0])}
+                    {this.renderNavItem(routes[1])}
                 </ul>
             </nav>
         );

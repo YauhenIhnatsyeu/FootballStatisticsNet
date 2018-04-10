@@ -2,19 +2,20 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Tabs from "Components/tabs/Tabs";
-import Tab from "Components/tabs/Tab";
+import createTeamUrl from "Utilities/urlsCreators";
+
+import teamRoutes from "Constants/teamRoutes";
+
+import Tabs from "Components/Tabs";
+
+import Item from "Components/Item";
 
 import "./index.css";
 
 export default class TeamItemForHeader extends Component {
-    handleTabClick = (tabIndex) => {
-        this.props.updateTeamPageIndex(tabIndex);
-    }
-
     render() {
         return (
-            <div className="item">
+            <Item>
                 <div className="team-item-for-header__team">
                     <img src={this.props.team.crestUrl} className="team-item-for-header__img" alt="" />
                     <div className="team-item__info-container">
@@ -25,26 +26,24 @@ export default class TeamItemForHeader extends Component {
 
                 <div className="team-item-for-header__tabs-container">
                     <Tabs
+                        titles={teamRoutes.map(route => route.caption)}
                         defaultIndex={this.props.defaultTeamPageIndex}
-                        onTabClick={this.handleTabClick}
-                    >
-                        <Tab title="Players" />
-                        <Tab title="Fixtures" />
-                    </Tabs>
+                        hrefs={teamRoutes.map(route => createTeamUrl(this.props.team.id) + route.path)}
+                    />
                 </div>
-            </div>
+            </Item>
         );
     }
 }
 
 TeamItemForHeader.propTypes = {
     team: PropTypes.shape({
+        id: PropTypes.number.isRequired,
         crestUrl: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
         shortName: PropTypes.string.isRequired,
     }).isRequired,
     defaultTeamPageIndex: PropTypes.number,
-    updateTeamPageIndex: PropTypes.func.isRequired,
 };
 
 TeamItemForHeader.defaultProps = {

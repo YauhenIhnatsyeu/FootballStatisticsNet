@@ -4,18 +4,14 @@ import PropTypes from "prop-types";
 
 import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";
 
-import itemsOnOnePageCount from "Constants/itemsOnOnePageCount";
-
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 
-import DateForms from "../DatesForm";
+import Item from "Components/Item";
 
-import "./index.css";
+import DatesForms from "../DatesForm";
 
 export default class FixturesSection extends Component {
     handlePageChanged = (pageIndex) => {
-        this.props.updateFixtureIndex(pageIndex * itemsOnOnePageCount);
-
         this.props.updateFixturesPageIndex(pageIndex);
     }
 
@@ -32,13 +28,12 @@ export default class FixturesSection extends Component {
 
         return (
             <React.Fragment>
-                <div className="item fixture-section__dates-form-container">
-                    <DateForms
+                <Item>
+                    <DatesForms
                         dates={this.props.dates}
-                        updateFromDate={this.props.updateFromDate}
-                        updateToDate={this.props.updateToDate}
+                        updateDates={this.props.updateDates}
                     />
-                </div>
+                </Item>
 
                 <ItemsListWithPagingControls
                     items={this.props.fixtures}
@@ -62,8 +57,7 @@ FixturesSection.propTypes = {
     }).isRequired,
     updateFixtureIndex: PropTypes.func.isRequired,
     updateFixturesPageIndex: PropTypes.func.isRequired,
-    updateFromDate: PropTypes.func.isRequired,
-    updateToDate: PropTypes.func.isRequired,
+    updateDates: PropTypes.func.isRequired,
 };
 
 FixturesSection.defaultProps = {

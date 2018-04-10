@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FS {
@@ -14,8 +15,17 @@ namespace FS {
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+
             app.UseStaticFiles();
             app.UseMvc();
+
+            //app.UseDeveloperExceptionPage();
+            //if (env.IsDevelopment()) {
+            //    app.UseDeveloperExceptionPage();
+            //    app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
+            //        HotModuleReplacement = true
+            //    });
+            //}
         }
     }
 }

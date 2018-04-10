@@ -2,37 +2,23 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { dateToString } from "Utilities/formatDate";
+import { dateToString } from "Utilities/castDate";
 
 import "./index.css";
 
 export default class DatesForm extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            fromDate: dateToString(this.props.dates.from),
-            toDate: dateToString(this.props.dates.to),
-        };
-    }
-
-
     handleFromDateChange = (e) => {
-        this.setState({
-            fromDate: e.target.value,
+        this.props.updateDates({
+            from: new Date(e.target.value),
+            to: this.props.dates.to,
         });
-
-        this.props.updateFromDate(new Date(e.target.value));
     }
 
     handleToDateChange = (e) => {
-        this.setState({
-            toDate: e.target.value,
+        this.props.updateDates({
+            from: this.props.dates.from,
+            to: new Date(e.target.value),
         });
-
-        // 1 day - 86400000 milliseconds
-        // Getting new date and adding a day to it
-        this.props.updateToDate(new Date(new Date(e.target.value).getTime() + 86400000));
     }
 
     render() {
@@ -41,14 +27,14 @@ export default class DatesForm extends Component {
                 <input
                     className="dates-form__input"
                     type="date"
-                    value={this.state.fromDate}
+                    value={dateToString(this.props.dates.from)}
                     onChange={this.handleFromDateChange}
                 />
 
                 <input
                     className="dates-form__input dates-form__input_position_down"
                     type="date"
-                    value={this.state.toDate}
+                    value={dateToString(this.props.dates.to)}
                     onChange={this.handleToDateChange}
                 />
             </form>
@@ -61,6 +47,5 @@ DatesForm.propTypes = {
         from: PropTypes.object.isRequired,
         to: PropTypes.object,
     }).isRequired,
-    updateFromDate: PropTypes.func.isRequired,
-    updateToDate: PropTypes.func.isRequired,
+    updateDates: PropTypes.func.isRequired,
 };

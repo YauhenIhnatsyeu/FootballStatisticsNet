@@ -1,0 +1,36 @@
+.tabs {
+    display: flex;
+
+    flex-wrap: wrap;
+}
+
+.tabs__tab {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+
+    border: none;
+
+    font: inherit;
+
+    color: #000000;
+
+    text-align: center;
+    text-decoration: none;
+
+    background: #d2e9d5;
+
+    flex-grow: 1;
+
+    cursor: pointer;
+
+    outline: none;
+}
+
+.tabs__tab:last-child {
+    margin-right: 0;
+}
+
+.tabs__tab_current {
+    color: #ffffff;
+    background: #209030;
+}

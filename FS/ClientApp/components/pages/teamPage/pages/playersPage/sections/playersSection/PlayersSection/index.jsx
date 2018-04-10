@@ -10,10 +10,8 @@ import Error from "Components/messages/Error";
 import PlayerItem from "PlayersPageSections/playersSection/PlayerItem";
 
 export default class PlayersSection extends Component {
-    constructor(props) {
-        super(props);
-
-        this.props.fetchPlayers(this.props.team._links.self.href);
+    componentDidMount() {
+        this.props.fetchPlayers(this.props.team._links.players.href);
     }
 
     handlePageChanged = (pageIndex) => {
@@ -21,7 +19,7 @@ export default class PlayersSection extends Component {
     }
 
     render() {
-        if (this.props.fetchingErrorOccured) {
+        if (this.props.playersFetchingErrorOccured) {
             return <Error />;
         }
 
@@ -44,10 +42,10 @@ export default class PlayersSection extends Component {
 PlayersSection.propTypes = {
     fetchPlayers: PropTypes.func.isRequired,
     updatePlayersPageIndex: PropTypes.func.isRequired,
-    fetchingErrorOccured: PropTypes.bool.isRequired,
+    playersFetchingErrorOccured: PropTypes.bool.isRequired,
     team: PropTypes.shape({
         _links: PropTypes.shape({
-            self: PropTypes.shape({
+            players: PropTypes.shape({
                 href: PropTypes.string.isRequired,
             }).isRequired,
         }).isRequired,

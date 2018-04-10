@@ -2,46 +2,44 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import { formatDate } from "Utilities/formatDate";
+import Item from "Components/Item";
+import FixtureInfo from "Pages/teamPage/pages/fixturesPage/FixtureInfo";
 
 import "./index.css";
 
 export default class DetailsHeader extends React.Component {
     render() {
+        const { info, fixture } = this.props.head2Head;
+
         return (
-            <div className="item details-header">
-                <div className="details-header__header">
-                    <p>
-                        {this.props.head2Head.fixture.homeTeamName}
-                        {" - "}
-                        {this.props.head2Head.fixture.awayTeamName}
-                        {this.props.head2Head.fixture.status === "FINISHED" &&
-                            (` ${this.props.head2Head.fixture.result.goalsHomeTeam}` +
-                            ` - ${this.props.head2Head.fixture.result.goalsAwayTeam}`)
-                        }
-                    </p>
-                    <p>Date: {formatDate(this.props.head2Head.fixture.date)}</p>
+            <Item>
+                <div className="details-header">
+                    <div className="details-header__header">
+                        <FixtureInfo
+                            fixture={fixture}
+                        />
+                    </div>
+                    <div className="details-header__statistics">
+                        <span className="details-header__statistics-title">
+                            Statistics:
+                        </span>
+                        <p>
+                            {fixture.homeTeamName}
+                            {" wins: "}
+                            {info.homeTeamWins}
+                        </p>
+                        <p>
+                            {fixture.awayTeamName}
+                            {" wins: "}
+                            {info.awayTeamWins}
+                        </p>
+                        <p>
+                            {"Draws: "}
+                            {info.draws}
+                        </p>
+                    </div>
                 </div>
-                <div className="details-header__statistics">
-                    <span className="details-header__statistics-title">
-                        Statistics:
-                    </span>
-                    <p>
-                        {this.props.head2Head.fixture.homeTeamName}
-                        {" wins: "}
-                        {this.props.head2Head.head2head.homeTeamWins}
-                    </p>
-                    <p>
-                        {this.props.head2Head.fixture.awayTeamName}
-                        {" wins: "}
-                        {this.props.head2Head.head2head.awayTeamWins}
-                    </p>
-                    <p>
-                        {"Draws: "}
-                        {this.props.head2Head.head2head.draws}
-                    </p>
-                </div>
-            </div>
+            </Item>
         );
     }
 }
@@ -57,15 +55,25 @@ DetailsHeader.propTypes = {
                 goalsAwayTeam: PropTypes.number,
             }).isRequired,
             date: PropTypes.string.isRequired,
+            isFinished: PropTypes.bool,
         }).isRequired,
-        head2head: PropTypes.shape({
-            homeTeamWins: PropTypes.number,
-            awayTeamWins: PropTypes.number,
-            draws: PropTypes.number,
-        }).isRequired,
+        info: PropTypes.shape({}).isRequired,
     }),
 };
 
 DetailsHeader.defaultProps = {
-    head2Head: null,
+    head2Head: PropTypes.shape({
+        fixture: {
+            id: null,
+            homeTeamName: null,
+            awayTeamName: null,
+            result: {
+                goalsHomeTeam: null,
+                goalsAwayTeam: null,
+            },
+            status: null,
+            date: null,
+            isFinished: false,
+        },
+    }),
 };

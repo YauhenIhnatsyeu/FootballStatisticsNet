@@ -1,0 +1,28 @@
+html {
+    font-size: 11px;
+    font-family: "IBM Plex Sans", sans-serif;
+}
+
+@media only screen and (min-device-width : 320px) {
+    html {
+        font-size: 13px;
+    }
+}
+
+@media only screen and (min-device-width : 768px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media only screen and (min-device-width : 1024px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (min-device-width : 1224px) {
+    html {
+        font-size: 16px;
+    }
+}

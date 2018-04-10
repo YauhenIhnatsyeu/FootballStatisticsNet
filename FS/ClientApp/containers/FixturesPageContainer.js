@@ -6,16 +6,18 @@ import {
     fetchHead2Head,
     updateFixtureIndex,
     updateFixturesPageIndex,
-    updateFromDate,
-    updateToDate,
+    updateDates,
 } from "ActionCreators";
 
 import FixturesPage from "Pages/teamPage/pages/fixturesPage/FixturesPage";
 
 const mapStateToProps = state => ({
-    fixtures: state.fixtures,
-    fixtureIndex: state.fixtureIndex,
-    fixturesPageIndex: state.fixturesPageIndex,
+    teamId: state.teamData.team.id,
+    fixtures: state.fixturesData.fixtures,
+    fixturesFetchingErrorOccured: state.fetchingErrors.fixturesFetchingErrorOccured,
+    head2HeadFetchingErrorOccured: state.fetchingErrors.head2HeadFetchingErrorOccured,
+    fixtureIndex: state.fixturesData.fixtureIndex,
+    fixturesPageIndex: state.fixturesData.fixturesPageIndex,
     head2Head: state.head2Head,
     dates: state.dates,
 });
@@ -26,8 +28,7 @@ const mapDispatchToProps = dispatch =>
         fetchHead2Head,
         updateFixtureIndex,
         updateFixturesPageIndex,
-        updateFromDate,
-        updateToDate,
+        updateDates,
     }, dispatch);
 
 export default

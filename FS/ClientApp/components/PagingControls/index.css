@@ -24,10 +24,16 @@
     border-color: #209030;
 }
 
-.paging-controls__link {
-    text-decoration: none;
+.paging-controls__button {
+    border: none;
+
+    background: #209030;
+
+    font: inherit;
 
     cursor: pointer;
+
+    outline: none;
 }
 
 .paging-controls__indicator {

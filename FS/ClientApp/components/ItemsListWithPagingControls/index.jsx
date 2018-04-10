@@ -10,41 +10,48 @@ import itemsOnOnePageCount from "Constants/itemsOnOnePageCount";
 import "./index.css";
 
 export default class ItemsListWithPagingControls extends Component {
-    render() {
+    getItems = () => {
+        const startIndex = this.props.currentPageIndex * itemsOnOnePageCount;
+
+        return this.props.items.slice(
+            startIndex,
+            startIndex + itemsOnOnePageCount,
+        );
+    }
+
+    renderPagingControls = () => {
         const pagingControlsPagesCount =
             Math.ceil(this.props.items.length / itemsOnOnePageCount);
 
-        const pagingControls = this.props.items.length > itemsOnOnePageCount ?
-            (
-                <PagingControls
-                    pagesCount={pagingControlsPagesCount}
-                    onPageChanged={this.props.onPageChanged}
-                    currentPageIndex={this.props.currentPageIndex}
-                />
-            )
-            :
-            null;
+        return (
+            <PagingControls
+                pagesCount={pagingControlsPagesCount}
+                onPageChanged={this.props.onPageChanged}
+                currentPageIndex={this.props.currentPageIndex}
+            />
+        );
+    }
 
-        const startIndex = this.props.currentPageIndex * itemsOnOnePageCount;
-
+    render() {
         return (
             <React.Fragment>
-                {pagingControls}
+                {this.props.items.length > itemsOnOnePageCount
+                    ? this.renderPagingControls()
+                    : null
+                }
 
                 <div className="items-list-with-paging-controls__items-list-container">
                     <ItemsList
-                        items={
-                            this.props.items.slice(
-                                startIndex,
-                                startIndex + itemsOnOnePageCount,
-                            )
-                        }
+                        items={this.getItems()}
                         itemComponent={this.props.itemComponent}
                         itemKey={this.props.itemKey}
                     />
                 </div>
 
-                {pagingControls}
+                {this.props.items.length > itemsOnOnePageCount
+                    ? this.renderPagingControls()
+                    : null
+                }
             </React.Fragment>
         );
     }

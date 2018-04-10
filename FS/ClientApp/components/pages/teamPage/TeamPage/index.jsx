@@ -2,13 +2,22 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import {
+    Route,
+    Switch,
+    Redirect,
+} from "react-router-dom";
+
+import routePaths from "Constants/routePaths";
+import teamRoutes from "Constants/teamRoutes";
+import teamRoutePaths from "Constants/teamRoutePaths";
+
 import Loading from "Components/messages/Loading";
 import Error from "Components/messages/Error";
-import PlayersPageContainer from "Containers/PlayersPageContainer";
-import FixturesPageContainer from "Containers/FixturesPageContainer";
+
+import createTeamUrl from "Utilities/urlsCreators";
 
 import TeamItemForHeader from "../TeamItemForHeader";
-import TeamInfo from "../teamInfo/TeamInfo";
 
 import "./index.css";
 
@@ -16,13 +25,15 @@ export default class TeamPage extends Component {
     constructor(props) {
         super(props);
 
-        this.props.resetTeamPageIndices();
+        this.teamId = +props.match.params.id;
+    }
 
-        this.props.fetchTeam(this.props.teamId);
+    componentDidMount() {
+        this.props.fetchTeam(this.teamId);
     }
 
     render() {
-        if (this.props.fetchingErrorOccured) {
+        if (this.props.teamFetchingErrorOccured) {
             return <Error />;
         }
 
@@ -30,38 +41,43 @@ export default class TeamPage extends Component {
             return <Loading />;
         }
 
+        const currentTeamUrl = createTeamUrl(this.teamId);
+
         return (
             <div className="team-page">
                 <div className="team-page__team-item-for-header-container">
                     <TeamItemForHeader
                         team={this.props.team}
                         defaultTeamPageIndex={this.props.teamPageIndex}
-                        updateTeamPageIndex={this.props.updateTeamPageIndex}
                     />
                 </div>
-                <TeamInfo>
-                    {this.props.teamPageIndex === 0 ?
-                        <PlayersPageContainer
-                            team={this.props.team}
-                            fetchingErrorOccured={this.props.fetchingErrorOccured}
-                        />
-                        :
-                        <FixturesPageContainer
-                            teamId={this.props.teamId}
-                            fetchingErrorOccured={this.props.fetchingErrorOccured}
-                        />
-                    }
-                </TeamInfo>
+                <div className="team-page__info-container">
+                    <Switch>
+                        {teamRoutes.map((route, index) => (
+                            <Route
+                                path={routePaths.team + route.path}
+                                render={() => <route.component />}
+                                key={index}
+                            />
+                        ))}
+
+                        <Redirect to={currentTeamUrl + teamRoutePaths.players} />
+                    </Switch>
+                </div>
             </div>
         );
     }
 }
 
+
 TeamPage.propTypes = {
-    resetTeamPageIndices: PropTypes.func.isRequired,
-    teamId: PropTypes.number.isRequired,
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            id: PropTypes.string.isRequired,
+        }).isRequired,
+    }).isRequired,
     fetchTeam: PropTypes.func.isRequired,
-    fetchingErrorOccured: PropTypes.bool.isRequired,
+    teamFetchingErrorOccured: PropTypes.bool,
     team: PropTypes.shape({
         id: PropTypes.number,
         crestUrl: PropTypes.string.isRequired,
@@ -70,9 +86,9 @@ TeamPage.propTypes = {
         squadMarketValue: PropTypes.string,
     }),
     teamPageIndex: PropTypes.number.isRequired,
-    updateTeamPageIndex: PropTypes.func.isRequired,
 };
 
 TeamPage.defaultProps = {
     team: null,
+    teamFetchingErrorOccured: false,
 };

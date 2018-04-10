@@ -16,20 +16,18 @@ import DetailsHeader from "../DetailsHeader";
 import "./index.css";
 
 export default class DetailsSection extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.props.fetchHead2Head(this.props.fixtureId);
+    componentDidMount() {
+        this.props.fetchHead2Head(this.props.currentFixtureId);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.fixtureId !== nextProps.fixtureId) {
-            this.props.fetchHead2Head(nextProps.fixtureId);
+        if (this.props.currentFixtureId !== nextProps.currentFixtureId) {
+            this.props.fetchHead2Head(nextProps.currentFixtureId);
         }
     }
 
     render() {
-        if (this.props.fetchingErrorOccured) {
+        if (this.props.head2HeadFetchingErrorOccured) {
             return <Error />;
         }
 
@@ -39,7 +37,7 @@ export default class DetailsSection extends React.Component {
 
         const fixtureItem = (
             <FixtureItem
-                currentFixtureId={this.props.fixtureId}
+                currentFixtureId={this.props.currentFixtureId}
             />
         );
 
@@ -53,7 +51,7 @@ export default class DetailsSection extends React.Component {
 
                 <ItemList
                     items={
-                        this.props.head2Head.head2head.fixtures
+                        this.props.head2Head.fixtures
                             .slice(0, head2HeadsOnOnePageCount)
                     }
                     itemComponent={fixtureItem}
@@ -65,13 +63,13 @@ export default class DetailsSection extends React.Component {
 }
 
 DetailsSection.propTypes = {
-    fixtureId: PropTypes.number.isRequired,
+    currentFixtureId: PropTypes.number.isRequired,
     fetchHead2Head: PropTypes.func.isRequired,
-    fetchingErrorOccured: PropTypes.bool.isRequired,
+    head2HeadFetchingErrorOccured: PropTypes.bool.isRequired,
     head2Head: PropTypes.shape({
-        head2head: PropTypes.shape({
-            fixtures: PropTypes.arrayOf(PropTypes.object).isRequired,
-        }).isRequired,
+        fixture: PropTypes.shape({}).isRequired,
+        fixtures: PropTypes.arrayOf(PropTypes.object).isRequired,
+        info: PropTypes.shape({}).isRequired,
     }),
 };
 

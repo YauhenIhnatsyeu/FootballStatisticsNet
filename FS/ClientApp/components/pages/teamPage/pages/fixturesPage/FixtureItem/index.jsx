@@ -2,7 +2,10 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { formatDate } from "Utilities/formatDate";
+import classNames from "classnames";
+
+import Item from "Components/Item";
+import FixtureInfo from "../FixtureInfo";
 
 import "./index.css";
 
@@ -14,37 +17,23 @@ export default class FixtureItem extends Component {
     }
 
     render() {
-        let style = "";
-
-        style += this.props.currentFixtureId === this.props.fixture.id ?
-            "item item_current "
-            :
-            "item ";
-
-        style += this.props.onClick ?
-            "fixture-item fixture-item_clickable"
-            :
-            "fixture-item";
+        const style = classNames({
+            "fixture-item": true,
+            "fixture-item_clickable": this.props.onClick,
+        });
 
         return (
-            <div
-                className={style}
-                onClick={this.handleClick}
-                onKeyDown={this.handleClick}
-                role="link"
-                tabIndex="0"
-            >
-                <p>
-                    {this.props.fixture.homeTeamName}
-                    {" - "}
-                    {this.props.fixture.awayTeamName}
-                    {this.props.fixture.status === "FINISHED" &&
-                        (` ${this.props.fixture.result.goalsHomeTeam}` +
-                        ` - ${this.props.fixture.result.goalsAwayTeam}`)
-                    }
-                </p>
-                <p>Date: {formatDate(this.props.fixture.date)}</p>
-            </div>
+            <Item isCurrent={this.props.currentFixtureId === this.props.fixture.id}>
+                <div
+                    className={style}
+                    onClick={this.handleClick}
+                    onKeyDown={this.handleClick}
+                    role="link"
+                    tabIndex="0"
+                >
+                    <FixtureInfo fixture={this.props.fixture} />
+                </div>
+            </Item>
         );
     }
 }
@@ -60,6 +49,7 @@ FixtureItem.propTypes = {
         }),
         status: PropTypes.string,
         date: PropTypes.string,
+        isFinished: PropTypes.bool,
     }),
     currentFixtureId: PropTypes.number.isRequired,
     onClick: PropTypes.func,
@@ -76,6 +66,7 @@ FixtureItem.defaultProps = {
         },
         status: null,
         date: null,
+        isFinished: false,
     },
     onClick: null,
 };

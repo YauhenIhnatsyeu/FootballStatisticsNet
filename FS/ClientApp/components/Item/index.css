@@ -1,0 +1,13 @@
+.item {
+    padding: 1rem;
+
+    color: #000000;
+    background: #eeeeee;
+
+    box-shadow: 0 4px 0 -2px #c6c6c6;
+}
+
+.item_current {
+    color: #ffffff;
+    background: #209030;
+}

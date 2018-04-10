@@ -17,5 +17,9 @@ export default class Message extends Component {
 }
 
 Message.propTypes = {
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
+};
+
+Message.defaultProps = {
+    children: null,
 };
