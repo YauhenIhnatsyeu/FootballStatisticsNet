@@ -9,7 +9,7 @@ export default class RegisterPage extends Component {
         super(props);
 
         this.user = {
-            login: "",
+            userName: "",
             password: "",
         };
     }
@@ -24,14 +24,13 @@ export default class RegisterPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-
         this.props.register(this.user);
     }
 
     render() {
         return (
             <form className="form" onSubmit={this.handleSubmit}>
-                <input className="form__input" type="text" name="login" onChange={this.handleChange} />
+                <input className="form__input" type="text" name="userName" onChange={this.handleChange} />
                 <input className="form__input" type="password" name="password" onChange={this.handleChange} />
                 <input className="form__input" type="submit" value="Register" />
             </form>
@@ -41,7 +40,4 @@ export default class RegisterPage extends Component {
 
 RegisterPage.propTypes = {
     register: PropTypes.func.isRequired,
-};
-
-RegisterPage.defaultProps = {
 };

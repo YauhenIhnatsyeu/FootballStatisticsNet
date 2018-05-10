@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using AutoMapper;
+using FS.Helpers;
 
 namespace FS {
     public class Startup {
@@ -25,10 +27,12 @@ namespace FS {
 
             services.Configure<IdentityOptions>(options => {
                 options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 5;
+                options.Password.RequiredLength = 3;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
             });
+
+            services.AddAutoMapper();
         }
 
         private const string CONNECTION_STRING =

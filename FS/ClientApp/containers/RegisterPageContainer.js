@@ -5,8 +5,7 @@ import RegisterPage from "Pages/registerPage";
 
 import { register } from "ActionCreators";
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators({ register }, dispatch);

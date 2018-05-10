@@ -9,6 +9,7 @@ import head2Head from "./head2Head";
 import fetchingErrors from "./fetchingErrors";
 import favoriteTeams from "./favoriteTeams";
 import dates from "./dates";
+import registering from "./registering";
 
 export default combineReducers({
     fetchingErrors,
@@ -20,4 +21,5 @@ export default combineReducers({
     head2Head,
     favoriteTeams,
     dates,
+    registering,
 });

@@ -48,18 +48,9 @@ module.exports = {
     },
     devServer: {
         contentBase: [
-            __dirname,
-            path.join(__dirname, "public"),
+            //__dirname,
+            path.join(__dirname, "Views/Home"),
+            path.join(__dirname, "wwwroot"),
         ],
-    },
-    // externals: [
-    //     { pg: true, tedious: true },
-    // ],
-    node: {
-        dgram: "empty",
-        fs: "empty",
-        // net: "empty",
-        tls: "empty",
-        dns: "empty",
     },
 };

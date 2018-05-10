@@ -50,3 +50,9 @@ export {
     getTeamsFromFavorites,
     onGetTeamsFromFavoritesSucceeded,
 } from "./favoriteTeamsActionCreators";
+
+export {
+    register,
+    onRegisterSucceeded,
+    onRegisterFailed,
+} from "./registerActionCreators";

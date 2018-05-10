@@ -10,6 +10,7 @@ import {
     removeTeamFromFavorites,
     getTeamsFromFavorites,
 } from "./useFavorites";
+import register from "./register";
 
 export default function* rootSaga() {
     yield takeEvery("LEAGUE_FETCH_REQUESTED", fetchLeague);
@@ -21,4 +22,5 @@ export default function* rootSaga() {
     yield takeEvery("ADD_TEAM_TO_FAVORITES", addTeamToFavorites);
     yield takeEvery("REMOVE_TEAM_FROM_FAVORITES", removeTeamFromFavorites);
     yield takeEvery("GET_TEAMS_FROM_FAVORITES_REQUESTED", getTeamsFromFavorites);
+    yield takeEvery("REGISTER_REQUESTED", register);
 }
