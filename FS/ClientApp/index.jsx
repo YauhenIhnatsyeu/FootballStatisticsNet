@@ -10,10 +10,10 @@ import App from "Components/App";
 import rootReducer from "./reducers";
 import rootSaga from "./sagas";
 
-import "./css/reset.css";
-import "./css/wrapper.css";
-import "./css/font.css";
-import "./css/item.css";
+import "Css/reset.css";
+import "Css/wrapper.css";
+import "Css/font.css";
+import "Css/item.css";
 
 const defaultState = {};
 

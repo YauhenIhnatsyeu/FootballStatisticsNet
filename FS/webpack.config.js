@@ -1,8 +1,7 @@
-require("babel-polyfill");
-
 const path = require("path");
 
 module.exports = {
+    devtool: "source-map",
     entry: ["babel-polyfill", "./ClientApp/index.jsx"],
     output: {
         filename: "bundle.js",
@@ -10,6 +9,8 @@ module.exports = {
     },
     resolve: {
         alias: {
+            Css: path.resolve(__dirname, "ClientApp/css"),
+
             Constants: path.resolve(__dirname, "ClientApp/constants"),
 
             Components: path.resolve(__dirname, "ClientApp/components"),
@@ -19,7 +20,12 @@ module.exports = {
             PlayersPageSections: path.resolve(__dirname, "ClientApp/components/pages/teamPage/pages/playersPage/sections"),
             FixturesPageSections: path.resolve(__dirname, "ClientApp/components/pages/teamPage/pages/fixturesPage/sections"),
 
-            ActionCreators: path.resolve(__dirname, "ClientApp/actions/actionCreators"),
+            ActionTypes: path.resolve(__dirname, "ClientApp/actions/actionTypes/index"),
+            ActionCreators: path.resolve(__dirname, "ClientApp/actions/actionCreators/index"),
+
+            Clients: path.resolve(__dirname, "ClientApp/clients"),
+            Helpers: path.resolve(__dirname, "ClientApp/helpers"),
+            Services: path.resolve(__dirname, "ClientApp/services"),
 
             Utilities: path.resolve(__dirname, "ClientApp/utils"),
         },
@@ -40,10 +46,20 @@ module.exports = {
             },
         ],
     },
-    /*plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
-    ],*/
-    watch: true,
+    devServer: {
+        contentBase: [
+            __dirname,
+            path.join(__dirname, "public"),
+        ],
+    },
+    // externals: [
+    //     { pg: true, tedious: true },
+    // ],
+    node: {
+        dgram: "empty",
+        fs: "empty",
+        // net: "empty",
+        tls: "empty",
+        dns: "empty",
+    },
 };

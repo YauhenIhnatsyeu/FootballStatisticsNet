@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { dateToString } from "Utilities/castDate";
 
-import "./index.css";
+import "Css/form.css";
 
 export default class DatesForm extends Component {
     handleFromDateChange = (e) => {
@@ -23,16 +23,16 @@ export default class DatesForm extends Component {
 
     render() {
         return (
-            <form className="dates-form">
+            <form className="form">
                 <input
-                    className="dates-form__input"
+                    className="form__input"
                     type="date"
                     value={dateToString(this.props.dates.from)}
                     onChange={this.handleFromDateChange}
                 />
 
                 <input
-                    className="dates-form__input dates-form__input_position_down"
+                    className="form__input form__input_position_down"
                     type="date"
                     value={dateToString(this.props.dates.to)}
                     onChange={this.handleToDateChange}

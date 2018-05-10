@@ -3,6 +3,7 @@ import routePaths from "Constants/routePaths";
 import TablePageContainer from "Containers/TablePageContainer";
 import LeaguePageContainer from "Containers/LeaguePageContainer";
 import TeamPageContainer from "Containers/TeamPageContainer";
+import RegisterPageContainer from "Containers/RegisterPageContainer";
 
 export default [
     {
@@ -19,5 +20,10 @@ export default [
         path: routePaths.team,
         component: TeamPageContainer,
         caption: "Team",
+    },
+    {
+        path: routePaths.register,
+        component: RegisterPageContainer,
+        caption: "Register",
     },
 ];
