@@ -46,11 +46,11 @@ module.exports = {
             },
         ],
     },
-    devServer: {
-        contentBase: [
-            //__dirname,
-            path.join(__dirname, "Views/Home"),
-            path.join(__dirname, "wwwroot"),
-        ],
-    },
+    // devServer: {
+    //     contentBase: [
+    //         //__dirname,
+    //         path.join(__dirname, "Views/Home"),
+    //         path.join(__dirname, "wwwroot"),
+    //     ],
+    // },
 };

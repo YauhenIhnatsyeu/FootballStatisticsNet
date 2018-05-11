@@ -17,6 +17,10 @@ exports.default = register;
 
 var _effects = __webpack_require__(/*! redux-saga/effects */ "./node_modules/redux-saga/es/effects.js");
 
+var _registerHelper = __webpack_require__(/*! Helpers/registerHelper */ "./ClientApp/helpers/registerHelper.js");
+
+var _registerHelper2 = _interopRequireDefault(_registerHelper);
+
 var _createBrowserHistory = __webpack_require__(/*! history/createBrowserHistory */ "./node_modules/history/createBrowserHistory.js");
 
 var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
@@ -26,50 +30,34 @@ __webpack_require__(/*! ActionCreators */ "./ClientApp/actions/actionCreators/in
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _marked = /*#__PURE__*/regeneratorRuntime.mark(register);
-
 //MOVE TO HELPERS
 
 
 function register(action) {
-    var history, user, requestOptions;
+    var user;
     return regeneratorRuntime.wrap(function register$(_context) {
         while (1) {
             switch (_context.prev = _context.next) {
                 case 0:
-                    _context.prev = 0;
-                    history = (0, _createBrowserHistory2.default)();
-
-                    console.log(history);
-
-                    user = action.payload;
-                    requestOptions = {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(user)
-                    };
+                    try {
+                        user = action.payload;
 
 
-                    fetch("http://localhost:5000/users/register", requestOptions);
-                    _context.next = 13;
-                    break;
+                        (0, _registerHelper2.default)(user);
+                    } catch (error) {
+                        console.log(error);
+                        //yield put(onFixturesFetchFailed(error));
+                    }
 
-                case 8:
-                    _context.prev = 8;
-                    _context.t0 = _context["catch"](0);
-
-                    console.log(_context.t0);
-                    _context.next = 13;
-                    return (0, _effects.put)(onFixturesFetchFailed(_context.t0));
-
-                case 13:
+                case 1:
                 case "end":
                     return _context.stop();
             }
         }
-    }, _marked, this, [[0, 8]]);
+    }, _marked, this);
 }
 
 /***/ })
 
 })
-//# sourceMappingURL=main.4e3114893e148915f340.hot-update.js.map
+//# sourceMappingURL=main.5ac40a36c5e0f7bd67b6.hot-update.js.map

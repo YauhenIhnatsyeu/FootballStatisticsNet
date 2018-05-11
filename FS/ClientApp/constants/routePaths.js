@@ -3,4 +3,5 @@ export default {
     teams: "/teams",
     team: "/team/:id([0-9]+)",
     register: "/register",
+    usersRegister: "/users/register",
 };

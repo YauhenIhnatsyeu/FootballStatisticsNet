@@ -19,35 +19,10 @@ namespace FS.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController(
-            UsersContext context,
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            IMapper mapper) {
-            this.context = context;
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-            this.mapper = mapper;
-        }
-
-        private UsersContext context;
-        private UserManager<User> userManager;
-        private SignInManager<User> signInManager;
-        private IMapper mapper;
-
         [HttpGet]
         [Route("{*url}")]
         public IActionResult Index() {
             return View();
-        }
-
-        // [AllowAnonymous]
-        [HttpPost]
-        [Route("/users/register")]
-        public async Task<IActionResult> Register([FromBody]UserDto userDto) {
-            var user = mapper.Map<User>(userDto);
-            var result = await userManager.CreateAsync(user, userDto.Password);
-            return result.Succeeded ? (IActionResult) Ok() : BadRequest();
         }
     }
 }
