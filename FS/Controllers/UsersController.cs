@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +17,11 @@ namespace FS.Controllers
 {
     public class UsersController : Controller
     {
+        private UsersContext context;
+        private readonly IMapper mapper;
+        private readonly SignInManager<User> signInManager;
+        private readonly UserManager<User> userManager;
+
         public UsersController(
             UsersContext context,
             UserManager<User> userManager,
@@ -31,40 +34,31 @@ namespace FS.Controllers
             this.mapper = mapper;
         }
 
-        private UsersContext context;
-        private UserManager<User> userManager;
-        private SignInManager<User> signInManager;
-        private IMapper mapper;
-
         [HttpPost]
         [Route("/users/register")]
-        public async Task<IActionResult> Register([FromBody]UserDto userDto)
+        public async Task<IActionResult> Register([FromBody] UserViewModel userViewModel)
         {
-            var user = mapper.Map<User>(userDto);
-            var result = await userManager.CreateAsync(user, userDto.Password);
+            var user = mapper.Map<User>(userViewModel);
+            var result = await userManager.CreateAsync(user, userViewModel.Password);
             return result.Succeeded
-                ? (IActionResult)Ok()
+                ? (IActionResult) Ok()
                 : BadRequest();
         }
 
         [HttpPost]
         [Route("/users/login")]
-        public async Task<IActionResult> Login([FromBody]UserDto userDto)
+        public async Task<IActionResult> Login([FromBody] UserViewModel userViewModel)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
-            var user = mapper.Map<User>(userDto);
-            var result = await signInManager.PasswordSignInAsync(user.UserName, userDto.Password, false, false);
-            
-            if (!result.Succeeded)
-            {
-                return BadRequest();
-            }
+            var user = mapper.Map<User>(userViewModel);
+            var result = await signInManager.PasswordSignInAsync(user.UserName, userViewModel.Password, false, false);
 
-            var claims = new[] 
-            {
+            if (!result.Succeeded) return BadRequest();
+
+            var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
 
             var configuration = ConfigurationContainer.Configuration;
@@ -76,18 +70,18 @@ namespace FS.Controllers
             );
 
             var token = new JwtSecurityToken(
-                 issuer: configuration["Jwt:Issuer"],
-                 audience: configuration["Jwt:Audience"],
-                 claims: claims,
-                 expires: DateTime.Now.AddMonths(3),
-                 signingCredentials: signingCredentials
+                configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMonths(3),
+                signingCredentials: signingCredentials
             );
-            
+
             return Ok(new {
                 user = new {
-                    Name = user.UserName,
+                    Name = user.UserName
                 },
-                token = new JwtSecurityTokenHandler().WriteToken(token),
+                token = new JwtSecurityTokenHandler().WriteToken(token)
             });
         }
 
@@ -100,7 +94,8 @@ namespace FS.Controllers
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("/private")]
-        public IActionResult Private() {
+        public IActionResult Private()
+        {
             return Content("You're there, man");
         }
     }

@@ -12,9 +12,6 @@ export default function* login(action) {
 
         if (user) {
             yield put(onLoginSucceeded(user));
-            console.log("Login!");
-        } else {
-            console.log("No login!");
         }
     } catch (error) {
         console.log(error);

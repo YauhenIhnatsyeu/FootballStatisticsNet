@@ -17,21 +17,22 @@ using AutoMapper;
 using FS.Helpers;
 using Microsoft.IdentityModel.Tokens;
 
-namespace FS {
-    public class Startup {
-        
-        
+namespace FS
+{
+    public class Startup
+    {
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
-            
+
             ConfigurationContainer.Configuration = builder.Build();
         }
 
-        public void ConfigureServices(IServiceCollection services) {
+        public void ConfigureServices(IServiceCollection services)
+        {
             var configuration = ConfigurationContainer.Configuration;
             var connectionString = configuration["Database:ConnectionString"];
             var secretKey = configuration["Jwt:SecretKey"];
@@ -43,7 +44,8 @@ namespace FS {
                 .AddDefaultTokenProviders();
 
             services.AddAuthentication()
-                .AddJwtBearer(oprtions => {
+                .AddJwtBearer(oprtions =>
+                {
                     oprtions.TokenValidationParameters = new TokenValidationParameters {
                         ValidateIssuer = true,
                         ValidateAudience = true,
@@ -57,7 +59,8 @@ namespace FS {
 
             services.AddMvc();
 
-            services.Configure<IdentityOptions>(options => {
+            services.Configure<IdentityOptions>(options =>
+            {
                 options.Password.RequireDigit = false;
                 options.Password.RequiredLength = 3;
                 options.Password.RequireUppercase = false;
@@ -70,7 +73,8 @@ namespace FS {
         private const string CONNECTION_STRING =
             "Server=localhost;Port=5432;Database=football-statistics;User Id=postgres;Password=password;";
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();

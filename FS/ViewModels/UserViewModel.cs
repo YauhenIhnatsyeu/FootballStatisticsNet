@@ -1,6 +1,6 @@
 namespace FS.Dtos
 {
-    public class UserDto
+    public class UserViewModel
     {
         public string UserName { get; set; }
         public string BirthDate { get; set; }

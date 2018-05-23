@@ -15,7 +15,6 @@ export default class InputForm extends Component {
 
     handleChange = (e) => {
         const { name: inputName, value: inputValue } = e.target;
-        console.log(inputValue);
         this.model[inputName] = inputValue;
     }
 

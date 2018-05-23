@@ -1,6 +1,6 @@
 import routePaths from "Constants/routePaths";
 import keys from "Constants/keys";
-import { tryExtractJsonFromResponse } from "Helpers/jsonHelper";
+import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 import { setValue, setJSONValue, removeValue } from "Helpers/localStorageHelper";
 
 function getUsersFetchUrl(usersPath) {

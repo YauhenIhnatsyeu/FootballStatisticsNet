@@ -24,7 +24,7 @@ export default class LoginPage extends Component {
                     onSubmit={this.handleSubmit}
                 />
                 <br />
-                <Link to={routePaths.register}>If you haven't got an account, create one</Link>
+                <Link to={routePaths.register}>If you haven{"'"}t got an account, create one</Link>
             </React.Fragment>
         );
     }

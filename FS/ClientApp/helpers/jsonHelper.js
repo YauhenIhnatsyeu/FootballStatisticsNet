@@ -1,4 +1,4 @@
-export function* tryExtractJsonFromResponse(response) {
+export default function* tryExtractJsonFromResponse(response) {
     if (response && response.ok) {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {

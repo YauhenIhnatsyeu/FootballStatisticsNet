@@ -7,13 +7,13 @@ import { Provider } from "react-redux";
 
 import App from "Components/App";
 
-import rootReducer from "./reducers";
-import rootSaga from "./sagas";
-
 import "Css/reset.css";
 import "Css/wrapper.css";
 import "Css/font.css";
 import "Css/item.css";
+
+import rootReducer from "./reducers";
+import rootSaga from "./sagas";
 
 const defaultState = {};
 

@@ -5,7 +5,6 @@ import { push as pushToHistory } from "Helpers/historyHelper";
 import routePaths from "Constants/routePaths";
 
 export default function* logout() {
-    // console.log(call(logoutUser()));
     try {
         yield call(logoutUser);
 

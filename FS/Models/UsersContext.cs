@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FS.Models
 {
-    public class UsersContext : IdentityDbContext<User> {
-        public UsersContext(DbContextOptions options) : base(options) {
+    public class UsersContext : IdentityDbContext<User>
+    {
+        public UsersContext(DbContextOptions options) : base(options)
+        {
         }
     }
 }

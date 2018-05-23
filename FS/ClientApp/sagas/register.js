@@ -1,4 +1,4 @@
-import { call, put } from "redux-saga/effects";
+import { call } from "redux-saga/effects";
 
 import { register as registerUser } from "Helpers/userHelper";
 import { push as pushToHistory } from "Helpers/historyHelper";
@@ -9,8 +9,9 @@ export default function* register(action) {
         const user = action.payload;
 
         const result = yield call(registerUser, user);
-        pushToHistory(routePaths.login);
-        console.log("Registered!");
+        if (result) {
+            pushToHistory(routePaths.login);
+        }
     } catch (error) {
         console.log(error);
     }
