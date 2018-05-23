@@ -1,17 +1,17 @@
 export function getValue(key) {
-    const item = localStorage.getItem(key);
-
-    return item || undefined;
+    return localStorage.getItem(key);
 }
 
 export function getJSONValue(key) {
-    const item = getValue(key);
-
-    return item ? JSON.parse(item) : undefined;
+    return JSON.parse(getValue(key));
 }
 
 export function setValue(key, value) {
     localStorage.setItem(key, value);
+}
+
+export function setJSONValue(key, value) {
+    setValue(key, JSON.stringify(value));
 }
 
 export function removeValue(key) {

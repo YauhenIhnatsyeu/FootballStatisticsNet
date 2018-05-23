@@ -16,7 +16,7 @@ import updateDatesActionTypes from "./updateDatesActionTypes";
 
 import favoriteTeamsActionTypes from "./favoriteTeamsActionTypes";
 
-import registerActionTypes from "./registerActionTypes";
+import userActionTypes from "./userActionTypes";
 
 export default Object.assign(
     {},
@@ -29,5 +29,5 @@ export default Object.assign(
     updateIndexActionTypes,
     updateDatesActionTypes,
     favoriteTeamsActionTypes,
-    registerActionTypes,
+    userActionTypes,
 );

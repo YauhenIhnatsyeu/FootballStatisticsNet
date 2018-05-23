@@ -4,6 +4,8 @@ import TablePageContainer from "Containers/TablePageContainer";
 import LeaguePageContainer from "Containers/LeaguePageContainer";
 import TeamPageContainer from "Containers/TeamPageContainer";
 import RegisterPageContainer from "Containers/RegisterPageContainer";
+import LoginPageContainer from "Containers/LoginPageContainer";
+import LogoutPageContainer from "Containers/LogoutPageContainer";
 
 export default [
     {
@@ -25,5 +27,15 @@ export default [
         path: routePaths.register,
         component: RegisterPageContainer,
         caption: "Register",
+    },
+    {
+        path: routePaths.login,
+        component: LoginPageContainer,
+        caption: "Log in",
+    },
+    {
+        path: routePaths.logout,
+        component: LogoutPageContainer,
+        caption: "Log out",
     },
 ];

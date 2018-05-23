@@ -1,0 +1,25 @@
+.auth-bar {
+    display: flex;
+
+    align-items: center;
+}
+
+.auth-bar__link-container {
+    margin: 0 1rem;
+}
+
+.auth-bar__link {
+    padding: 0.75rem 1rem;
+
+    color: #3b9f52;
+    background-color: #FFFFFF;
+
+    text-decoration: none;
+    font-weight: 500;
+
+    box-shadow: 0 2px 3px -0.8px #454545;
+}
+
+.auth-bar__text {
+    color: #FFFFFF;
+}

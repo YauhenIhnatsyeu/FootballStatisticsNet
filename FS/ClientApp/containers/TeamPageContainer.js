@@ -1,9 +1,7 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import {
-    fetchTeam,
-} from "ActionCreators";
+import { fetchTeam } from "ActionCreators";
 
 import TeamPage from "Pages/teamPage/TeamPage";
 

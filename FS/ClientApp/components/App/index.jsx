@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { BrowserRouter as Router } from "react-router-dom";
 
-import Header from "Components/header/Header";
+import HeaderContainer from "Containers/HeaderContainer";
 
 import Main from "Components/Main";
 
@@ -11,7 +11,7 @@ export default class App extends Component {
         return (
             <Router>
                 <React.Fragment>
-                    <Header />
+                    <HeaderContainer />
                     <Main />
                 </React.Fragment>
             </Router>

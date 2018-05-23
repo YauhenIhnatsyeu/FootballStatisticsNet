@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import RegisterPage from "Pages/registerPage";
+import RegisterPage from "Pages/RegisterPage";
 
 import { register } from "ActionCreators";
 

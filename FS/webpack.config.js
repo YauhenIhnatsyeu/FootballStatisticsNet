@@ -1,12 +1,22 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
     devtool: "source-map",
     entry: ["babel-polyfill", "./ClientApp/index.jsx"],
     output: {
-        filename: "bundle.js",
+        filename: "bundle[hash].js",
         path: path.resolve(__dirname, "wwwroot"),
+        publicPath: "~",
     },
+    plugins: [
+        new CleanWebpackPlugin(path.resolve(__dirname, "wwwroot")),
+        new HtmlWebpackPlugin({
+            template: "Templates/IndexTemplate.cshtml",
+            filename: "../Views/Home/Index.cshtml",
+        }),
+    ],
     resolve: {
         alias: {
             Css: path.resolve(__dirname, "ClientApp/css"),
@@ -46,11 +56,4 @@ module.exports = {
             },
         ],
     },
-    // devServer: {
-    //     contentBase: [
-    //         //__dirname,
-    //         path.join(__dirname, "Views/Home"),
-    //         path.join(__dirname, "wwwroot"),
-    //     ],
-    // },
 };

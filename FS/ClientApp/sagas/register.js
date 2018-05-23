@@ -1,19 +1,17 @@
-﻿import { call, put } from "redux-saga/effects";
+import { call, put } from "redux-saga/effects";
 
-import registerUser from "Helpers/registerHelper";
-//MOVE TO HELPERS
-import createHistory from "history/createBrowserHistory";
-
-import {
-} from "ActionCreators";
+import { register as registerUser } from "Helpers/userHelper";
+import { push as pushToHistory } from "Helpers/historyHelper";
+import routePaths from "Constants/routePaths";
 
 export default function* register(action) {
     try {
         const user = action.payload;
 
-        registerUser(user);
+        const result = yield call(registerUser, user);
+        pushToHistory(routePaths.login);
+        console.log("Registered!");
     } catch (error) {
         console.log(error);
-        //yield put(onFixturesFetchFailed(error));
     }
 }

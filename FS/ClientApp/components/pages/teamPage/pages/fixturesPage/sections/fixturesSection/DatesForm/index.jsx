@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { dateToString } from "Utilities/castDate";
 
-import "Css/form.css";
+import "./index.css";
 
 export default class DatesForm extends Component {
     handleFromDateChange = (e) => {

@@ -2,38 +2,22 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import "Css/form.css";
+import InputForm from "Components/inputForm/InputForm";
+import inputProps from "Constants/inputProps";
 
 export default class RegisterPage extends Component {
-    constructor(props) {
-        super(props);
-
-        this.user = {
-            userName: "",
-            password: "",
-        };
-    }
-
-    handleChange = (e) => {
-        const { name: inputName, value: inputValue } = e.target;
-
-        this.user[inputName] = inputValue;
-
-        console.log(JSON.stringify(this.user));
-    }
-
-    handleSubmit = (e) => {
+    handleSubmit = (e, user) => {
         e.preventDefault();
-        this.props.register(this.user);
+        this.props.register(user);
     }
 
     render() {
         return (
-            <form className="form" onSubmit={this.handleSubmit}>
-                <input className="form__input" type="text" name="userName" onChange={this.handleChange} />
-                <input className="form__input" type="password" name="password" onChange={this.handleChange} />
-                <input className="form__input" type="submit" value="Register" />
-            </form>
+            <InputForm
+                inputProps={inputProps.register}
+                submitValue="Register"
+                onSubmit={this.handleSubmit}
+            />
         );
     }
 }

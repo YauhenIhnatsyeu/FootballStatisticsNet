@@ -11,6 +11,8 @@ import {
     getTeamsFromFavorites,
 } from "./useFavorites";
 import register from "./register";
+import login from "./login";
+import logout from "./logout";
 
 export default function* rootSaga() {
     yield takeEvery("LEAGUE_FETCH_REQUESTED", fetchLeague);
@@ -23,4 +25,6 @@ export default function* rootSaga() {
     yield takeEvery("REMOVE_TEAM_FROM_FAVORITES", removeTeamFromFavorites);
     yield takeEvery("GET_TEAMS_FROM_FAVORITES_REQUESTED", getTeamsFromFavorites);
     yield takeEvery("REGISTER_REQUESTED", register);
+    yield takeEvery("LOGIN_REQUESTED", login);
+    yield takeEvery("LOGOUT_REQUESTED", logout);
 }

@@ -55,4 +55,9 @@ export {
     register,
     onRegisterSucceeded,
     onRegisterFailed,
-} from "./registerActionCreators";
+    login,
+    onLoginSucceeded,
+    onLoginFailed,
+    logout,
+    onLogoutSucceeded,
+} from "./userActionCreators";
