@@ -6,8 +6,7 @@ import InputForm from "Components/inputForm/InputForm";
 import inputProps from "Constants/inputProps";
 
 export default class RegisterPage extends Component {
-    handleSubmit = (e, user) => {
-        e.preventDefault();
+    handleSubmit = (user) => {
         this.props.register(user);
     }
 

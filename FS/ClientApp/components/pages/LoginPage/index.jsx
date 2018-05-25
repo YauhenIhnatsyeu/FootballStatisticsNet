@@ -10,8 +10,7 @@ import { Link } from "react-router-dom";
 import routePaths from "Constants/routePaths";
 
 export default class LoginPage extends Component {
-    handleSubmit = (e, user) => {
-        e.preventDefault();
+    handleSubmit = (user) => {
         this.props.login(user);
     }
 

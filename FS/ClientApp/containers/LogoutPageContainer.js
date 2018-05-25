@@ -5,7 +5,7 @@ import LogoutPage from "Pages/LogoutPage";
 
 import { logout } from "ActionCreators";
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators({ logout }, dispatch);
