@@ -6,13 +6,13 @@ namespace FS.Models
 {
     public class User : IdentityUser
     {
-        private const string BIRTH_DATE = "birth_date";
-        private const string PROFILE_PICTURE = "profile_picture";
+        private const string BIRTH_DATE = "BirthDate";
+        private const string AVATAR_URL = "AvatarUrl";
 
         [Column(BIRTH_DATE)]
         public DateTime BirthDate { get; set; }
 
-        [Column(PROFILE_PICTURE)]
-        public string ProfilePicture { get; set; }
+        [Column(AVATAR_URL)]
+        public string AvatarUrl { get; set; }
     }
 }

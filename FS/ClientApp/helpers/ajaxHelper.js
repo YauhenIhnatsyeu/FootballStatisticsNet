@@ -1,4 +1,8 @@
-export default async function fetchUrl(url) {
+export async function fetchUrl(url, requestOptions) {
+    return fetch(url, requestOptions);
+}
+
+export async function fetchFootballUrl(url) {
     const fetchInit = {
         headers: {
             "X-Auth-Token": "22cb5922f71544ee9aea4544d3256e40",

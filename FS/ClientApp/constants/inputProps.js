@@ -39,6 +39,11 @@ const register = {
             maxLength: 20,
         },
     },
+    avatar: {
+        name: "avatar",
+        label: "Profile picture",
+        type: "file",
+    },
 };
 
 export default {

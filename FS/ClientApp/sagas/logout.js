@@ -1,6 +1,6 @@
 import { call } from "redux-saga/effects";
 
-import { logout as logoutUser } from "Helpers/userHelper";
+import { logout as logoutUser } from "Services/userService";
 import { push as pushToHistory } from "Helpers/historyHelper";
 import routePaths from "Constants/routePaths";
 

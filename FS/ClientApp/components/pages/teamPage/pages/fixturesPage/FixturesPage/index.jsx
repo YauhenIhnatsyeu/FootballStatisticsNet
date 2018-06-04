@@ -31,7 +31,13 @@ export default class FixturesPage extends Component {
             return <Loading />;
         }
 
-        const currentFixtureId = this.props.fixtures[this.props.fixtureIndex].id;
+        if (this.props.fixtures.length < 1) {
+            return null;
+        }
+
+        const currentFixtureId = this.props.fixtures[this.props.fixtureIndex]
+            ? this.props.fixtures[this.props.fixtureIndex].id
+            : 0;
 
         return (
             <React.Fragment>

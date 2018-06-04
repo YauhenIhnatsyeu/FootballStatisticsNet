@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using FS.Helpers;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FS
@@ -67,34 +68,20 @@ namespace FS
                 options.Password.RequireNonAlphanumeric = false;
             });
 
+            services.Configure<FormOptions>(options =>
+            {
+                options.ValueLengthLimit = int.MaxValue;
+                options.MultipartBodyLengthLimit = long.MaxValue;
+            });
+
             services.AddAutoMapper();
         }
-
-        private const string CONNECTION_STRING =
-            "Server=localhost;Port=5432;Database=football-statistics;User Id=postgres;Password=password;";
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
-
-            //var optionsBuilder= new DbContextOptionsBuilder<UsersContext>();
-            //optionsBuilder.UseNpgsql(CONNECTION_STRING);
-
-            //using (var dbContext = new UsersContext(optionsBuilder.Options)) {
-            //    foreach (var item in dbContext.Users) {
-            //        Console.WriteLine($"Name {item.Name}");
-            //    }
-            //}
-
-            //app.UseDeveloperExceptionPage();
-            //if (env.IsDevelopment()) {
-            //    app.UseDeveloperExceptionPage();
-            //    app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions {
-            //        HotModuleReplacement = true
-            //    });
-            //}
         }
     }
 }

@@ -24,7 +24,7 @@ export default class AuthBar extends Component {
     )
 
     renderLoggedInAuthBar = () => {
-        const { name } = this.props.user;
+        const { name, avatarUrl } = this.props.user;
         return (
             <div className="auth-bar">
                 <p className="auth-bar__text">
@@ -34,6 +34,7 @@ export default class AuthBar extends Component {
                             : "You're logged in!"
                     }
                 </p>
+                {avatarUrl && <img className="auth-bar__img" src={avatarUrl} alt="" />}
                 {this.renderLink(routePaths.logout, "Log out")}
             </div>
         );
@@ -49,6 +50,7 @@ export default class AuthBar extends Component {
 AuthBar.propTypes = {
     user: PropTypes.shape({
         name: PropTypes.string,
+        avatarUrl: PropTypes.string,
     }),
 };
 

@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 
-import { login as loginUser } from "Helpers/userHelper";
+import { login as loginUser } from "Services/userService";
 
 import { onLoginSucceeded } from "ActionCreators";
 

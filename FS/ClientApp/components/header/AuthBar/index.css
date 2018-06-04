@@ -20,6 +20,11 @@
     box-shadow: 0 2px 3px -0.8px #454545;
 }
 
+.auth-bar__img {
+    width: 3rem;
+    height: 3rem;
+}
+
 .auth-bar__text {
     color: #FFFFFF;
 }

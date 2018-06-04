@@ -37,9 +37,7 @@ export default class LabelInput extends Component {
     validate = (str) => {
         const errorMessage = validate(str, this.props.inputProps.validationOptions);
         if (errorMessage) {
-            this.setState({
-                errorMessage,
-            });
+            this.setState({ errorMessage });
         } else if (this.state.errorMessage) {
             this.setState({
                 errorMessage: null,
@@ -47,11 +45,25 @@ export default class LabelInput extends Component {
         }
     }
 
-    handleDateChange = (e) => {
-        this.setState({
-            value: e.target.value,
-        });
-        this.props.onChange(e);
+    handleChange = (e) => {
+        const {
+            name, type, value, files,
+        } = e.target;
+
+        let valueToReturn = value;
+
+        switch (type) {
+        case "date":
+            this.setState({ value });
+            break;
+        case "file":
+            valueToReturn = files;
+            break;
+        default:
+            break;
+        }
+
+        this.props.onChange(valueToReturn, name);
     }
 
     handleBlur = (e) => {
@@ -76,8 +88,9 @@ export default class LabelInput extends Component {
                         id={inputProps.name}
                         name={inputProps.name}
                         type={inputProps.type}
+                        // if input's type is date, use state to update its value
                         value={this.isDatePicker() ? this.state.value : inputProps.value}
-                        onChange={this.isDatePicker() ? this.handleDateChange : this.props.onChange}
+                        onChange={this.handleChange}
                         onBlur={this.handleBlur}
                     />
                 </label>

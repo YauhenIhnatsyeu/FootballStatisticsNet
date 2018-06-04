@@ -12,28 +12,27 @@ export default class InputForm extends Component {
     constructor(props) {
         super(props);
 
-        const model = {};
+        this.model = {};
 
+        // Filling in model with values from inputProps
         Object.keys(props.inputProps).map((key) => {
-            model[key] = props.inputProps[key].value;
+            this.model[key] = props.inputProps[key].value;
             return null;
         });
 
         this.state = {
-            model,
             errorMessages: [],
         };
     }
 
-    handleChange = (e) => {
-        const { name: inputName, value: inputValue } = e.target;
-        this.state.model[inputName] = inputValue;
+    handleChange = (value, name) => {
+        this.model[name] = value;
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { model } = this.state;
+        const { model } = this;
         const { inputProps, onSubmit } = this.props;
 
         const errorMessages = Object.keys(model).map(key =>

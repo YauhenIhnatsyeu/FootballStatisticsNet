@@ -5,7 +5,9 @@ export default {
     register: "/register",
     login: "/login",
     logout: "/logout",
+    users: "/users/register",
     usersRegister: "/users/register",
+    usersAvatar: "/users/avatar",
     usersLogin: "/users/login",
     usersLogout: "/users/logout",
 };
