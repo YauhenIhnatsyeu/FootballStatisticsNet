@@ -1,10 +1,6 @@
 import { fetchUrl } from "Helpers/ajaxHelper";
+import getCurrentUrl from "Helpers/currentUrlHelper";
 import routePaths from "Constants/routePaths";
-
-function getUsersFetchUrl(usersPath) {
-    const { hostname, port } = window.location;
-    return `http://${hostname}${port ? `:${port}` : ""}${usersPath}`;
-}
 
 function getAvatarRequestOptions(avatar) {
     const body = new FormData();
@@ -29,25 +25,25 @@ function getRegisterRequestOptions(userParam, avatarId) {
 
 export function* uploadAvatar(avatar) {
     return yield fetchUrl(
-        getUsersFetchUrl(routePaths.usersAvatar),
+        getCurrentUrl() + routePaths.usersAvatar,
         getAvatarRequestOptions(avatar),
     );
 }
 
 export function* register(user, avatarId) {
     return yield fetchUrl(
-        getUsersFetchUrl(routePaths.usersRegister),
+        getCurrentUrl() + routePaths.usersRegister,
         getRegisterRequestOptions(user, avatarId),
     );
 }
 
 export function* login(user) {
     return yield fetchUrl(
-        getUsersFetchUrl(routePaths.usersLogin),
+        getCurrentUrl() + routePaths.usersLogin,
         getLoginRequestOptions(user),
     );
 }
 
 export function* logout() {
-    return yield fetchUrl(getUsersFetchUrl(routePaths.usersLogout));
+    return yield fetchUrl(getCurrentUrl() + routePaths.usersLogout);
 }

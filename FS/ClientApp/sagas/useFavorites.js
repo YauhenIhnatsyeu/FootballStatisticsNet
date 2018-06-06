@@ -10,31 +10,31 @@ import {
 export function* getTeamsFromFavorites() {
     try {
         const teams = yield call(getFromFavorites);
-        yield put(onGetTeamsFromFavoritesSucceeded(teams));
+        yield teams && put(onGetTeamsFromFavoritesSucceeded(teams));
     } catch (error) {
         // TODO
-        throw new Error();
+        console.log(error);
     }
 }
 
 export function* addTeamToFavorites(action) {
     try {
         const team = action.payload;
-        yield call(addToFavorites, team);
-        yield call(getTeamsFromFavorites);
+        const result = yield call(addToFavorites, team);
+        yield result && call(getTeamsFromFavorites);
     } catch (error) {
         // TODO
-        throw new Error();
+        console.log(error);
     }
 }
 
 export function* removeTeamFromFavorites(action) {
     try {
         const team = action.payload;
-        yield call(removeFromFavorites, team);
-        yield call(getTeamsFromFavorites);
+        const result = yield call(removeFromFavorites, team);
+        yield result && call(getTeamsFromFavorites);
     } catch (error) {
         // TODO
-        throw new Error();
+        console.log(error);
     }
 }

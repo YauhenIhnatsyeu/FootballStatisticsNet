@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -11,8 +10,6 @@ using CloudinaryDotNet.Actions;
 using FS.Dtos;
 using FS.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -22,18 +19,15 @@ namespace FS.Controllers
     public class UsersController : Controller
     {
         private readonly Cloudinary cloudinary;
-        private readonly UsersContext context;
         private readonly IMapper mapper;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
 
         public UsersController(
-            UsersContext context,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             IMapper mapper)
         {
-            this.context = context;
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.mapper = mapper;
@@ -58,7 +52,8 @@ namespace FS.Controllers
             var avatarHashCode = avatar.GetHashCode();
             var avatarStream = avatar.OpenReadStream();
 
-            var uploadParams = new ImageUploadParams {
+            var uploadParams = new ImageUploadParams
+            {
                 File = new FileDescription($"avatar-{avatarHashCode}", avatarStream)
             };
 
@@ -71,8 +66,8 @@ namespace FS.Controllers
 
         [HttpPost]
         [Route("/users/register")]
-        public async Task<IActionResult> Register([FromBody] UserViewModel userViewModelParam) {
-
+        public async Task<IActionResult> Register([FromBody] UserViewModel userViewModelParam)
+        {
             if (userViewModelParam == null) return BadRequest();
 
             var getAvatarResult = cloudinary.GetResource(userViewModelParam.AvatarId);
@@ -104,7 +99,8 @@ namespace FS.Controllers
 
             if (!result.Succeeded) return BadRequest();
 
-            var claims = new[] {
+            var claims = new[]
+            {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
             };
@@ -125,12 +121,14 @@ namespace FS.Controllers
                 signingCredentials: signingCredentials
             );
 
-            var contextUser = await userManager.FindByNameAsync(user.UserName);
+            var dbUser = await userManager.FindByNameAsync(user.UserName);
 
-            return Ok(new {
-                User = new {
+            return Ok(new
+            {
+                User = new
+                {
                     Name = user.UserName,
-                    contextUser?.AvatarUrl
+                    dbUser?.AvatarUrl
                 },
                 Token = new JwtSecurityTokenHandler().WriteToken(token)
             });
@@ -141,13 +139,6 @@ namespace FS.Controllers
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return Ok();
-        }
-
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("/private")]
-        public IActionResult Private()
-        {
-            return Content("You're there, man");
         }
     }
 }

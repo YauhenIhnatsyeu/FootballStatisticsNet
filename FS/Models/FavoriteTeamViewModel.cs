@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace FS.Models
 {
-    public class TFavoriteTeamsList
+    public class FavoriteTeamViewModel
     {
-        public string Id { get; set; }
         public int TeamId { get; set; }
     }
 }
