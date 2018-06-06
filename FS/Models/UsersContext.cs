@@ -12,5 +12,7 @@ namespace FS.Models
         public UsersContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<TFavoriteTeamsList> FavoriteTeamsLists { get; set; }
     }
 }

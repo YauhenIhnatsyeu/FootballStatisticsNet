@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -11,7 +9,6 @@ using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using FS.Dtos;
-using FS.Migrations;
 using FS.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,19 +16,16 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Http;
 
 namespace FS.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly Cloudinary cloudinary;
         private readonly UsersContext context;
+        private readonly IMapper mapper;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
-        private readonly IMapper mapper;
-
-        private readonly Cloudinary cloudinary;
 
         public UsersController(
             UsersContext context,
@@ -44,21 +38,20 @@ namespace FS.Controllers
             this.userManager = userManager;
             this.mapper = mapper;
 
-            var account = new Account("greatdouble", "186989138943984", "UatKlrq8YqYWThmiwtfS_wQzH4o");
+            var configuration = ConfigurationContainer.Configuration;
+
+            var account = new Account(
+                configuration["Cloudinary:Cloud"],
+                configuration["Cloudinary:ApiKey"],
+                configuration["Cloudinary:ApiSecret"]
+            );
             cloudinary = new Cloudinary(account);
-            //var uploadParams = new ImageUploadParams {
-            //    File = new FileDescription(
-            //        @"C:\Users\yauhen.ihnatsyeu\Downloads\60835_new_york_dual_screen_dual_monitor_new_york_cityscape_dual_screen.jpg"
-            //        //"profile_picture.jpg",
-            //        //new MemoryStream(Encoding.UTF8.GetBytes(userViewModel.ProfilePicture))
-            //    )
-            //};
-            //cloudinary.Upload(uploadParams);
         }
 
         [HttpPost]
         [Route("/users/avatar")]
-        public IActionResult UploadProfilePicture() {
+        public IActionResult UploadProfilePicture()
+        {
             if (HttpContext.Request.Form?.Files?.Count != 1) return BadRequest();
 
             var avatar = HttpContext.Request.Form.Files[0];
@@ -73,13 +66,14 @@ namespace FS.Controllers
 
             if (uploadResult.StatusCode != HttpStatusCode.OK) return BadRequest();
 
-            return Ok(new { AvatarId = uploadResult.PublicId });
+            return Ok(new {AvatarId = uploadResult.PublicId});
         }
 
         [HttpPost]
         [Route("/users/register")]
-        public async Task<IActionResult> Register([FromBody] UserViewModel userViewModelParam)
-        {
+        public async Task<IActionResult> Register([FromBody] UserViewModel userViewModelParam) {
+
+            if (userViewModelParam == null) return BadRequest();
 
             var getAvatarResult = cloudinary.GetResource(userViewModelParam.AvatarId);
 
@@ -102,6 +96,8 @@ namespace FS.Controllers
         public async Task<IActionResult> Login([FromBody] UserViewModel userViewModel)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
+
+            if (userViewModel == null) return BadRequest();
 
             var user = mapper.Map<User>(userViewModel);
             var result = await signInManager.PasswordSignInAsync(user.UserName, userViewModel.Password, false, false);
@@ -129,10 +125,12 @@ namespace FS.Controllers
                 signingCredentials: signingCredentials
             );
 
+            var contextUser = await userManager.FindByNameAsync(user.UserName);
+
             return Ok(new {
                 User = new {
                     Name = user.UserName,
-                    context.Users.Single(u => u.UserName == user.UserName).AvatarUrl,
+                    contextUser?.AvatarUrl
                 },
                 Token = new JwtSecurityTokenHandler().WriteToken(token)
             });

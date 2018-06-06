@@ -12,5 +12,6 @@ namespace FS.Dtos
         public string Password { get; set; }
         public string AvatarId { get; set; }
         public string AvatarUrl { get; set; }
+        public int FavoriteTeamsListId { get; set; }
     }
 }
