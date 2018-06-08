@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -33,7 +34,7 @@ namespace FS.Controllers
             this.mapper = mapper;
 
             var configuration = ConfigurationContainer.Configuration;
-
+            
             var account = new Account(
                 configuration["Cloudinary:Cloud"],
                 configuration["Cloudinary:ApiKey"],

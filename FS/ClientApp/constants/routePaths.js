@@ -15,4 +15,6 @@ export default {
     getFavoriteTeams: "/teams/get",
     addFavoriteTeam: "/teams/add",
     removeFavoriteTeam: "/teams/remove",
+
+    twitterToken: "/twitter/token",
 };
