@@ -13,6 +13,20 @@ namespace FS.Models
         {
         }
 
-        public DbSet<TFavoriteTeamsList> FavoriteTeamsLists { get; set; }
+        public DbSet<TFavoriteTeams> FavoriteTeams { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<TFavoriteTeams>(typeBuilder =>
+                typeBuilder.HasKey(teams => new {Id = teams.UserId, teams.TeamId}));
+
+            builder.Entity<TFavoriteTeams>()
+                .HasOne(teams => teams.User)
+                .WithMany()
+                .HasForeignKey(teams => teams.UserId)
+                .HasConstraintName("FK_UserId");
+        }
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 namespace FS_Server.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FavoriteTeamsController : Controller
     {
         private readonly UsersContext context;
@@ -22,14 +23,13 @@ namespace FS_Server.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("/teams/get")]
         public async Task<IActionResult> GetTeams() {
             User dbUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             var teamIds = new List<int>();
 
-            context.FavoriteTeamsLists
-                .Where(item => item.Id == dbUser.Id)
+            context.FavoriteTeams
+                .Where(item => item.User == dbUser)
                 .ToList()
                 .ForEach(item => teamIds.Add(item.TeamId));
 
@@ -50,18 +50,13 @@ namespace FS_Server.Controllers
 
             User dbUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            var teamToSave = new TFavoriteTeamsList
+            var teamToSave = new TFavoriteTeams
             {
-                Id = dbUser.Id,
+                User = dbUser,
                 TeamId = teamId
             };
 
-            if (await context.FavoriteTeamsLists.FindAsync(teamToSave) != null)
-            {
-                return Ok();
-            }
-
-            context.FavoriteTeamsLists.Add(teamToSave);
+            context.FavoriteTeams.Add(teamToSave);
             context.SaveChanges();
 
             return Ok();
@@ -77,16 +72,12 @@ namespace FS_Server.Controllers
 
             User dbUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            var teamToRemove = new TFavoriteTeamsList {
-                Id = dbUser.Id,
+            var teamToRemove = new TFavoriteTeams {
+                User = dbUser,
                 TeamId = teamId
             };
 
-            if (context.FavoriteTeamsLists.Find(teamToRemove) == null) {
-                return Ok();
-            }
-
-            context.FavoriteTeamsLists.Remove(teamToRemove);
+            context.FavoriteTeams.Remove(teamToRemove);
             context.SaveChanges();
 
             return Ok();

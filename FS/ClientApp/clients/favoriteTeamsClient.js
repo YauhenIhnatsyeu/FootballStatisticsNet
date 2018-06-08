@@ -1,9 +1,23 @@
 import { fetchUrl } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
 import routePaths from "Constants/routePaths";
+import keys from "Constants/keys";
+import { getValue } from "Helpers/localStorageHelper";
+
+function getBearer() {
+    return `Bearer ${getValue(keys.token)}`;
+}
 
 export function* getFavoriteTeams() {
-    return yield fetchUrl(getCurrentUrl() + routePaths.getFavoriteTeams);
+    return yield fetchUrl(
+        getCurrentUrl() + routePaths.getFavoriteTeams,
+        {
+            method: "GET",
+            headers: {
+                Authorization: getBearer(),
+            },
+        },
+    );
 }
 
 export function* addFavoriteTeam(teamId) {
@@ -11,7 +25,11 @@ export function* addFavoriteTeam(teamId) {
         getCurrentUrl() + routePaths.addFavoriteTeam,
         {
             method: "POST",
-            body: { teamId },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: getBearer(),
+            },
+            body: JSON.stringify({ teamId }),
         },
     );
 }
@@ -21,7 +39,11 @@ export function* removeFavoriteTeam(teamId) {
         getCurrentUrl() + routePaths.removeFavoriteTeam,
         {
             method: "DELETE",
-            body: { teamId },
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: getBearer(),
+            },
+            body: JSON.stringify({ teamId }),
         },
     );
 }

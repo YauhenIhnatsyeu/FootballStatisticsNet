@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace FS.Migrations
+namespace FSServer.Migrations
 {
     [DbContext(typeof(UsersContext))]
     partial class UsersContextModelSnapshot : ModelSnapshot
@@ -19,6 +19,17 @@ namespace FS.Migrations
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011");
+
+            modelBuilder.Entity("FS.Models.TFavoriteTeams", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("TeamId");
+
+                    b.HasKey("UserId", "TeamId");
+
+                    b.ToTable("FavoriteTeams");
+                });
 
             modelBuilder.Entity("FS.Models.User", b =>
                 {
@@ -181,6 +192,15 @@ namespace FS.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("FS.Models.TFavoriteTeams", b =>
+                {
+                    b.HasOne("FS.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
