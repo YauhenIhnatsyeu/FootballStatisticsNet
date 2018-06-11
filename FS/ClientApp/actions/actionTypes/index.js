@@ -18,6 +18,8 @@ import favoriteTeamsActionTypes from "./favoriteTeamsActionTypes";
 
 import userActionTypes from "./userActionTypes";
 
+import twitterActionTypes from "./twitterActionTypes";
+
 export default Object.assign(
     {},
     leagueActionTypes,
@@ -30,4 +32,5 @@ export default Object.assign(
     updateDatesActionTypes,
     favoriteTeamsActionTypes,
     userActionTypes,
+    twitterActionTypes,
 );

@@ -7,6 +7,7 @@ const initialState = {
     playersFetchingErrorOccured: false,
     fixturesFetchingErrorOccured: false,
     head2HeadFetchingErrorOccured: false,
+    tweetsSearchingErrorOccured: false,
 };
 
 export default function fetchingErrors(state = initialState, action) {
@@ -28,6 +29,9 @@ export default function fetchingErrors(state = initialState, action) {
 
     case actionTypes.HEAD2HEAD_FETCH_FAILED:
         return { ...state, head2HeadFetchingErrorOccured: true };
+
+    case actionTypes.TWEETS_SEARCH_FAILED:
+        return { ...state, tweetsSearchingErrorOccured: true };
 
     default:
         return state;

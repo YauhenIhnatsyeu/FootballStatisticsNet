@@ -48,7 +48,6 @@ export default class TeamPage extends Component {
                 <div className="team-page__team-item-for-header-container">
                     <TeamItemForHeader
                         team={this.props.team}
-                        defaultTeamPageIndex={this.props.teamPageIndex}
                     />
                 </div>
                 <div className="team-page__info-container">
@@ -85,7 +84,6 @@ TeamPage.propTypes = {
         shortName: PropTypes.string.isRequired,
         squadMarketValue: PropTypes.string,
     }),
-    teamPageIndex: PropTypes.number.isRequired,
 };
 
 TeamPage.defaultProps = {

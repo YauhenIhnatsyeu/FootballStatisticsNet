@@ -5,10 +5,11 @@ import PropTypes from "prop-types";
 import Section from "Pages/teamPage/Section";
 
 import PlayersSection from "PlayersPageSections/playersSection/PlayersSection";
+import TweetsSection from "PlayersPageSections/tweetsSection/TweetsSection";
 
 export default class PlayersPage extends Component {
     render() {
-        const hashtag = this.props.team.shortName
+        const teamName = this.props.team.shortName
             ? this.props.team.shortName.toLowerCase()
             : "football";
 
@@ -24,7 +25,14 @@ export default class PlayersPage extends Component {
                         playersFetchingErrorOccured={this.props.playersFetchingErrorOccured}
                     />
                 </Section>
-                <Section title={`Tweets for tag #${hashtag}`} />
+                <Section title={`Tweets for tag #${teamName}`}>
+                    <TweetsSection
+                        query={`#${teamName}`}
+                        tweets={this.props.tweets}
+                        tweetsSearchingErrorOccured={this.props.tweetsSearchingErrorOccured}
+                        searchTweets={this.props.searchTweets}
+                    />
+                </Section>
             </React.Fragment>
         );
     }
@@ -44,8 +52,12 @@ PlayersPage.propTypes = {
     }).isRequired,
     players: PropTypes.arrayOf(PropTypes.object),
     playersPageIndex: PropTypes.number.isRequired,
+    tweets: PropTypes.arrayOf(PropTypes.object),
+    tweetsSearchingErrorOccured: PropTypes.bool.isRequired,
+    searchTweets: PropTypes.func.isRequired,
 };
 
 PlayersPage.defaultProps = {
     players: null,
+    tweets: null,
 };

@@ -1,0 +1,8 @@
+.tweet-item__title-container {
+    margin-bottom: 0.2rem;
+}
+
+.tweet-item__title {
+    font-size: 1.3rem;
+    font-weight: 500;
+}

@@ -7,14 +7,18 @@ const initialState = {
 
 export default function playersData(state = initialState, action) {
     switch (action.type) {
+    case actionTypes.PLAYERS_FETCH_REQUESTED:
+        return {
+            ...state,
+            player: null,
+            playersPageIndex: initialState.playersPageIndex,
+        };
+
     case actionTypes.PLAYERS_FETCH_SUCCEEDED:
         return { ...state, players: action.payload };
 
     case actionTypes.PLAYERS_PAGE_INDEX_UPDATE:
         return { ...state, playersPageIndex: action.payload };
-
-    case actionTypes.PLAYERS_FETCH_REQUESTED:
-        return { ...state, playersPageIndex: initialState.playersPageIndex };
 
     default:
         return state;

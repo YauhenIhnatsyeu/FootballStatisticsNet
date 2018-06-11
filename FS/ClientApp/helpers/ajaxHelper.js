@@ -1,4 +1,8 @@
 export async function fetchUrl(url, requestOptions) {
+    if (!url) {
+        return null;
+    }
+
     return fetch(url, requestOptions);
 }
 

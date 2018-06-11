@@ -7,6 +7,9 @@ const initialState = {
 
 export default function leagueData(state = initialState, action) {
     switch (action.type) {
+    case actionTypes.LEAGUE_FETCH_REQUESTED:
+        return { ...state, league: null };
+
     case actionTypes.LEAGUE_FETCH_SUCCEEDED:
         return { ...state, league: action.payload };
 

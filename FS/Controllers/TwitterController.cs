@@ -30,13 +30,14 @@ namespace FS.Controllers
         {
             if (!HttpContext.Request.Query.ContainsKey("q")) return BadRequest();
 
-            var url = "https://api.twitter.com/1.1/search/tweets.json?q=" +
-                      $"{HttpContext.Request.Query["q"]}&result_type=popular&count=10";
+            string q = HttpUtility.UrlEncode(HttpContext.Request.Query["q"]);
+            string url = "https://api.twitter.com/1.1/search/tweets.json" +
+                      $"?q={q}&result_type=popular&count=10";
 
             string responseString = await SendApiRequest(url);
             var json = JObject.Parse(responseString);
 
-            return Ok(new {Result = json});
+            return Ok(new {SearchResult = json});
         }
 
         private string GetTokenCredentialsEncoded(string consumerKey, string consumerSecret)

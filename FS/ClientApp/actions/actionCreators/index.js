@@ -61,3 +61,9 @@ export {
     logout,
     onLogoutSucceeded,
 } from "./userActionCreators";
+
+export {
+    searchTweets,
+    onTweetsSearchSucceeded,
+    onTweetsSearchFailed,
+} from "./twitterActionCreators";

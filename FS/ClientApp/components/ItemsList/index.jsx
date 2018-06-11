@@ -15,7 +15,7 @@ export default class ItemsList extends Component {
 
         return (
             <div className="items-list">
-                {this.props.items
+                {this.props.items && this.props.items
                     .map((item, index) => {
                         extraProps[this.props.itemKey] = item;
 

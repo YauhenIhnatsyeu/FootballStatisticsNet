@@ -6,8 +6,7 @@ import { fetchTeam } from "ActionCreators";
 import TeamPage from "Pages/teamPage/TeamPage";
 
 const mapStateToProps = state => ({
-    team: state.teamData.team,
-    teamPageIndex: state.teamData.teamPageIndex,
+    team: state.team,
     teamFetchingErrorOccured: state.fetchingErrors.teamFetchingErrorOccured,
 });
 

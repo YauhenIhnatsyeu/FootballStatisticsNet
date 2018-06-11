@@ -4,6 +4,9 @@ const initialState = null;
 
 export default function teams(state = initialState, action) {
     switch (action.type) {
+    case actionTypes.TEAMS_FETCH_REQUESTED:
+        return null;
+
     case actionTypes.TEAMS_FETCH_SUCCEEDED:
         return action.payload;
 

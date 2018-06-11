@@ -2,12 +2,12 @@ import actionTypes from "ActionTypes";
 
 const initialState = null;
 
-export default function head2Head(state = initialState, action) {
+export default function dates(state = initialState, action) {
     switch (action.type) {
-    case actionTypes.HEAD_2_HEAD_FETCH_REQUESTED:
+    case actionTypes.TWEETS_SEARCH_REQUESTED:
         return null;
 
-    case actionTypes.HEAD_2_HEAD_FETCH_SUCCEEDED:
+    case actionTypes.TWEETS_SEARCH_SUCCEEDED:
         return action.payload;
 
     default:

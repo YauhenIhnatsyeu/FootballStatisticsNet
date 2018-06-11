@@ -10,15 +10,17 @@ export default class PlayerItem extends Component {
     render() {
         return (
             <Item>
-                <p className="player-item__name">
-                    {this.props.player.jerseyNumber
-                        && `${this.props.player.jerseyNumber}. `}
-                    {this.props.player.name}
-                </p>
-                <p>Position: {this.props.player.position}</p>
-                <p>Date of birth: {this.props.player.dateOfBirth}</p>
-                {this.props.player.marketValue
-                    && <p>Market value: {this.props.player.marketValue}</p>}
+                <div className="player-item">
+                    <p className="player-item__title">
+                        {this.props.player.jerseyNumber
+                            && `${this.props.player.jerseyNumber}. `}
+                        {this.props.player.name}
+                    </p>
+                    <p>Position: {this.props.player.position}</p>
+                    <p>Date of birth: {this.props.player.dateOfBirth}</p>
+                    {this.props.player.marketValue
+                        && <p>Market value: {this.props.player.marketValue}</p>}
+                </div>
             </Item>
         );
     }

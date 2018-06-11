@@ -9,7 +9,6 @@ export default function* register(action) {
         const user = action.payload;
 
         const result = yield call(registerUser, user);
-        console.log(result);
         if (result) {
             pushToHistory(routePaths.login);
         }

@@ -10,6 +10,14 @@ const initialState = {
 
 export default function fixturesData(state = initialState, action) {
     switch (action.type) {
+    case actionTypes.FIXTURES_FETCH_REQUESTED:
+        return {
+            ...state,
+            fixtures: null,
+            fixtureIndex: initialState.fixtureIndex,
+            fixturesPageIndex: initialState.fixturesPageIndex,
+        };
+
     case actionTypes.FIXTURES_FETCH_SUCCEEDED:
         return { ...state, fixtures: action.payload };
 
@@ -21,13 +29,6 @@ export default function fixturesData(state = initialState, action) {
             ...state,
             fixtureIndex: action.payload * itemsOnOnePageCount,
             fixturesPageIndex: action.payload,
-        };
-
-    case actionTypes.FIXTURES_FETCH_REQUESTED:
-        return {
-            ...state,
-            fixtureIndex: initialState.fixtureIndex,
-            fixturesPageIndex: initialState.fixturesPageIndex,
         };
 
     default:
