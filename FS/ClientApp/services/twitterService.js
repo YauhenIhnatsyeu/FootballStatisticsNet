@@ -10,7 +10,7 @@ function parseSearchResult(searchResult) {
         name: status.user && status.user.name,
         date: status.created_at,
         isRetweet: status.retweeted_status !== undefined,
-        retweetName: status.retweeted_status && status.retweeted_status.user && status.retweeted_status.name,
+        retweetName: status.retweeted_status && status.retweeted_status.user && status.retweeted_status.user.name,
         retweetDate: status.retweeted_status && status.retweeted_status.created_at,
         text: status.text,
     }));
