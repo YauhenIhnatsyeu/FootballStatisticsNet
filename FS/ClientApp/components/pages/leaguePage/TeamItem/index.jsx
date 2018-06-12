@@ -38,13 +38,16 @@ export default class TeamItem extends Component {
                             <p className="team-item__name">{this.props.team.name}</p>
                         </Link>
                         <p>Short name: {this.props.team.shortName}</p>
-                        {
-                            this.props.team.squadMarketValue &&
-                            <p>Squad market value: {this.props.team.squadMarketValue}</p>
-                        }
-                        <button className="team-item__button" onClick={this.handleButtonClick}>
-                            {this.isThisTeamFavorite() ? "Remove" : "Add"} team to favorites
-                        </button>
+
+                        {this.props.team.squadMarketValue
+                            && <p>Squad market value: {this.props.team.squadMarketValue}</p>}
+
+                        {this.props.loggedIn
+                        && (
+                            <button className="team-item__button" onClick={this.handleButtonClick}>
+                                {this.isThisTeamFavorite() ? "Remove" : "Add"} team to favorites
+                            </button>
+                        )}
                     </div>
                 </div>
             </Item>
@@ -63,6 +66,7 @@ TeamItem.propTypes = {
     favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
     removeTeamFromFavorites: PropTypes.func.isRequired,
     addTeamToFavorites: PropTypes.func.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
 };
 
 TeamItem.defaultProps = {

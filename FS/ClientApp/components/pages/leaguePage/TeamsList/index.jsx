@@ -11,7 +11,9 @@ import "./index.css";
 
 export default class TeamsList extends Component {
     componentDidMount() {
-        this.props.getTeamsFromFavorites();
+        if (this.props.loggedIn) {
+            this.props.getTeamsFromFavorites();
+        }
     }
 
     render() {
@@ -33,6 +35,7 @@ export default class TeamsList extends Component {
                                 favoriteTeams={this.props.favoriteTeams}
                                 addTeamToFavorites={this.props.addTeamToFavorites}
                                 removeTeamFromFavorites={this.props.removeTeamFromFavorites}
+                                loggedIn={this.props.loggedIn}
                             />
                         </div>
                     ))
@@ -49,6 +52,7 @@ TeamsList.propTypes = {
     favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
     removeTeamFromFavorites: PropTypes.func.isRequired,
     addTeamToFavorites: PropTypes.func.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
 };
 
 TeamsList.defaultProps = {

@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
     teams: state.teams,
     teamsFetchingErrorOccured: state.fetchingErrors.teamsFetchingErrorOccured,
     favoriteTeams: state.favoriteTeams,
+    loggedIn: state.user !== null,
 });
 
 const mapDispatchToProps = dispatch =>

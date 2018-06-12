@@ -43,6 +43,7 @@ export default class LeaguePage extends Component {
                         favoriteTeams={this.props.favoriteTeams}
                         addTeamToFavorites={this.props.addTeamToFavorites}
                         removeTeamFromFavorites={this.props.removeTeamFromFavorites}
+                        loggedIn={this.props.loggedIn}
                     />
                 </div>
             </React.Fragment>
@@ -60,6 +61,7 @@ LeaguePage.propTypes = {
     favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
     removeTeamFromFavorites: PropTypes.func.isRequired,
     addTeamToFavorites: PropTypes.func.isRequired,
+    loggedIn: PropTypes.bool.isRequired,
 };
 
 LeaguePage.defaultProps = {
