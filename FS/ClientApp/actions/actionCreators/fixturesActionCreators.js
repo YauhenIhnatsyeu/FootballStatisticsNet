@@ -21,9 +21,9 @@ export function onFixturesFetchFailed(error) {
     };
 }
 
-export function updateFixtureIndex(index) {
+export function updateCurrentFixtureId(id) {
     return {
-        type: actionTypes.FIXTURE_INDEX_UPDATE,
-        payload: index,
+        type: actionTypes.CURRENT_FIXTURE_ID_UPDATE,
+        payload: id,
     };
 }

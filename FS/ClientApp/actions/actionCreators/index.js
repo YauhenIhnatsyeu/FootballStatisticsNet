@@ -27,7 +27,7 @@ export {
     fetchFixtures,
     onFixturesFetchSucceeded,
     onFixturesFetchFailed,
-    updateFixtureIndex,
+    updateCurrentFixtureId,
 } from "./fixturesActionCreators";
 
 export {

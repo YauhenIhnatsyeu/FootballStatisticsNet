@@ -4,7 +4,7 @@ import itemsOnOnePageCount from "Constants/itemsOnOnePageCount";
 
 const initialState = {
     fixtures: null,
-    fixtureIndex: 0,
+    currentFixtureId: 0,
     fixturesPageIndex: 0,
 };
 
@@ -13,23 +13,36 @@ export default function fixturesData(state = initialState, action) {
     case actionTypes.FIXTURES_FETCH_REQUESTED:
         return {
             ...state,
-            fixtures: null,
-            fixtureIndex: initialState.fixtureIndex,
+            fixtures: initialState.fixtures,
             fixturesPageIndex: initialState.fixturesPageIndex,
         };
 
-    case actionTypes.FIXTURES_FETCH_SUCCEEDED:
-        return { ...state, fixtures: action.payload };
+    case actionTypes.FIXTURES_FETCH_SUCCEEDED: {
+        const currentFixtureId = action.payload.length > 0
+            ? action.payload[0].id
+            : initialState.currentFixtureId;
 
-    case actionTypes.FIXTURE_INDEX_UPDATE:
-        return { ...state, fixtureIndex: action.payload };
-
-    case actionTypes.FIXTURES_PAGE_INDEX_UPDATE:
         return {
             ...state,
-            fixtureIndex: action.payload * itemsOnOnePageCount,
+            fixtures: action.payload,
+            currentFixtureId,
+        };
+    }
+
+    case actionTypes.CURRENT_FIXTURE_ID_UPDATE:
+        return { ...state, currentFixtureId: action.payload };
+
+    case actionTypes.FIXTURES_PAGE_INDEX_UPDATE: {
+        const currentFixtureId = state.fixtures.length >= action.payload * itemsOnOnePageCount
+            ? state.fixtures[action.payload * itemsOnOnePageCount].id
+            : initialState.currentFixtureId;
+
+        return {
+            ...state,
+            currentFixtureId,
             fixturesPageIndex: action.payload,
         };
+    }
 
     default:
         return state;

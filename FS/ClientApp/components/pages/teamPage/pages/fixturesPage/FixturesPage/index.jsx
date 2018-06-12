@@ -2,9 +2,6 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Loading from "Components/messages/Loading";
-import Error from "Components/messages/Error";
-
 import Section from "Pages/teamPage/Section";
 
 import FixturesSection from "FixturesPageSections/fixturesSection/FixturesSection";
@@ -23,43 +20,32 @@ export default class FixturesPage extends Component {
     }
 
     render() {
-        if (this.props.fixturesFetchingErrorOccured) {
-            return <Error />;
-        }
-
-        if (!this.props.fixtures) {
-            return <Loading />;
-        }
-
-        if (this.props.fixtures.length < 1) {
-            return null;
-        }
-
-        const currentFixtureId = this.props.fixtures[this.props.fixtureIndex]
-            ? this.props.fixtures[this.props.fixtureIndex].id
-            : 0;
-
         return (
             <React.Fragment>
                 <Section title="Fixtures">
                     <FixturesSection
                         fixtures={this.props.fixtures}
-                        currentFixtureId={currentFixtureId}
+                        fixturesFetchingErrorOccured={this.props.fixturesFetchingErrorOccured}
+                        currentFixtureId={this.props.currentFixtureId}
                         fixturesPageIndex={this.props.fixturesPageIndex}
                         dates={this.props.dates}
-                        updateFixtureIndex={this.props.updateFixtureIndex}
+                        updateCurrentFixtureId={this.props.updateCurrentFixtureId}
                         updateFixturesPageIndex={this.props.updateFixturesPageIndex}
                         updateDates={this.props.updateDates}
                     />
                 </Section>
-                <Section>
-                    <DetailsSection
-                        currentFixtureId={currentFixtureId}
-                        head2Head={this.props.head2Head}
-                        head2HeadFetchingErrorOccured={this.props.head2HeadFetchingErrorOccured}
-                        fetchHead2Head={this.props.fetchHead2Head}
-                    />
-                </Section>
+
+                {(!this.props.fixturesFetchingErrorOccured && this.props.fixtures && this.props.fixtures.length > 0)
+                && (
+                    <Section>
+                        <DetailsSection
+                            currentFixtureId={this.props.currentFixtureId}
+                            head2Head={this.props.head2Head}
+                            head2HeadFetchingErrorOccured={this.props.head2HeadFetchingErrorOccured}
+                            fetchHead2Head={this.props.fetchHead2Head}
+                        />
+                    </Section>
+                )}
             </React.Fragment>
         );
     }
@@ -68,7 +54,7 @@ export default class FixturesPage extends Component {
 FixturesPage.propTypes = {
     teamId: PropTypes.number.isRequired,
     fixtures: PropTypes.arrayOf(PropTypes.object),
-    fixtureIndex: PropTypes.number.isRequired,
+    currentFixtureId: PropTypes.number.isRequired,
     fixturesPageIndex: PropTypes.number.isRequired,
     head2Head: PropTypes.shape({
         fixture: PropTypes.shape({}).isRequired,
@@ -83,7 +69,7 @@ FixturesPage.propTypes = {
         from: PropTypes.object.isRequired,
         to: PropTypes.object,
     }).isRequired,
-    updateFixtureIndex: PropTypes.func.isRequired,
+    updateCurrentFixtureId: PropTypes.func.isRequired,
     updateFixturesPageIndex: PropTypes.func.isRequired,
     updateDates: PropTypes.func.isRequired,
 };
