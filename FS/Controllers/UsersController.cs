@@ -9,6 +9,7 @@ using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using FS.Dtos;
+using FS.Helpers;
 using FS.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -35,12 +36,11 @@ namespace FS.Controllers
 
             var configuration = ConfigurationContainer.Configuration;
             
-            var account = new Account(
+            cloudinary = CloudinaryHelper.GetCloudinary(
                 configuration["Cloudinary:Cloud"],
                 configuration["Cloudinary:ApiKey"],
                 configuration["Cloudinary:ApiSecret"]
             );
-            cloudinary = new Cloudinary(account);
         }
 
         [HttpPost]
@@ -53,12 +53,7 @@ namespace FS.Controllers
             var avatarHashCode = avatar.GetHashCode();
             var avatarStream = avatar.OpenReadStream();
 
-            var uploadParams = new ImageUploadParams
-            {
-                File = new FileDescription($"avatar-{avatarHashCode}", avatarStream)
-            };
-
-            var uploadResult = cloudinary.Upload(uploadParams);
+            var uploadResult = CloudinaryHelper.UploadFile(cloudinary, $"avatar-{avatarHashCode}", avatarStream);
 
             if (uploadResult.StatusCode != HttpStatusCode.OK) return BadRequest();
 
@@ -71,9 +66,10 @@ namespace FS.Controllers
         {
             if (userViewModelParam == null) return BadRequest();
 
-            var getAvatarResult = cloudinary.GetResource(userViewModelParam.AvatarId);
-
-            if (getAvatarResult.StatusCode != HttpStatusCode.OK) return BadRequest();
+            if (!CloudinaryHelper.Exists(cloudinary, userViewModelParam.AvatarId, out var getAvatarResult))
+            {
+                return BadRequest();
+            }
 
             var userViewModel = userViewModelParam;
 

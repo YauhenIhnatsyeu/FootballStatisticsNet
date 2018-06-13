@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace FSServer.Migrations
+namespace FS.Migrations
 {
     [DbContext(typeof(UsersContext))]
     [Migration("20180607060054_Initial")]
