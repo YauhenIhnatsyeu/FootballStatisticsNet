@@ -25,7 +25,7 @@ export default class Main extends Component {
                                     key={index}
                                 />
                             ))}
-                            <Redirect to={routePaths.register} />
+                            <Redirect to={routePaths.teams} />
                         </Switch>
                     </div>
                 </div>
