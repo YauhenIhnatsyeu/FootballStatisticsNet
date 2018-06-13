@@ -1,20 +1,14 @@
-﻿using System;
-using System.ComponentModel;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using FS.Dtos;
 using FS.Helpers;
 using FS.Models;
+using FS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace FS.Controllers
 {
@@ -35,7 +29,7 @@ namespace FS.Controllers
             this.mapper = mapper;
 
             var configuration = ConfigurationContainer.Configuration;
-            
+
             cloudinary = CloudinaryHelper.GetCloudinary(
                 configuration["Cloudinary:Cloud"],
                 configuration["Cloudinary:ApiKey"],
@@ -67,9 +61,7 @@ namespace FS.Controllers
             if (userViewModelParam == null) return BadRequest();
 
             if (!CloudinaryHelper.Exists(cloudinary, userViewModelParam.AvatarId, out var getAvatarResult))
-            {
                 return BadRequest();
-            }
 
             var userViewModel = userViewModelParam;
 
@@ -92,31 +84,12 @@ namespace FS.Controllers
             if (userViewModel == null) return BadRequest();
 
             var user = mapper.Map<User>(userViewModel);
-            var result = await signInManager.PasswordSignInAsync(user.UserName, userViewModel.Password, false, false);
+            var signInResult =
+                await signInManager.PasswordSignInAsync(user.UserName, userViewModel.Password, false, false);
 
-            if (!result.Succeeded) return BadRequest();
+            if (!signInResult.Succeeded) return BadRequest();
 
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
-            };
-
-            var configuration = ConfigurationContainer.Configuration;
-            var secretKey = configuration["Jwt:SecretKey"];
-
-            var signingCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-                SecurityAlgorithms.HmacSha256
-            );
-
-            var token = new JwtSecurityToken(
-                configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMonths(3),
-                signingCredentials: signingCredentials
-            );
+            string token = JWTService.GetToken(user.UserName);
 
             var dbUser = await userManager.FindByNameAsync(user.UserName);
 
@@ -127,7 +100,7 @@ namespace FS.Controllers
                     Name = user.UserName,
                     dbUser?.AvatarUrl
                 },
-                Token = new JwtSecurityTokenHandler().WriteToken(token)
+                Token = token
             });
         }
 
