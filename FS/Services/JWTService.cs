@@ -5,12 +5,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FS.Helpers;
+using FS.Interfaces;
 
 namespace FS.Services
 {
-    public static class JWTService
+    public class JWTService : IJWTService
     {
-        public static string GetToken(string UserName)
+        public string GetToken(string UserName)
         {
             Claim[] claims =
             {

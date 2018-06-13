@@ -15,6 +15,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using FS.Helpers;
+using FS.Interfaces;
+using FS.Services;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.IdentityModel.Tokens;
 
@@ -75,6 +77,9 @@ namespace FS
             });
 
             services.AddAutoMapper();
+
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IJWTService, JWTService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -4,8 +4,8 @@ using AutoMapper;
 using CloudinaryDotNet;
 using FS.Dtos;
 using FS.Helpers;
+using FS.Interfaces;
 using FS.Models;
-using FS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +18,18 @@ namespace FS.Controllers
         private readonly IMapper mapper;
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> userManager;
+        private readonly IUserService userService;
 
         public UsersController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
-            IMapper mapper)
+            IMapper mapper,
+            IUserService userService)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.mapper = mapper;
+            this.userService = userService;
 
             var configuration = ConfigurationContainer.Configuration;
 
@@ -68,9 +71,8 @@ namespace FS.Controllers
             userViewModel.AvatarUrl = getAvatarResult.Url;
 
             var user = mapper.Map<User>(userViewModel);
-            var result = await userManager.CreateAsync(user, userViewModel.Password);
 
-            return result.Succeeded
+            return await userService.CreateAsync(user, userViewModel.Password)
                 ? (IActionResult) Ok()
                 : BadRequest();
         }
@@ -83,23 +85,16 @@ namespace FS.Controllers
 
             if (userViewModel == null) return BadRequest();
 
-            var user = mapper.Map<User>(userViewModel);
-            var signInResult =
-                await signInManager.PasswordSignInAsync(user.UserName, userViewModel.Password, false, false);
+            User user = mapper.Map<User>(userViewModel);
 
-            if (!signInResult.Succeeded) return BadRequest();
+            if (!await userService.SignInAsync(user.UserName, userViewModel.Password, out string token))
+                return BadRequest();
 
-            string token = JWTService.GetToken(user.UserName);
-
-            var dbUser = await userManager.FindByNameAsync(user.UserName);
+            User dbUser = await userManager.FindByNameAsync(user.UserName);
 
             return Ok(new
             {
-                User = new
-                {
-                    Name = user.UserName,
-                    dbUser?.AvatarUrl
-                },
+                User = new {Name = user.UserName, dbUser?.AvatarUrl},
                 Token = token
             });
         }
