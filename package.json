@@ -1,9 +1,14 @@
 {
   "name": "football",
   "version": "1.0.0",
+  "engines": {
+    "node": "9.5.0",
+    "npm": "5.8.0"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "webpack",
     "build": "webpack --mode development",
     "watch": "webpack --mode development --watch --hot --history-api-fallback",
     "server": "webpack-dev-server --mode development --inline --hot --history-api-fallback",
@@ -55,7 +60,6 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "redux-saga": "^0.16.0",
-    "sequelize": "^4.37.6"
+    "redux-saga": "^0.16.0"
   }
 }
