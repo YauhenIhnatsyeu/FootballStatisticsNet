@@ -1,12 +1,8 @@
 import routePaths from "Constants/routePaths";
 import keys from "Constants/keys";
+import getCurrentUrl from "Helpers/currentUrlHelper";
 import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 import { setValue, setJSONValue, removeValue } from "Helpers/localStorageHelper";
-
-function getUsersFetchUrl(usersPath) {
-    const { hostname, port } = window.location;
-    return `http://${hostname}${port ? `:${port}` : ""}${usersPath}`;
-}
 
 export function* register(user) {
     const requestOptions = {
@@ -15,7 +11,7 @@ export function* register(user) {
         body: JSON.stringify(user),
     };
 
-    const fetchUrl = getUsersFetchUrl(routePaths.usersRegister);
+    const fetchUrl = getCurrentUrl() + routePaths.usersRegister;
 
     const response = yield fetch(fetchUrl, requestOptions);
     return response.ok;
@@ -42,13 +38,13 @@ export function* login(user) {
         body: JSON.stringify(user),
     };
 
-    const fetchUrl = getUsersFetchUrl(routePaths.usersLogin);
+    const fetchUrl = getCurrentUrl() + routePaths.usersLogin;
 
     return yield fetchAndHandleLogin(fetchUrl, requestOptions);
 }
 
 export function* logout() {
-    const fetchUrl = getUsersFetchUrl(routePaths.usersLogout);
+    const fetchUrl = getCurrentUrl() + routePaths.usersLogout;
 
     yield fetch(fetchUrl);
 
