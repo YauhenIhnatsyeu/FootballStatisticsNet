@@ -60,6 +60,12 @@ namespace FS
                     };
                 });
 
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 5001;
+            });
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -90,13 +96,17 @@ namespace FS
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            //app.UseHsts();
+            if (env.IsDevelopment()) {
+                app.UseDeveloperExceptionPage();
+            } else {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
+
             app.UseMvc();
-            app.UseCookiePolicy();
         }
     }
 }
