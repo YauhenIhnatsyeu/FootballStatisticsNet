@@ -9,6 +9,7 @@ using FS.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace FS.Controllers
 {
@@ -24,14 +25,13 @@ namespace FS.Controllers
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             IMapper mapper,
-            IUserService userService)
+            IUserService userService,
+            IConfiguration configuration)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.mapper = mapper;
             this.userService = userService;
-
-            var configuration = ConfigurationContainer.Configuration;
 
             cloudinary = CloudinaryHelper.GetCloudinary(
                 configuration["Cloudinary:Cloud"],
@@ -68,7 +68,7 @@ namespace FS.Controllers
 
             var userViewModel = userViewModelParam;
 
-            userViewModel.AvatarUrl = getAvatarResult.Url;
+            userViewModel.AvatarUrl = getAvatarResult.SecureUrl;
 
             var user = mapper.Map<User>(userViewModel);
 

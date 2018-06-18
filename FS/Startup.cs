@@ -24,19 +24,15 @@ namespace FS
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", false, true)
-                .AddEnvironmentVariables();
+        private readonly IConfiguration configuration;
 
-            ConfigurationContainer.Configuration = builder.Build();
+        public Startup(IConfiguration configuration)
+        {
+            this.configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var configuration = ConfigurationContainer.Configuration;
             var connectionString = configuration["Database:ConnectionString"];
             var secretKey = configuration["Jwt:SecretKey"];
 

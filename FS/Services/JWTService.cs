@@ -6,11 +6,19 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using FS.Helpers;
 using FS.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace FS.Services
 {
     public class JWTService : IJWTService
     {
+        private readonly IConfiguration configuration;
+
+        public JWTService(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         public string GetToken(string UserName)
         {
             Claim[] claims =
@@ -18,8 +26,6 @@ namespace FS.Services
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
                 new Claim(JwtRegisteredClaimNames.UniqueName, UserName)
             };
-
-            var configuration = ConfigurationContainer.Configuration;
 
             return JWTHelper.GetTokenAsString(
                 configuration["Jwt:SecretKey"],

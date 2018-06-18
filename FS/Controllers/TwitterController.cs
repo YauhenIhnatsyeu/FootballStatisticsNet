@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
 namespace FS.Controllers
@@ -14,9 +15,8 @@ namespace FS.Controllers
     {
         private readonly string token;
 
-        public TwitterController()
+        public TwitterController(IConfiguration configuration)
         {
-            var configuration = ConfigurationContainer.Configuration;
             string consumerKey = configuration["Twitter:ConsumerKey"];
             string consumerSecret = configuration["Twitter:ConsumerSecret"];
 
