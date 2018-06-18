@@ -7,8 +7,6 @@ import { Provider } from "react-redux";
 
 import App from "Components/App";
 
-import saveTwitterTokenToLocalStorage from "Services/twitterService";
-
 import "Css/reset.css";
 import "Css/wrapper.css";
 import "Css/font.css";

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FS.Models;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,6 +17,7 @@ using FS.Helpers;
 using FS.Interfaces;
 using FS.Services;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FS
@@ -60,7 +60,8 @@ namespace FS
                     };
                 });
 
-            services.AddMvc();
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -76,6 +77,11 @@ namespace FS
                 options.MultipartBodyLengthLimit = long.MaxValue;
             });
 
+            services.Configure<CookiePolicyOptions>(options => {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddAutoMapper();
 
             services.AddTransient<IUserService, UserService>();
@@ -84,9 +90,13 @@ namespace FS
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //app.UseHsts();
+
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMvc();
+            app.UseCookiePolicy();
         }
     }
 }
