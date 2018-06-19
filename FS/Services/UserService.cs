@@ -38,5 +38,10 @@ namespace FS.Services
                 : null;
             return signInResult;
         }
+
+        public Task<User> FindByNameAsync(string userName)
+        {
+            return userManager.FindByNameAsync(userName);
+        }
     }
 }

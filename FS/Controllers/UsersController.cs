@@ -6,6 +6,7 @@ using FS.Dtos;
 using FS.Helpers;
 using FS.Interfaces;
 using FS.Models;
+using FS.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,29 +16,19 @@ namespace FS.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly Cloudinary cloudinary;
         private readonly IMapper mapper;
-        private readonly SignInManager<User> signInManager;
-        private readonly UserManager<User> userManager;
         private readonly IUserService userService;
+        private readonly ICloudinaryService cloudinaryService;
 
         public UsersController(
-            SignInManager<User> signInManager,
-            UserManager<User> userManager,
             IMapper mapper,
             IUserService userService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ICloudinaryService cloudinaryService)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
             this.mapper = mapper;
             this.userService = userService;
-
-            cloudinary = CloudinaryHelper.GetCloudinary(
-                configuration["Cloudinary:Cloud"],
-                configuration["Cloudinary:ApiKey"],
-                configuration["Cloudinary:ApiSecret"]
-            );
+            this.cloudinaryService = cloudinaryService;
         }
 
         [HttpPost]
@@ -50,7 +41,7 @@ namespace FS.Controllers
             var avatarHashCode = avatar.GetHashCode();
             var avatarStream = avatar.OpenReadStream();
 
-            var uploadResult = CloudinaryHelper.UploadFile(cloudinary, $"avatar-{avatarHashCode}", avatarStream);
+            var uploadResult = cloudinaryService.UploadFile($"avatar-{avatarHashCode}", avatarStream);
 
             if (uploadResult.StatusCode != HttpStatusCode.OK) return BadRequest();
 
@@ -63,7 +54,7 @@ namespace FS.Controllers
         {
             if (userViewModelParam == null) return BadRequest();
 
-            if (!CloudinaryHelper.Exists(cloudinary, userViewModelParam.AvatarId, out var getAvatarResult))
+            if (!cloudinaryService.Exists(userViewModelParam.AvatarId, out var getAvatarResult))
                 return BadRequest();
 
             var userViewModel = userViewModelParam;
@@ -90,7 +81,7 @@ namespace FS.Controllers
             if (!await userService.SignInAsync(user.UserName, userViewModel.Password, out string token))
                 return BadRequest();
 
-            User dbUser = await userManager.FindByNameAsync(user.UserName);
+            User dbUser = await userService.FindByNameAsync(user.UserName);
 
             return Ok(new
             {

@@ -12,5 +12,6 @@ namespace FS.Interfaces
         Task<bool> CreateAsync(User user, string password);
         Task<bool> SignInAsync(string userName, string password);
         Task<bool> SignInAsync(string userName, string password, out string token);
+        Task<User> FindByNameAsync(string userName);
     }
 }
