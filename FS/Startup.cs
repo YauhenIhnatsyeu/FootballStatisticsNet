@@ -88,6 +88,7 @@ namespace FS
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<ITwitterService, TwitterService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
