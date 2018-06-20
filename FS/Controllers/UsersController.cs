@@ -1,9 +1,7 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using CloudinaryDotNet;
 using FS.Dtos;
-using FS.Helpers;
 using FS.Interfaces;
 using FS.Models;
 using FS.Services;
@@ -16,9 +14,9 @@ namespace FS.Controllers
 {
     public class UsersController : Controller
     {
+        private readonly ICloudinaryService cloudinaryService;
         private readonly IMapper mapper;
         private readonly IUserService userService;
-        private readonly ICloudinaryService cloudinaryService;
 
         public UsersController(
             IMapper mapper,
@@ -33,9 +31,14 @@ namespace FS.Controllers
 
         [HttpPost]
         [Route("/users/avatar")]
-        public IActionResult UploadProfilePicture()
+        public IActionResult UploadAvatar()
         {
-            if (HttpContext.Request.Form?.Files?.Count != 1) return BadRequest();
+            if (HttpContext.Request.Form == null)
+                return BadRequest();
+            if (HttpContext.Request.Form.Files == null)
+                return BadRequest();
+            if (HttpContext.Request.Form.Files.Count != 1)
+                return BadRequest();
 
             var avatar = HttpContext.Request.Form.Files[0];
             var avatarHashCode = avatar.GetHashCode();
@@ -43,7 +46,10 @@ namespace FS.Controllers
 
             var uploadResult = cloudinaryService.UploadFile($"avatar-{avatarHashCode}", avatarStream);
 
-            if (uploadResult.StatusCode != HttpStatusCode.OK) return BadRequest();
+            if (uploadResult.StatusCode != HttpStatusCode.OK)
+            {
+                return BadRequest();
+            }
 
             return Ok(new {AvatarId = uploadResult.PublicId});
         }
@@ -52,10 +58,15 @@ namespace FS.Controllers
         [Route("/users/register")]
         public async Task<IActionResult> Register([FromBody] UserViewModel userViewModelParam)
         {
-            if (userViewModelParam == null) return BadRequest();
+            if (userViewModelParam == null)
+            {
+                return BadRequest();
+            }
 
             if (!cloudinaryService.Exists(userViewModelParam.AvatarId, out var getAvatarResult))
+            {
                 return BadRequest();
+            }
 
             var userViewModel = userViewModelParam;
 
@@ -74,12 +85,17 @@ namespace FS.Controllers
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
-            if (userViewModel == null) return BadRequest();
+            if (userViewModel == null)
+            {
+                return BadRequest();
+            }
 
             User user = mapper.Map<User>(userViewModel);
 
             if (!await userService.SignInAsync(user.UserName, userViewModel.Password, out string token))
+            {
                 return BadRequest();
+            }
 
             User dbUser = await userService.FindByNameAsync(user.UserName);
 

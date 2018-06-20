@@ -33,13 +33,19 @@ namespace FS.Services
                     TwitterHelper.GetAuthorizationHttpContent()
                 );
 
-                if (!response.IsSuccessStatusCode) return null;
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
 
                 string respose = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(respose);
                 string tokenKey = configuration["Twitter:TokenKey"];
 
-                if (!json.ContainsKey(tokenKey)) return null;
+                if (!json.ContainsKey(tokenKey))
+                {
+                    return null;
+                }
 
                 return json[tokenKey].ToString();
             }
@@ -47,7 +53,10 @@ namespace FS.Services
 
         public async Task<string> SendApiRequestAsync(string url)
         {
-            if (url == null || token == null) return null;
+            if (url == null || token == null)
+            {
+                return null;
+            }
 
             using (var httpClient = TwitterHelper.GetAuthenticationHttpClient(token))
             {

@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Extensions.Internal;
 
 namespace FS.Controllers
 {
@@ -24,14 +23,18 @@ namespace FS.Controllers
 
         [HttpGet]
         [Route("/teams/get")]
-        public async Task<IActionResult> GetTeams() {
+        public async Task<IActionResult> GetTeams()
+        {
             User dbUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
             var teamIds = new List<int>();
+            IEnumerable<FavoriteTeam> favoriteTeams = context.FavoriteTeams
+                .Where(item => item.User == dbUser);
 
-            context.FavoriteTeams
-                .Where(item => item.User == dbUser)
-                .ToList()
-                .ForEach(item => teamIds.Add(item.TeamId));
+            foreach (var item in favoriteTeams)
+            {
+                context.Entry(item).Reference(favoriteTeam => favoriteTeam.Team).Load();
+                teamIds.Add(item.Team.Code);
+            }
 
             return Ok(new
             {
@@ -44,19 +47,27 @@ namespace FS.Controllers
         [Route("/teams/add")]
         public async Task<IActionResult> AddTeam([FromBody] FavoriteTeamViewModel favoriteTeamViewModel)
         {
-            if (favoriteTeamViewModel == null) return BadRequest();
+            if (favoriteTeamViewModel == null)
+            {
+                return BadRequest();
+            }
 
             int teamId = favoriteTeamViewModel.TeamId;
-
             User dbUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            var teamToSave = new TFavoriteTeams
+            var favoriteTeamToSave = new FavoriteTeam
             {
                 User = dbUser,
-                TeamId = teamId
+                Team = context.Teams.Single(team => team.Code == teamId)
+                       ?? new Team {Code = teamId}
             };
 
-            context.FavoriteTeams.Add(teamToSave);
+            if (context.FavoriteTeams.Contains(favoriteTeamToSave))
+            {
+                return Ok();
+            }
+
+            context.FavoriteTeams.Add(favoriteTeamToSave);
             context.SaveChanges();
 
             return Ok();
@@ -65,16 +76,26 @@ namespace FS.Controllers
         [HttpDelete]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("/teams/remove")]
-        public async Task<IActionResult> RemoveTeam([FromBody] FavoriteTeamViewModel favoriteTeamViewModel) {
-            if (favoriteTeamViewModel == null) return BadRequest();
+        public async Task<IActionResult> RemoveTeam([FromBody] FavoriteTeamViewModel favoriteTeamViewModel)
+        {
+            if (favoriteTeamViewModel == null)
+            {
+                return BadRequest();
+            }
 
             int teamId = favoriteTeamViewModel.TeamId;
-
             User dbUser = await userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            Team team = context.Teams.Single(t => t.Code == teamId);
 
-            var teamToRemove = new TFavoriteTeams {
+            if (team == null)
+            {
+                return BadRequest();
+            }
+
+            var teamToRemove = new FavoriteTeam
+            {
                 User = dbUser,
-                TeamId = teamId
+                Team = team
             };
 
             context.FavoriteTeams.Remove(teamToRemove);
