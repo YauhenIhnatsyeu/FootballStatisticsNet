@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FS.Models;
+using FS.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +22,7 @@ namespace FS.Controllers
 
         [HttpPost]
         [Route("/funclubs/create")]
-        public IActionResult Create()
+        public IActionResult Create([FromBody] FunClubViewModel funClubViewModel)
         {
             return Ok();
         }

@@ -30,31 +30,6 @@ namespace FS.Controllers
         }
 
         [HttpPost]
-        [Route("/users/avatar")]
-        public IActionResult UploadAvatar()
-        {
-            if (HttpContext.Request.Form == null)
-                return BadRequest();
-            if (HttpContext.Request.Form.Files == null)
-                return BadRequest();
-            if (HttpContext.Request.Form.Files.Count != 1)
-                return BadRequest();
-
-            var avatar = HttpContext.Request.Form.Files[0];
-            var avatarHashCode = avatar.GetHashCode();
-            var avatarStream = avatar.OpenReadStream();
-
-            var uploadResult = cloudinaryService.UploadFile($"avatar-{avatarHashCode}", avatarStream);
-
-            if (uploadResult.StatusCode != HttpStatusCode.OK)
-            {
-                return BadRequest();
-            }
-
-            return Ok(new {AvatarId = uploadResult.PublicId});
-        }
-
-        [HttpPost]
         [Route("/users/register")]
         public async Task<IActionResult> Register([FromBody] UserViewModel userViewModelParam)
         {

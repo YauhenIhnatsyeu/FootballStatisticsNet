@@ -17,4 +17,6 @@ export default {
     removeFavoriteTeam: "/teams/remove",
 
     searchTweets: "/twitter/search",
+
+    funClubsAvatar: "/funclubs/avatar",
 };
