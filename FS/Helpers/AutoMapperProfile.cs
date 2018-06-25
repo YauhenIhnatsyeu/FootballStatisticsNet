@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using FS.Core.Models;
 using FS.Dtos;
-using FS.Models;
 
 namespace FS.Helpers
 {
@@ -8,8 +8,8 @@ namespace FS.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserViewModel>();
-            CreateMap<UserViewModel, User>();
+            CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>();
         }
     }
 }

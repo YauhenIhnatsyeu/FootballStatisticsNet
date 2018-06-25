@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FS.Models;
+﻿using System.Text;
+using AutoMapper;
+using FS.Core.Interfaces;
+using FS.Core.Models;
+using FS.Core.Services;
+using FS.Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using AutoMapper;
-using FS.Helpers;
-using FS.Interfaces;
-using FS.Services;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FS
@@ -45,14 +40,15 @@ namespace FS
             services.AddAuthentication()
                 .AddJwtBearer(oprtions =>
                 {
-                    oprtions.TokenValidationParameters = new TokenValidationParameters {
+                    oprtions.TokenValidationParameters = new TokenValidationParameters
+                    {
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["Jwt:Issuer"],
                         ValidAudience = configuration["Jwt:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
                     };
                 });
 
@@ -79,24 +75,30 @@ namespace FS
                 options.MultipartBodyLengthLimit = long.MaxValue;
             });
 
-            services.Configure<CookiePolicyOptions>(options => {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             services.AddAutoMapper();
 
-            services.AddTransient<IUserService, UserService>();
             services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<ITwitterService, TwitterService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
+            services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
+            services.AddTransient<ITeamsRepository, TeamsRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            } else {
+            }
+            else
+            {
                 app.UseHsts();
             }
 
