@@ -2,8 +2,8 @@ import { fetchTeams as getTeams } from "Clients/footballApiClient";
 import { addIdsToTeams } from "Utilities/addIdsToTeams";
 import httpToHttps from "Utilities/httpToHttps";
 
-export default function* fetchTeams(leagueId) {
-    const teamsData = yield getTeams(leagueId);
+export default async function fetchTeams(leagueId) {
+    const teamsData = await getTeams(leagueId);
     const { teams } = teamsData;
 
     addIdsToTeams(teams);

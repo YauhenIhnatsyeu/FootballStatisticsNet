@@ -1,8 +1,8 @@
 import { fetchHead2Head as getHead2Head } from "Clients/footballApiClient";
 import addPropertiesToFixtures from "Utilities/fixturesUtils/addPropertiesToFixtures";
 
-export default function* fetchHead2Head(fixtureId) {
-    const head2HeadData = yield getHead2Head(fixtureId);
+export default async function fetchHead2Head(fixtureId) {
+    const head2HeadData = await getHead2Head(fixtureId);
 
     const { head2head: head2Head } = head2HeadData;
     const { fixtures } = head2Head;

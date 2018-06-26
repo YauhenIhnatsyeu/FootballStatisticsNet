@@ -8,21 +8,23 @@ import keys from "Constants/keys";
 import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 import { setValue, setJSONValue, removeValue } from "Helpers/localStorageHelper";
 
-export function* register(user) {
+export async function register(user) {
     if (user) {
+        // If user wants to upload avatar
         if (user.avatar && user.avatar[0]) {
-            const avatarResponse = yield uploadAvatar(user.avatar[0]);
+            const avatarResponse = await uploadAvatar(user.avatar[0]);
 
             if (avatarResponse.ok) {
-                const json = yield tryExtractJsonFromResponse(avatarResponse);
+                const json = await tryExtractJsonFromResponse(avatarResponse);
 
                 if (json && json.avatarId) {
-                    const registerResponse = yield registerUser(user, json.avatarId);
+                    const registerResponse = await registerUser(user, json.avatarId);
                     return registerResponse.ok;
                 }
             }
+        // If user doesn't want to upload avatar
         } else {
-            const registerResponse = yield registerUser(user);
+            const registerResponse = await registerUser(user);
             return registerResponse.ok;
         }
     }
@@ -30,11 +32,11 @@ export function* register(user) {
     return false;
 }
 
-export function* login(user) {
-    const response = yield loginUser(user);
+export async function login(user) {
+    const response = await loginUser(user);
 
     if (response.ok) {
-        const json = yield tryExtractJsonFromResponse(response);
+        const json = await tryExtractJsonFromResponse(response);
         if (json && json.user && json.token) {
             setJSONValue(keys.user, json.user);
             setValue(keys.token, json.token);
@@ -45,8 +47,8 @@ export function* login(user) {
     return null;
 }
 
-export function* logout() {
-    yield logoutUser();
+export async function logout() {
+    await logoutUser();
 
     removeValue(keys.user);
     removeValue(keys.token);

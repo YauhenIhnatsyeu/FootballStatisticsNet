@@ -8,8 +8,8 @@ function getBearer() {
     return `Bearer ${getValue(keys.token)}`;
 }
 
-export function* getFavoriteTeams() {
-    return yield fetchUrl(
+export function getFavoriteTeams() {
+    return fetchUrl(
         getCurrentUrl() + apiRoutePaths.getFavoriteTeams,
         {
             method: "GET",
@@ -20,8 +20,8 @@ export function* getFavoriteTeams() {
     );
 }
 
-export function* addFavoriteTeam(teamId) {
-    return yield fetchUrl(
+export function addFavoriteTeam(teamId) {
+    return fetchUrl(
         getCurrentUrl() + apiRoutePaths.addFavoriteTeam,
         {
             method: "POST",
@@ -34,8 +34,8 @@ export function* addFavoriteTeam(teamId) {
     );
 }
 
-export function* removeFavoriteTeam(teamId) {
-    return yield fetchUrl(
+export function removeFavoriteTeam(teamId) {
+    return fetchUrl(
         getCurrentUrl() + apiRoutePaths.removeFavoriteTeam,
         {
             method: "DELETE",

@@ -8,31 +8,31 @@ import {
     createHead2HeadUrl,
 } from "Utilities/fetchingUrlsCreators";
 
-export function* fetchLeague(leagueId) {
+export function fetchLeague(leagueId) {
     const leagueUrl = createLeagueUrl(leagueId);
-    return yield fetchFootballUrl(leagueUrl);
+    return fetchFootballUrl(leagueUrl);
 }
 
-export function* fetchTeams(leagueId) {
+export function fetchTeams(leagueId) {
     const teamsUrl = createTeamsUrl(leagueId);
-    return yield fetchFootballUrl(teamsUrl);
+    return fetchFootballUrl(teamsUrl);
 }
 
-export function* fetchTeam(teamId) {
+export function fetchTeam(teamId) {
     const teamUrl = createTeamUrl(teamId);
-    return yield fetchFootballUrl(teamUrl);
+    return fetchFootballUrl(teamUrl);
 }
 
-export function* fetchPlayers(playersUrl) {
-    return yield fetchFootballUrl(playersUrl);
+export function fetchPlayers(playersUrl) {
+    return fetchFootballUrl(playersUrl);
 }
 
-export function* fetchFixtures(teamId) {
+export function fetchFixtures(teamId) {
     const fixturesUrl = createFixturesUrl(teamId);
-    return yield fetchFootballUrl(fixturesUrl);
+    return fetchFootballUrl(fixturesUrl);
 }
 
-export function* fetchHead2Head(fixtureId) {
+export function fetchHead2Head(fixtureId) {
     const fixturesUrl = createHead2HeadUrl(fixtureId);
-    return yield fetchFootballUrl(fixturesUrl);
+    return fetchFootballUrl(fixturesUrl);
 }

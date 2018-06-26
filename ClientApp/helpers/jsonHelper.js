@@ -1,10 +1,11 @@
-export default function* tryExtractJsonFromResponse(response) {
+export default async function tryExtractJsonFromResponse(response) {
     if (response && response.ok) {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
-            return yield response.json().then(json => json);
+            const json = await response.json().then(j => j);
+            return json;
         }
-        return yield null;
+        return null;
     }
-    return yield null;
+    return null;
 }

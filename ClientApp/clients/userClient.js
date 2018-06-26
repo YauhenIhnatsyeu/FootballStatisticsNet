@@ -23,27 +23,27 @@ function getRegisterRequestOptions(userParam, avatarId) {
     return getLoginRequestOptions(user);
 }
 
-export function* uploadAvatar(avatar) {
-    return yield fetchUrl(
+export function uploadAvatar(avatar) {
+    return fetchUrl(
         getCurrentUrl() + apiRoutePaths.avatar,
         getAvatarRequestOptions(avatar),
     );
 }
 
-export function* register(user, avatarId) {
-    return yield fetchUrl(
+export function register(user, avatarId) {
+    return fetchUrl(
         getCurrentUrl() + apiRoutePaths.register,
         getRegisterRequestOptions(user, avatarId),
     );
 }
 
-export function* login(user) {
-    return yield fetchUrl(
+export function login(user) {
+    return fetchUrl(
         getCurrentUrl() + apiRoutePaths.login,
         getLoginRequestOptions(user),
     );
 }
 
-export function* logout() {
-    return yield fetchUrl(getCurrentUrl() + apiRoutePaths.logout);
+export function logout() {
+    return fetchUrl(getCurrentUrl() + apiRoutePaths.logout);
 }

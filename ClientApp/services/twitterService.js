@@ -16,11 +16,11 @@ function parseSearchResult(searchResult) {
     }));
 }
 
-export default function* search(query) {
-    const response = yield searchTweets(query);
+export default async function search(query) {
+    const response = await searchTweets(query);
 
     if (response.ok) {
-        const json = yield tryExtractJsonFromResponse(response);
+        const json = await tryExtractJsonFromResponse(response);
 
         if (json && json.searchResult) {
             return parseSearchResult(json.searchResult);

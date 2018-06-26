@@ -2,11 +2,11 @@ import { getFavoriteTeams, addFavoriteTeam, removeFavoriteTeam } from "Clients/f
 
 import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 
-export function* getFromFavorites() {
-    const response = yield getFavoriteTeams();
+export async function getFromFavorites() {
+    const response = await getFavoriteTeams();
 
     if (response.ok) {
-        const json = yield tryExtractJsonFromResponse(response);
+        const json = await tryExtractJsonFromResponse(response);
 
         return json && json.teamIds;
     }
@@ -14,18 +14,18 @@ export function* getFromFavorites() {
     return null;
 }
 
-export function* addToFavorites(team) {
+export async function addToFavorites(team) {
     if (!team || !team.id) return false;
 
-    const response = yield addFavoriteTeam(team.id);
+    const response = await addFavoriteTeam(team.id);
 
     return response.ok;
 }
 
-export function* removeFromFavorites(team) {
+export async function removeFromFavorites(team) {
     if (!team || !team.id) return false;
 
-    const response = yield removeFavoriteTeam(team.id);
+    const response = await removeFavoriteTeam(team.id);
 
     return response.ok;
 }
