@@ -33,7 +33,7 @@ namespace FS.Api.Controllers
             string url = String.Format(tweetsSearchingUrlTemplate, query);
 
             string responseString = await twitterService.SendApiRequestAsync(url);
-            var json = JObject.Parse(responseString);
+            JObject json = JObject.Parse(responseString);
 
             return Ok(new {SearchResult = json});
         }

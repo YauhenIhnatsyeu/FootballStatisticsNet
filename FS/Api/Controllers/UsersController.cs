@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using CloudinaryDotNet.Actions;
 using FS.Core.Enums;
 using FS.Core.Interfaces;
 using FS.Core.Models;
@@ -46,7 +47,7 @@ namespace FS.Api.Controllers
 
             if (avatarState == AvatarState.Requested)
             {
-                if (!cloudinaryService.Exists(userDtoParam.AvatarId, out var getAvatarResult))
+                if (!cloudinaryService.Exists(userDtoParam.AvatarId, out GetResourceResult getAvatarResult))
                 {
                     return BadRequest();
                 }

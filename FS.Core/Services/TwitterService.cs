@@ -30,7 +30,7 @@ namespace FS.Core.Services
                 return null;
             }
 
-            using (var httpClient = TwitterHelper.GetAuthenticationHttpClient(token))
+            using (HttpClient httpClient = TwitterHelper.GetAuthenticationHttpClient(token))
             {
                 return await httpClient.GetStringAsync(url);
             }
@@ -38,7 +38,7 @@ namespace FS.Core.Services
 
         private async Task<string> GetTokenAsync(string tokenCredentialsEncoded)
         {
-            using (var httpClient = TwitterHelper.GetAuthorizationHttpClient(tokenCredentialsEncoded))
+            using (HttpClient httpClient = TwitterHelper.GetAuthorizationHttpClient(tokenCredentialsEncoded))
             {
                 HttpResponseMessage response = await httpClient.PostAsync(
                     configuration["Twitter:OauthUrl"],
@@ -51,7 +51,7 @@ namespace FS.Core.Services
                 }
 
                 string respose = await response.Content.ReadAsStringAsync();
-                var json = JObject.Parse(respose);
+                JObject json = JObject.Parse(respose);
                 string tokenKey = configuration["Twitter:TokenKey"];
 
                 if (!json.ContainsKey(tokenKey))

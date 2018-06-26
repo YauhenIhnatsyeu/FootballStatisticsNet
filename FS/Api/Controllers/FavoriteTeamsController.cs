@@ -34,9 +34,10 @@ namespace FS.Api.Controllers
         public IActionResult GetTeams()
         {
             User userFromDb = usersRepository.FindByName(HttpContext.User.Identity.Name);
-            var teamIds = favoriteTeamsRepository.Get()
+            IReadOnlyList<int> teamIds = favoriteTeamsRepository.Get()
                 .Where(fv => fv.User == userFromDb)
-                .Select(fv => fv.Team.Code);
+                .Select(fv => fv.Team.Code)
+                .ToList();
 
             return Ok(new
             {
