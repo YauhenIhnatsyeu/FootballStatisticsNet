@@ -29,7 +29,7 @@ namespace FS.Controllers
         }
 
         [HttpPost]
-        [Route("/users/register")]
+        [Route("/api/users/register")]
         public IActionResult Register([FromBody] UserDTO userDtoParam)
         {
             if (userDtoParam == null)
@@ -54,7 +54,7 @@ namespace FS.Controllers
         }
 
         [HttpPost]
-        [Route("/users/login")]
+        [Route("/api/users/login")]
         public async Task<IActionResult> Login([FromBody] UserDTO userDto)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
@@ -80,7 +80,7 @@ namespace FS.Controllers
             });
         }
 
-        [Route("/users/logout")]
+        [Route("/api/users/logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);

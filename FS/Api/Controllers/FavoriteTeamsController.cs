@@ -30,7 +30,7 @@ namespace FS.Controllers
         }
 
         [HttpGet]
-        [Route("/teams/get")]
+        [Route("/api/teams/get")]
         public IActionResult GetTeams()
         {
             User userFromDb = usersRepository.FindByName(HttpContext.User.Identity.Name);

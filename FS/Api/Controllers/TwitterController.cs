@@ -16,7 +16,7 @@ namespace FS.Controllers
         }
 
         [HttpGet]
-        [Route("/twitter/search")]
+        [Route("/api/twitter/search")]
         public async Task<IActionResult> Search()
         {
             if (!HttpContext.Request.Query.ContainsKey("q")) return BadRequest();

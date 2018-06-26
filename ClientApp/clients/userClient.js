@@ -1,6 +1,6 @@
 import { fetchUrl } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
-import routePaths from "Constants/routePaths";
+import apiRoutePaths from "Constants/apiRoutePaths";
 
 function getAvatarRequestOptions(avatar) {
     const body = new FormData();
@@ -25,25 +25,25 @@ function getRegisterRequestOptions(userParam, avatarId) {
 
 export function* uploadAvatar(avatar) {
     return yield fetchUrl(
-        getCurrentUrl() + routePaths.usersAvatar,
+        getCurrentUrl() + apiRoutePaths.avatar,
         getAvatarRequestOptions(avatar),
     );
 }
 
 export function* register(user, avatarId) {
     return yield fetchUrl(
-        getCurrentUrl() + routePaths.usersRegister,
+        getCurrentUrl() + apiRoutePaths.register,
         getRegisterRequestOptions(user, avatarId),
     );
 }
 
 export function* login(user) {
     return yield fetchUrl(
-        getCurrentUrl() + routePaths.usersLogin,
+        getCurrentUrl() + apiRoutePaths.login,
         getLoginRequestOptions(user),
     );
 }
 
 export function* logout() {
-    return yield fetchUrl(getCurrentUrl() + routePaths.usersLogout);
+    return yield fetchUrl(getCurrentUrl() + apiRoutePaths.logout);
 }

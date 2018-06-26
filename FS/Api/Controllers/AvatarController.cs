@@ -14,8 +14,8 @@ namespace FS.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/users/avatar")]
-        [Route("/funclubs/avatar")]
+        [Route("/api/users/avatar")]
+        [Route("/api/funclubs/avatar")]
         public IActionResult Upload()
         {
             if (HttpContext.Request.Form == null)

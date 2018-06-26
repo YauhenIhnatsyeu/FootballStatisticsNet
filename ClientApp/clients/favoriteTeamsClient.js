@@ -1,6 +1,6 @@
 import { fetchUrl } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
-import routePaths from "Constants/routePaths";
+import apiRoutePaths from "Constants/apiRoutePaths";
 import keys from "Constants/keys";
 import { getValue } from "Helpers/localStorageHelper";
 
@@ -10,7 +10,7 @@ function getBearer() {
 
 export function* getFavoriteTeams() {
     return yield fetchUrl(
-        getCurrentUrl() + routePaths.getFavoriteTeams,
+        getCurrentUrl() + apiRoutePaths.getFavoriteTeams,
         {
             method: "GET",
             headers: {
@@ -22,7 +22,7 @@ export function* getFavoriteTeams() {
 
 export function* addFavoriteTeam(teamId) {
     return yield fetchUrl(
-        getCurrentUrl() + routePaths.addFavoriteTeam,
+        getCurrentUrl() + apiRoutePaths.addFavoriteTeam,
         {
             method: "POST",
             headers: {
@@ -36,7 +36,7 @@ export function* addFavoriteTeam(teamId) {
 
 export function* removeFavoriteTeam(teamId) {
     return yield fetchUrl(
-        getCurrentUrl() + routePaths.removeFavoriteTeam,
+        getCurrentUrl() + apiRoutePaths.removeFavoriteTeam,
         {
             method: "DELETE",
             headers: {
