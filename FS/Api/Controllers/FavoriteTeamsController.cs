@@ -47,7 +47,7 @@ namespace FS.Api.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("/teams/add")]
+        [Route("/api/teams/add")]
         public IActionResult AddTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
             if (favoriteTeamDto == null)
@@ -77,7 +77,7 @@ namespace FS.Api.Controllers
 
         [HttpDelete]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("/teams/remove")]
+        [Route("/api/teams/remove")]
         public IActionResult RemoveTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
             if (favoriteTeamDto == null)
