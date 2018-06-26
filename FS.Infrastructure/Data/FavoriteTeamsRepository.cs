@@ -1,10 +1,8 @@
-﻿using FS.Core.Interfaces;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FS.Core.Interfaces;
 using FS.Core.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace FS.Infrastructure.Data
 {

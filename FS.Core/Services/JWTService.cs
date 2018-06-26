@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace FS.Core.Services
 {
-    public class JWTService : IJWTService 
+    public class JWTService : IJWTService
     {
         private readonly IConfiguration configuration;
 

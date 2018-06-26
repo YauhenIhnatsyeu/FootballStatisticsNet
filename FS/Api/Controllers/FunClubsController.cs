@@ -4,7 +4,7 @@ using FS.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FS.Controllers
+namespace FS.Api.Controllers
 {
     public class FunClubsController : Controller
     {

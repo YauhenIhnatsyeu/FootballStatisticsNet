@@ -9,16 +9,21 @@ import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 import { setValue, setJSONValue, removeValue } from "Helpers/localStorageHelper";
 
 export function* register(user) {
-    if (user && user.avatar && user.avatar[0]) {
-        const avatarResponse = yield uploadAvatar(user.avatar[0]);
+    if (user) {
+        if (user.avatar && user.avatar[0]) {
+            const avatarResponse = yield uploadAvatar(user.avatar[0]);
 
-        if (avatarResponse.ok) {
-            const json = yield tryExtractJsonFromResponse(avatarResponse);
+            if (avatarResponse.ok) {
+                const json = yield tryExtractJsonFromResponse(avatarResponse);
 
-            if (json && json.avatarId) {
-                const registerResponse = yield registerUser(user, json.avatarId);
-                return registerResponse.ok;
+                if (json && json.avatarId) {
+                    const registerResponse = yield registerUser(user, json.avatarId);
+                    return registerResponse.ok;
+                }
             }
+        } else {
+            const registerResponse = yield registerUser(user);
+            return registerResponse.ok;
         }
     }
 

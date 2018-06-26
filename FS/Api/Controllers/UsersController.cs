@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using FS.Core.Enums;
 using FS.Core.Interfaces;
 using FS.Core.Models;
 using FS.Dtos;
@@ -7,14 +8,14 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FS.Controllers
+namespace FS.Api.Controllers
 {
     public class UsersController : Controller
     {
         private readonly ICloudinaryService cloudinaryService;
+        private readonly IJWTService jwtService;
         private readonly IMapper mapper;
         private readonly IUsersRepository<User> usersRepository;
-        private readonly IJWTService jwtService;
 
         public UsersController(
             IMapper mapper,
@@ -37,19 +38,26 @@ namespace FS.Controllers
                 return BadRequest();
             }
 
-            if (!cloudinaryService.Exists(userDtoParam.AvatarId, out var getAvatarResult))
+            UserDTO userDto = userDtoParam;
+
+            AvatarState avatarState = userDtoParam.AvatarId == null
+                ? AvatarState.NotRequested
+                : AvatarState.Requested;
+
+            if (avatarState == AvatarState.Requested)
             {
-                return BadRequest();
+                if (!cloudinaryService.Exists(userDtoParam.AvatarId, out var getAvatarResult))
+                {
+                    return BadRequest();
+                }
+
+                userDto.AvatarUrl = getAvatarResult.SecureUrl;
             }
 
-            var userDto = userDtoParam;
-
-            userDto.AvatarUrl = getAvatarResult.SecureUrl;
-
-            var user = mapper.Map<User>(userDto);
+            User user = mapper.Map<User>(userDto);
 
             return usersRepository.Create(user, userDto.Password)
-                ? (IActionResult)Ok()
+                ? (IActionResult) Ok()
                 : BadRequest();
         }
 
@@ -75,7 +83,7 @@ namespace FS.Controllers
 
             return Ok(new
             {
-                User = new { Name = userFromDb.UserName, userFromDb?.AvatarUrl },
+                User = new {Name = userFromDb.UserName, userFromDb?.AvatarUrl},
                 Token = jwtService.GetToken(userFromDb)
             });
         }

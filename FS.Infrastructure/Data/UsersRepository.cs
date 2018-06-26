@@ -1,5 +1,4 @@
 ﻿using FS.Core.Interfaces;
-using FS.Core.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace FS.Infrastructure.Data

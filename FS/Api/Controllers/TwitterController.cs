@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
-namespace FS.Controllers
+namespace FS.Api.Controllers
 {
     public class TwitterController : Controller
     {
