@@ -8,8 +8,8 @@ namespace FS.Helpers
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>();
+            CreateMap<UserToServerDTO, User>();
+            CreateMap<User, UserToClientDTO>();
         }
     }
 }

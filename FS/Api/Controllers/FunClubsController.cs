@@ -1,20 +1,24 @@
 ﻿using FS.Api.DTOs;
+using FS.Core.Interfaces;
 using FS.Core.Models;
 using FS.Infrastructure.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FS.Api.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FunClubsController : Controller
     {
-        private readonly UsersContext context;
-        private readonly UserManager<User> userManager;
+        private readonly IFunClubsRepository funClubsRepository;
+        private readonly IUsersRepository<User> usersRepository;
 
-        public FunClubsController(UsersContext context, UserManager<User> userManager)
+        public FunClubsController(IFunClubsRepository funClubsRepository, IUsersRepository<User> usersRepository)
         {
-            this.context = context;
-            this.userManager = userManager;
+            this.funClubsRepository = funClubsRepository;
+            this.usersRepository = usersRepository;
         }
 
         [HttpPost]

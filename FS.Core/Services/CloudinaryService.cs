@@ -23,18 +23,12 @@ namespace FS.Core.Services
 
         public ImageUploadResult UploadFile(string name, Stream stream)
         {
-            return cloudinary.Upload(new ImageUploadParams {File = new FileDescription(name, stream)});
+            return cloudinary?.Upload(new ImageUploadParams {File = new FileDescription(name, stream)});
         }
 
-        public bool Exists(string publicId)
+        public GetResourceResult GetFile(string publicId)
         {
-            return cloudinary.GetResource(publicId).StatusCode == HttpStatusCode.OK;
-        }
-
-        public bool Exists(string publicId, out GetResourceResult getResourceResult)
-        {
-            getResourceResult = cloudinary.GetResource(publicId);
-            return getResourceResult.StatusCode == HttpStatusCode.OK;
+            return cloudinary?.GetResource(publicId);
         }
     }
 }

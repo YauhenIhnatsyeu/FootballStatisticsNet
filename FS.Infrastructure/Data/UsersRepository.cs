@@ -1,4 +1,6 @@
-﻿using FS.Core.Interfaces;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FS.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace FS.Infrastructure.Data
@@ -12,6 +14,11 @@ namespace FS.Infrastructure.Data
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+        }
+
+        public IReadOnlyList<T> Get()
+        {
+            return userManager.Users.ToList();
         }
 
         public bool Create(T user, string password)

@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
-using CloudinaryDotNet.Actions;
-using FS.Core.Enums;
 using FS.Core.Interfaces;
 using FS.Core.Models;
 using FS.Dtos;
@@ -13,46 +13,44 @@ namespace FS.Api.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly ICloudinaryService cloudinaryService;
+        private readonly IAvatarsRepository avatarsRepository;
         private readonly IJWTService jwtService;
         private readonly IMapper mapper;
         private readonly IUsersRepository<User> usersRepository;
 
         public UsersController(
             IMapper mapper,
-            ICloudinaryService cloudinaryService,
+            IAvatarsRepository avatarsRepository,
             IUsersRepository<User> usersRepository,
             IJWTService jwtService)
         {
             this.mapper = mapper;
-            this.cloudinaryService = cloudinaryService;
+            this.avatarsRepository = avatarsRepository;
             this.usersRepository = usersRepository;
             this.jwtService = jwtService;
         }
 
         [HttpPost]
         [Route("/api/users/register")]
-        public IActionResult Register([FromBody] UserDTO userDtoParam)
+        public IActionResult Register([FromBody] UserToServerDTO userDtoParam)
         {
             if (userDtoParam == null)
             {
                 return BadRequest();
             }
 
-            UserDTO userDto = userDtoParam;
+            UserToServerDTO userDto = userDtoParam;
 
-            AvatarState avatarState = userDtoParam.AvatarId == null
-                ? AvatarState.NotRequested
-                : AvatarState.Requested;
-
-            if (avatarState == AvatarState.Requested)
+            if (userDtoParam.AvatarId != null)
             {
-                if (!cloudinaryService.Exists(userDtoParam.AvatarId, out GetResourceResult getAvatarResult))
+                string avatarUrl = avatarsRepository.Get(userDtoParam.AvatarId);
+
+                if (avatarUrl == null)
                 {
                     return BadRequest();
                 }
 
-                userDto.AvatarUrl = getAvatarResult.SecureUrl;
+                userDto.AvatarUrl = avatarUrl;
             }
 
             User user = mapper.Map<User>(userDto);
@@ -64,28 +62,29 @@ namespace FS.Api.Controllers
 
         [HttpPost]
         [Route("/api/users/login")]
-        public async Task<IActionResult> Login([FromBody] UserDTO userDto)
+        public async Task<IActionResult> Login([FromBody] UserToServerDTO userToServerDto)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
 
-            if (userDto == null)
+            if (userToServerDto == null)
             {
                 return BadRequest();
             }
 
-            User user = mapper.Map<User>(userDto);
+            User user = mapper.Map<User>(userToServerDto);
 
-            if (!usersRepository.SignIn(user, userDto.Password))
+            if (!usersRepository.SignIn(user, userToServerDto.Password))
             {
                 return BadRequest();
             }
 
-            User userFromDb = usersRepository.FindByName(user.UserName);
+            User userFromRepository = usersRepository.FindByName(user.UserName);
+            UserToClientDTO userToClientDto = mapper.Map<UserToClientDTO>(userFromRepository);
 
             return Ok(new
             {
-                User = new {Name = userFromDb.UserName, userFromDb?.AvatarUrl},
-                Token = jwtService.GetToken(userFromDb)
+                User = userToClientDto,
+                Token = jwtService.GetToken(userFromRepository)
             });
         }
 
@@ -94,6 +93,14 @@ namespace FS.Api.Controllers
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return Ok();
+        }
+
+        [Route("/api/users/get")]
+        public IActionResult Get()
+        {
+            IEnumerable<UserToClientDTO> users = usersRepository.Get()
+                .Select(user => mapper.Map<UserToClientDTO>(user));
+            return Ok(users);
         }
     }
 }

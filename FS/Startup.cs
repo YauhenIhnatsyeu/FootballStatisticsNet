@@ -86,9 +86,12 @@ namespace FS
             services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<ITwitterService, TwitterService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+
+            services.AddTransient<IAvatarsRepository, AvatarsRepository>();
             services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
             services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
             services.AddTransient<ITeamsRepository, TeamsRepository>();
+            services.AddTransient<IFunClubsRepository, FunClubsRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

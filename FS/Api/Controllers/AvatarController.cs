@@ -2,6 +2,8 @@
 using System.Net;
 using CloudinaryDotNet.Actions;
 using FS.Core.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +11,11 @@ namespace FS.Api.Controllers
 {
     public class AvatarController : Controller
     {
-        private readonly ICloudinaryService cloudinaryService;
+        private readonly IAvatarsRepository avatarsRepository;
 
-        public AvatarController(ICloudinaryService cloudinaryService)
+        public AvatarController(IAvatarsRepository avatarsRepository)
         {
-            this.cloudinaryService = cloudinaryService;
+            this.avatarsRepository = avatarsRepository;
         }
 
         [HttpPost]
@@ -32,17 +34,14 @@ namespace FS.Api.Controllers
             int avatarHashCode = avatar.GetHashCode();
             Stream avatarStream = avatar.OpenReadStream();
 
-            ImageUploadResult uploadResult = cloudinaryService.UploadFile(
+            string avatarId = avatarsRepository.Add(
                 $"avatar-{avatarHashCode}",
                 avatarStream
             );
 
-            if (uploadResult.StatusCode != HttpStatusCode.OK)
-            {
-                return BadRequest();
-            }
-
-            return Ok(new {AvatarId = uploadResult.PublicId});
+            return avatarId == null
+                ? BadRequest()
+                : (IActionResult) Ok(new {AvatarId = avatarId});
         }
     }
 }
