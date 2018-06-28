@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using AutoMapper;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Repositories;
+using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using FS.Core.Services;
 using FS.Infrastructure.Data;
@@ -92,6 +93,7 @@ namespace FS
             services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
             services.AddTransient<ITeamsRepository, TeamsRepository>();
             services.AddTransient<IFunClubsRepository, FunClubsRepository>();
+            services.AddTransient<IUsersFunClubsRepository, UsersFunClubsRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

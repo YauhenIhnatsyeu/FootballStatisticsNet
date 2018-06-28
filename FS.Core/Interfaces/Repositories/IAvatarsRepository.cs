@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
-namespace FS.Core.Interfaces
+namespace FS.Core.Interfaces.Repositories
 {
     public interface IAvatarsRepository
     {

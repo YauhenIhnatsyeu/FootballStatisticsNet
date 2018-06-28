@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Repositories;
+using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using FS.Dtos;
 using Microsoft.AspNetCore.Authentication;

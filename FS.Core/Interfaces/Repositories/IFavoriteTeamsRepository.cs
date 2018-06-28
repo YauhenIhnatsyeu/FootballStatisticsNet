@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FS.Core.Models;
 
-namespace FS.Core.Interfaces
+namespace FS.Core.Interfaces.Repositories
 {
     public interface IFavoriteTeamsRepository
     {

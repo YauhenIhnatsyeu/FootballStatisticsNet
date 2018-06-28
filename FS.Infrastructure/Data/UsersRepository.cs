@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Identity;
 
 namespace FS.Infrastructure.Data
@@ -30,6 +30,11 @@ namespace FS.Infrastructure.Data
         {
             return signInManager.PasswordSignInAsync(user.UserName, password, false, false)
                 .Result.Succeeded;
+        }
+
+        public T FindById(string id)
+        {
+            return userManager.FindByIdAsync(id).Result;
         }
 
         public T FindByName(string name)

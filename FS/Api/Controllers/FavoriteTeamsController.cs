@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using FS.Core.Interfaces;
-using FS.Core.Models;
-using FS.Infrastructure.Data;
 using FS.Api.DTOs;
+using FS.Core.Interfaces.Repositories;
+using FS.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FS.Api.Controllers
@@ -15,9 +12,9 @@ namespace FS.Api.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FavoriteTeamsController : Controller
     {
-        private readonly IUsersRepository<User> usersRepository;
         private readonly IFavoriteTeamsRepository favoriteTeamsRepository;
         private readonly ITeamsRepository teamsRepository;
+        private readonly IUsersRepository<User> usersRepository;
 
         public FavoriteTeamsController(
             IUsersRepository<User> usersRepository,
@@ -54,14 +51,16 @@ namespace FS.Api.Controllers
                 return BadRequest();
             }
 
-            int teamId = favoriteTeamDto.TeamId;
+            var teamToSave = new Team {Code = favoriteTeamDto.TeamId};
+
+            teamsRepository.Add(teamToSave);
+
             User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
 
             var favoriteTeamToSave = new FavoriteTeam
             {
                 User = userFromRepository,
-                Team = teamsRepository.Get().FirstOrDefault(team => team.Code == teamId)
-                       ?? new Team { Code = teamId }
+                Team = teamsRepository.GetByTeam(teamToSave)
             };
 
             if (favoriteTeamsRepository.Get().Contains(favoriteTeamToSave))
@@ -84,22 +83,22 @@ namespace FS.Api.Controllers
                 return BadRequest();
             }
 
-            int teamId = favoriteTeamDto.TeamId;
-            User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
-            Team team = teamsRepository.Get().FirstOrDefault(t => t.Code == teamId);
+            var team = new Team {Code = favoriteTeamDto.TeamId};
 
-            if (team == null)
+            if (!teamsRepository.Contains(team))
             {
                 return BadRequest();
             }
 
-            var teamToRemove = new FavoriteTeam
+            User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
+
+            var favoriteTeamToRemove = new FavoriteTeam
             {
                 User = userFromRepository,
-                Team = team
+                Team = teamsRepository.GetByTeam(team)
             };
 
-            favoriteTeamsRepository.Remove(teamToRemove);
+            favoriteTeamsRepository.Remove(favoriteTeamToRemove);
 
             return Ok();
         }

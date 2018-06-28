@@ -1,9 +1,8 @@
 ﻿using System.IO;
-using System.Net;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using FS.Core.Helpers;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 
 namespace FS.Core.Services

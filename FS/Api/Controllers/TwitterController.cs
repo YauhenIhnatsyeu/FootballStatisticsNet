@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
@@ -30,7 +29,7 @@ namespace FS.Api.Controllers
             string tweetsSearchingUrlTemplate = configuration["Twitter:TweetsSearchingUrl"];
 
             string query = HttpUtility.UrlEncode(HttpContext.Request.Query[queryKey]);
-            string url = String.Format(tweetsSearchingUrlTemplate, query);
+            string url = string.Format(tweetsSearchingUrlTemplate, query);
 
             string responseString = await twitterService.SendApiRequestAsync(url);
             JObject json = JObject.Parse(responseString);

@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using FS.Core.Helpers;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 

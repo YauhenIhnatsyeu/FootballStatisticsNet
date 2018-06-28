@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace FS.Core.Interfaces
+namespace FS.Core.Interfaces.Services
 {
     public interface ITwitterService
     {

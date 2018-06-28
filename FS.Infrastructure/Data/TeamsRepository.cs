@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 
 namespace FS.Infrastructure.Data
@@ -19,8 +19,18 @@ namespace FS.Infrastructure.Data
             return context.Teams.ToList();
         }
 
+        public Team GetByTeam(Team item)
+        {
+            return Get().FirstOrDefault(team => team.Code == item.Code);
+        }
+
         public void Add(Team item)
         {
+            if (Contains(item))
+            {
+                return;
+            }
+
             context.Teams.Add(item);
             context.SaveChanges();
         }
@@ -29,6 +39,11 @@ namespace FS.Infrastructure.Data
         {
             context.Teams.Remove(item);
             context.SaveChanges();
+        }
+
+        public bool Contains(Team item)
+        {
+            return GetByTeam(item) != null;
         }
     }
 }

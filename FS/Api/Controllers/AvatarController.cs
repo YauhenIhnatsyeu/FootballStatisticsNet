@@ -1,9 +1,5 @@
 ﻿using System.IO;
-using System.Net;
-using CloudinaryDotNet.Actions;
-using FS.Core.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
+using FS.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

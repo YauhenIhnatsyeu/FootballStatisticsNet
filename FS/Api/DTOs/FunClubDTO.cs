@@ -7,7 +7,7 @@ namespace FS.Api.DTOs
         public string Name { get; set; }
         public int TeamId { get; set; }
         public string Description { get; set; }
-        public int AvatarId { get; set; }
+        public string AvatarUrl { get; set; }
         public IReadOnlyList<string> UsersIds { get; set; }
     }
 }

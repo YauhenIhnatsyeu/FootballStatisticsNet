@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using CloudinaryDotNet.Actions;
 
-namespace FS.Core.Interfaces
+namespace FS.Core.Interfaces.Services
 {
     public interface ICloudinaryService
     {

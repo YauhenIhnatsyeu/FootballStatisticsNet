@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Net;
-using System.Text;
 using CloudinaryDotNet.Actions;
-using FS.Core.Interfaces;
+using FS.Core.Interfaces.Repositories;
+using FS.Core.Interfaces.Services;
 
 namespace FS.Infrastructure.Data
 {

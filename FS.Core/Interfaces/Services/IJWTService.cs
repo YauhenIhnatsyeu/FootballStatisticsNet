@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace FS.Core.Interfaces
+namespace FS.Core.Interfaces.Services
 {
     public interface IJWTService
     {
