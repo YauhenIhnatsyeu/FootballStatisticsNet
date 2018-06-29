@@ -1,4 +1,7 @@
-﻿using FS.Api.DTOs;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using FS.Api.DTOs;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -11,25 +14,43 @@ namespace FS.Api.Controllers
     public class FunClubsController : Controller
     {
         private readonly IFunClubsRepository funClubsRepository;
+        private readonly IMapper mapper;
         private readonly ITeamsRepository teamsRepository;
         private readonly IUsersFunClubsRepository usersFunClubsRepository;
         private readonly IUsersRepository<User> usersRepository;
 
-        public FunClubsController(
-            ITeamsRepository teamsRepository,
-            IFunClubsRepository funClubsRepository,
-            IUsersFunClubsRepository usersFunClubsRepository,
+        public FunClubsController(IFunClubsRepository funClubsRepository, IMapper mapper,
+            ITeamsRepository teamsRepository, IUsersFunClubsRepository usersFunClubsRepository,
             IUsersRepository<User> usersRepository)
         {
-            this.teamsRepository = teamsRepository;
             this.funClubsRepository = funClubsRepository;
+            this.mapper = mapper;
+            this.teamsRepository = teamsRepository;
             this.usersFunClubsRepository = usersFunClubsRepository;
             this.usersRepository = usersRepository;
         }
 
+        [AllowAnonymous]
+        [Route("/api/funclubs/get")]
+        public IActionResult Get()
+        {
+            IEnumerable<UserToClientDTO> users = usersRepository.Get()
+                .Select(user => mapper.Map<UserToClientDTO>(user));
+
+            IEnumerable<FunClubToClientDTO> funClubs = funClubsRepository.Get()
+                .Select(funClub =>
+                {
+                    var funClubDto = mapper.Map<FunClubToClientDTO>(funClub);
+                    funClubDto.Users = users;
+                    return funClubDto;
+                });
+
+            return Ok(funClubs);
+        }
+
         [HttpPost]
         [Route("/api/funclubs/create")]
-        public IActionResult Create([FromBody] FunClubDTO funClubDto)
+        public IActionResult Create([FromBody] FunClubToServerDTO funClubDto)
         {
             if (funClubDto == null)
             {
@@ -37,7 +58,6 @@ namespace FS.Api.Controllers
             }
 
             var teamToSave = new Team {Code = funClubDto.TeamId};
-
             teamsRepository.Add(teamToSave);
 
             var funClub = new FunClub
@@ -66,6 +86,43 @@ namespace FS.Api.Controllers
                     UserIsCreator = false
                 });
             }
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("/api/funclubs/adduser")]
+        public IActionResult AddUser([FromBody] UserFunClubDTO userFunClubDto)
+        {
+            if (userFunClubDto == null)
+            {
+                return BadRequest();
+            }
+
+            usersFunClubsRepository.Add(new UserFunClub
+            {
+                User = usersRepository.FindById(userFunClubDto.UserId),
+                FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId),
+                UserIsCreator = false
+            });
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("/api/funclubs/removeuser")]
+        public IActionResult RemoveUser([FromBody] UserFunClubDTO userFunClubDto)
+        {
+            if (userFunClubDto == null)
+            {
+                return BadRequest();
+            }
+
+            usersFunClubsRepository.Remove(new UserFunClub
+            {
+                User = usersRepository.FindById(userFunClubDto.UserId),
+                FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId),
+            });
 
             return Ok();
         }

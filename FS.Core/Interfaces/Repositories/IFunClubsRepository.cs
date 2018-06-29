@@ -8,5 +8,6 @@ namespace FS.Core.Interfaces.Repositories
         IReadOnlyList<FunClub> Get();
         void Add(FunClub item);
         void Remove(FunClub item);
+        FunClub FindById(int id);
     }
 }

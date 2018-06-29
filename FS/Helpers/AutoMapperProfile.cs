@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using FS.Api.DTOs;
 using FS.Core.Models;
-using FS.Dtos;
 
 namespace FS.Helpers
 {
@@ -10,6 +10,7 @@ namespace FS.Helpers
         {
             CreateMap<UserToServerDTO, User>();
             CreateMap<User, UserToClientDTO>();
+            CreateMap<FunClub, FunClubToClientDTO>();
         }
     }
 }

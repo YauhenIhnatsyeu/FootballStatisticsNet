@@ -30,5 +30,10 @@ namespace FS.Infrastructure.Data
             context.FunClubs.Remove(item);
             context.SaveChanges();
         }
+
+        public FunClub FindById(int id)
+        {
+            return context.FunClubs.FirstOrDefault(funClub => funClub.Id == id);
+        }
     }
 }

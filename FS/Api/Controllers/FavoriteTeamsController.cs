@@ -52,7 +52,6 @@ namespace FS.Api.Controllers
             }
 
             var teamToSave = new Team {Code = favoriteTeamDto.TeamId};
-
             teamsRepository.Add(teamToSave);
 
             User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
@@ -62,11 +61,6 @@ namespace FS.Api.Controllers
                 User = userFromRepository,
                 Team = teamsRepository.GetByTeam(teamToSave)
             };
-
-            if (favoriteTeamsRepository.Get().Contains(favoriteTeamToSave))
-            {
-                return Ok();
-            }
 
             favoriteTeamsRepository.Add(favoriteTeamToSave);
 

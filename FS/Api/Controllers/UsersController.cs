@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using FS.Api.DTOs;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
-using FS.Dtos;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +29,14 @@ namespace FS.Api.Controllers
             this.avatarsRepository = avatarsRepository;
             this.usersRepository = usersRepository;
             this.jwtService = jwtService;
+        }
+
+        [Route("/api/users/get")]
+        public IActionResult Get()
+        {
+            IEnumerable<UserToClientDTO> users = usersRepository.Get()
+                .Select(user => mapper.Map<UserToClientDTO>(user));
+            return Ok(users);
         }
 
         [HttpPost]
@@ -94,14 +102,6 @@ namespace FS.Api.Controllers
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
             return Ok();
-        }
-
-        [Route("/api/users/get")]
-        public IActionResult Get()
-        {
-            IEnumerable<UserToClientDTO> users = usersRepository.Get()
-                .Select(user => mapper.Map<UserToClientDTO>(user));
-            return Ok(users);
         }
     }
 }
