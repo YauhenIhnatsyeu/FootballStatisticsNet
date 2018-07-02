@@ -34,18 +34,16 @@ namespace FS.Api.Controllers
         [Route("/api/funclubs/get")]
         public IActionResult Get()
         {
-            IEnumerable<UserToClientDTO> users = usersRepository.Get()
-                .Select(user => mapper.Map<UserToClientDTO>(user));
+            //IEnumerable<UserToClientDTO> users = usersRepository.Get()
+            //    .Select(user => mapper.Map<UserToClientDTO>(user));
 
-            IEnumerable<FunClubToClientDTO> funClubs = funClubsRepository.Get()
-                .Select(funClub =>
-                {
-                    var funClubDto = mapper.Map<FunClubToClientDTO>(funClub);
-                    funClubDto.Users = users;
-                    return funClubDto;
-                });
+            //IEnumerable<FunClubToClientDTO> funClubs = funClubsRepository.Get()
+            //    .Select(funClub => mapper.Map<FunClubToClientDTO>(funClub));
 
-            return Ok(funClubs);
+            //IEnumerable<IEnumerable<UserFunClubToClientDTO>> funClubs = funClubsRepository.Get()
+            //    .Select(funClub => mapper.Map<ICollection<UserFunClub>, IEnumerable<UserFunClubToClientDTO>>(funClub.UsersFunClub));
+
+            return Ok(/*funClubs*/);
         }
 
         [HttpPost]
@@ -92,7 +90,7 @@ namespace FS.Api.Controllers
 
         [HttpPost]
         [Route("/api/funclubs/adduser")]
-        public IActionResult AddUser([FromBody] UserFunClubDTO userFunClubDto)
+        public IActionResult AddUser([FromBody] UserFunClubToServerDTO userFunClubDto)
         {
             if (userFunClubDto == null)
             {
@@ -111,7 +109,7 @@ namespace FS.Api.Controllers
 
         [HttpPost]
         [Route("/api/funclubs/removeuser")]
-        public IActionResult RemoveUser([FromBody] UserFunClubDTO userFunClubDto)
+        public IActionResult RemoveUser([FromBody] UserFunClubToServerDTO userFunClubDto)
         {
             if (userFunClubDto == null)
             {
