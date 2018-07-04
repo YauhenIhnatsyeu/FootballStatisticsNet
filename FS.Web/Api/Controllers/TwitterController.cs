@@ -26,12 +26,8 @@ namespace FS.Api.Controllers
 
             if (!HttpContext.Request.Query.ContainsKey(queryKey)) return BadRequest();
 
-            string tweetsSearchingUrlTemplate = configuration["Twitter:TweetsSearchingUrl"];
-
-            string query = HttpUtility.UrlEncode(HttpContext.Request.Query[queryKey]);
-            string url = string.Format(tweetsSearchingUrlTemplate, query);
-
-            string responseString = await twitterService.SendApiRequestAsync(url);
+            string responseString =
+                await twitterService.SendSearhTweetsApiRequest(HttpContext.Request.Query[queryKey]);
             JObject json = JObject.Parse(responseString);
 
             return Ok(new {SearchResult = json});

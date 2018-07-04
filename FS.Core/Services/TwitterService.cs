@@ -1,7 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using FS.Core.Helpers;
 using FS.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
@@ -34,6 +36,16 @@ namespace FS.Core.Services
             {
                 return await httpClient.GetStringAsync(url);
             }
+        }
+
+        public async Task<string> SendSearhTweetsApiRequest(string text)
+        {
+            string tweetsSearchingUrlTemplate = configuration["Twitter:TweetsSearchingUrl"];
+
+            string query = HttpUtility.UrlEncode(text);
+            string url = string.Format(tweetsSearchingUrlTemplate, query);
+
+            return await SendApiRequestAsync(url);
         }
 
         private async Task<string> GetTokenAsync(string tokenCredentialsEncoded)
