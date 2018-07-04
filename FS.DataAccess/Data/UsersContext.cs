@@ -19,7 +19,6 @@ namespace FS.DataAccess.Data
         {
             base.OnModelCreating(builder);
 
-
             builder.Entity<Team>(typeBuilder =>
                 typeBuilder.HasKey(team => team.Id));
 

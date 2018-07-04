@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using AutoMapper;
+using FS.Core.Enums;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using FS.Web.Api.DTOs;
@@ -65,7 +66,8 @@ namespace FS.Web.Api.Controllers
             {
                 FunClub = funClub,
                 User = usersRepository.FindByName(HttpContext.User.Identity.Name),
-                UserIsCreator = true
+                UserIsCreator = true,
+                MemberStatus = MemberStatus.In
             });
 
             // Other users
@@ -75,7 +77,8 @@ namespace FS.Web.Api.Controllers
                 {
                     FunClub = funClub,
                     User = usersRepository.FindById(userId),
-                    UserIsCreator = false
+                    UserIsCreator = false,
+                    MemberStatus = MemberStatus.In
                 });
             }
 
