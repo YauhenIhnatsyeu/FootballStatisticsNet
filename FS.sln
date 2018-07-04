@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FS", "FS\FS.csproj", "{705CBC4E-6D85-4564-9F54-1F100AF2FA38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FS.Web", "FS.Web\FS.Web.csproj", "{705CBC4E-6D85-4564-9F54-1F100AF2FA38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FS.Core", "FS.Core\FS.Core.csproj", "{B3753CF1-0370-45AD-9B9F-3CFA9A1EA685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FS.Core", "FS.Core\FS.Core.csproj", "{B3753CF1-0370-45AD-9B9F-3CFA9A1EA685}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FS.Infrastructure", "FS.Infrastructure\FS.Infrastructure.csproj", "{04E8DA05-D809-4CA8-ADB4-67D1907CC2F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FS.DataAccess", "FS.DataAccess\FS.DataAccess.csproj", "{04E8DA05-D809-4CA8-ADB4-67D1907CC2F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

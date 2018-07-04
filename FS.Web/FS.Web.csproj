@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FS.Core\FS.Core.csproj" />
-    <ProjectReference Include="..\FS.Infrastructure\FS.Infrastructure.csproj" />
+    <ProjectReference Include="..\FS.DataAccess\FS.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>
