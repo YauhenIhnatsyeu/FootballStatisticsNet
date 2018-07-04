@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
-using FS.Api.DTOs;
 using FS.Core.Models;
+using FS.Web.Api.DTOs;
 
-namespace FS.Helpers
+namespace FS.Web.Helpers
 {
     public class AutoMapperProfile : Profile
     {

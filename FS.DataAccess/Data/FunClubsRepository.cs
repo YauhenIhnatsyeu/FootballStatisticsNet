@@ -4,7 +4,7 @@ using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FS.Infrastructure.Data
+namespace FS.DataAccess.Data
 {
     public class FunClubsRepository : IFunClubsRepository
     {

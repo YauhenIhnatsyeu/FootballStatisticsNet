@@ -10,27 +10,28 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
 
-namespace FS.Middlewares
+namespace FS.Web.Middlewares
 {
     public class HttpsRedirectionMiddleware
     {
-        private readonly RequestDelegate _next;
-        private bool _portEvaluated = false;
-        private int? _httpsPort;
-        private readonly int _statusCode;
-
-        private readonly IServerAddressesFeature _serverAddressesFeature;
         private readonly IConfiguration _config;
         private readonly ILogger _logger;
+        private readonly RequestDelegate _next;
+
+        private readonly IServerAddressesFeature _serverAddressesFeature;
+        private readonly int _statusCode;
+        private int? _httpsPort;
+        private bool _portEvaluated;
 
         /// <summary>
-        /// Initializes the HttpsRedirectionMiddleware
+        ///     Initializes the HttpsRedirectionMiddleware
         /// </summary>
         /// <param name="next"></param>
         /// <param name="options"></param>
         /// <param name="config"></param>
         /// <param name="loggerFactory"></param>
-        public HttpsRedirectionMiddleware(RequestDelegate next, IOptions<HttpsRedirectionOptions> options, IConfiguration config, ILoggerFactory loggerFactory)
+        public HttpsRedirectionMiddleware(RequestDelegate next, IOptions<HttpsRedirectionOptions> options,
+            IConfiguration config, ILoggerFactory loggerFactory)
 
         {
             _next = next ?? throw new ArgumentNullException(nameof(next));
@@ -40,6 +41,7 @@ namespace FS.Middlewares
             {
                 throw new ArgumentNullException(nameof(options));
             }
+
             var httpsRedirectionOptions = options.Value;
             _httpsPort = httpsRedirectionOptions.HttpsPort;
             _portEvaluated = _httpsPort.HasValue;
@@ -48,22 +50,24 @@ namespace FS.Middlewares
         }
 
         /// <summary>
-        /// Initializes the HttpsRedirectionMiddleware
+        ///     Initializes the HttpsRedirectionMiddleware
         /// </summary>
         /// <param name="next"></param>
         /// <param name="options"></param>
         /// <param name="config"></param>
         /// <param name="loggerFactory"></param>
         /// <param name="serverAddressesFeature">The</param>
-        public HttpsRedirectionMiddleware(RequestDelegate next, IOptions<HttpsRedirectionOptions> options, IConfiguration config, ILoggerFactory loggerFactory,
+        public HttpsRedirectionMiddleware(RequestDelegate next, IOptions<HttpsRedirectionOptions> options,
+            IConfiguration config, ILoggerFactory loggerFactory,
             IServerAddressesFeature serverAddressesFeature)
             : this(next, options, config, loggerFactory)
         {
-            _serverAddressesFeature = serverAddressesFeature ?? throw new ArgumentNullException(nameof(serverAddressesFeature));
+            _serverAddressesFeature =
+                serverAddressesFeature ?? throw new ArgumentNullException(nameof(serverAddressesFeature));
         }
 
         /// <summary>
-        /// Invokes the HttpsRedirectionMiddleware
+        ///     Invokes the HttpsRedirectionMiddleware
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -71,7 +75,7 @@ namespace FS.Middlewares
         {
             if (context.Request.IsHttps
                 || context.Request.Headers.ContainsKey("x-forwarded-proto")
-                    && context.Request.Headers["x-forwarded-proto"] == "https"
+                && context.Request.Headers["x-forwarded-proto"] == "https"
                 || !TryGetHttpsPort(out var port))
             {
                 return _next(context);
@@ -119,6 +123,7 @@ namespace FS.Middlewares
                 port = _httpsPort ?? port;
                 return _httpsPort.HasValue;
             }
+
             _portEvaluated = true;
 
             _httpsPort = _config.GetValue<int?>("HTTPS_PORT");
@@ -147,10 +152,8 @@ namespace FS.Middlewares
                         //_logger.FailedMultiplePorts();
                         return false;
                     }
-                    else
-                    {
-                        httpsPort = bindingAddress.Port;
-                    }
+
+                    httpsPort = bindingAddress.Port;
                 }
             }
 

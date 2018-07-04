@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using FS.Api.DTOs;
+﻿using AutoMapper;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
+using FS.Web.Api.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FS.Api.Controllers
+namespace FS.Web.Api.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FunClubsController : Controller
@@ -43,7 +41,7 @@ namespace FS.Api.Controllers
             //IEnumerable<IEnumerable<UserFunClubToClientDTO>> funClubs = funClubsRepository.Get()
             //    .Select(funClub => mapper.Map<ICollection<UserFunClub>, IEnumerable<UserFunClubToClientDTO>>(funClub.UsersFunClub));
 
-            return Ok(/*funClubs*/);
+            return Ok( /*funClubs*/);
         }
 
         [HttpPost]
@@ -119,7 +117,7 @@ namespace FS.Api.Controllers
             usersFunClubsRepository.Remove(new UserFunClub
             {
                 User = usersRepository.FindById(userFunClubDto.UserId),
-                FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId),
+                FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId)
             });
 
             return Ok();

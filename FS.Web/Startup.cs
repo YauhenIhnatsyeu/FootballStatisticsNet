@@ -4,7 +4,9 @@ using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using FS.Core.Services;
+using FS.DataAccess.Data;
 using FS.Infrastructure.Data;
+using FS.Web.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +17,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using FS.Middlewares;
 
-namespace FS
+namespace FS.Web
 {
     public class Startup
     {

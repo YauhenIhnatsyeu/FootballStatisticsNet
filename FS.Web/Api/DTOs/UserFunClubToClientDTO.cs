@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FS.Api.DTOs
+﻿namespace FS.Web.Api.DTOs
 {
     public class UserFunClubToClientDTO
     {

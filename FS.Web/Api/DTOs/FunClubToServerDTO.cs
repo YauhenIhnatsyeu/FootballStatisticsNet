@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FS.Api.DTOs
+namespace FS.Web.Api.DTOs
 {
     public class FunClubToServerDTO
     {

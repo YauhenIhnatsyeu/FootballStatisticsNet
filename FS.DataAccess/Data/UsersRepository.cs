@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FS.Core.Interfaces.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
-namespace FS.Infrastructure.Data
+namespace FS.DataAccess.Data
 {
     public class UsersRepository<T> : IUsersRepository<T> where T : IdentityUser
     {

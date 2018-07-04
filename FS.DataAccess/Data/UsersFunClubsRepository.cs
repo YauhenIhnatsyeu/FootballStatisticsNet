@@ -3,7 +3,7 @@ using System.Linq;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 
-namespace FS.Infrastructure.Data
+namespace FS.DataAccess.Data
 {
     public class UsersFunClubsRepository : IUsersFunClubsRepository
     {

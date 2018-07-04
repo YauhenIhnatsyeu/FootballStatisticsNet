@@ -1,6 +1,6 @@
 using System;
 
-namespace FS.Api.DTOs
+namespace FS.Web.Api.DTOs
 {
     public class UserToClientDTO
     {

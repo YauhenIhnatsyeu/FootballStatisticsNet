@@ -1,11 +1,10 @@
 ﻿using System.Threading.Tasks;
-using System.Web;
 using FS.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
 
-namespace FS.Api.Controllers
+namespace FS.Web.Api.Controllers
 {
     public class TwitterController : Controller
     {
