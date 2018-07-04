@@ -2,6 +2,7 @@
 using System.Linq;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FS.DataAccess.Data
 {
@@ -16,7 +17,10 @@ namespace FS.DataAccess.Data
 
         public IReadOnlyList<UserFunClub> Get()
         {
-            return context.UsersFunClubs.ToList();
+            return context.UsersFunClubs
+                .Include(ufc => ufc.User)
+                .Include(ufc => ufc.FunClub)
+                .ToList();
         }
 
         public void Add(UserFunClub item)

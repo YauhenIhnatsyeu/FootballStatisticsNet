@@ -2,7 +2,7 @@
 {
     public class UserFunClubToClientDTO
     {
-        //public UserToClientDTO User { get; set; }
+        public UserToClientDTO User { get; set; }
         public bool UserIsCreator { get; set; }
     }
 }

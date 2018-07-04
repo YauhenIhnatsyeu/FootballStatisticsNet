@@ -34,8 +34,8 @@ namespace FS.Web.Api.Controllers
         [Route("/api/users/get")]
         public IActionResult Get()
         {
-            IEnumerable<UserToClientDTO> users = usersRepository.Get()
-                .Select(user => mapper.Map<UserToClientDTO>(user));
+            IEnumerable<UserToClientDTO> users =
+                mapper.Map<IReadOnlyList<User>, IEnumerable<UserToClientDTO>>(usersRepository.Get());
             return Ok(users);
         }
 

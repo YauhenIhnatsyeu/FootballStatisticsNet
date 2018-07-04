@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections;
+using System.Collections.Generic;
+using AutoMapper;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using FS.Web.Api.DTOs;
@@ -32,16 +34,10 @@ namespace FS.Web.Api.Controllers
         [Route("/api/funclubs/get")]
         public IActionResult Get()
         {
-            //IEnumerable<UserToClientDTO> users = usersRepository.Get()
-            //    .Select(user => mapper.Map<UserToClientDTO>(user));
+            IEnumerable<FunClubToClientDTO> funClubs =
+                mapper.Map<IReadOnlyList<FunClub>, IEnumerable<FunClubToClientDTO>>(funClubsRepository.Get());
 
-            //IEnumerable<FunClubToClientDTO> funClubs = funClubsRepository.Get()
-            //    .Select(funClub => mapper.Map<FunClubToClientDTO>(funClub));
-
-            //IEnumerable<IEnumerable<UserFunClubToClientDTO>> funClubs = funClubsRepository.Get()
-            //    .Select(funClub => mapper.Map<ICollection<UserFunClub>, IEnumerable<UserFunClubToClientDTO>>(funClub.UsersFunClub));
-
-            return Ok( /*funClubs*/);
+            return Ok(funClubs);
         }
 
         [HttpPost]

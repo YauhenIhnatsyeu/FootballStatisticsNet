@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using FS.Core.Models;
 
 namespace FS.Web.Api.DTOs
 {
@@ -9,6 +10,6 @@ namespace FS.Web.Api.DTOs
         public int TeamId { get; set; }
         public string Description { get; set; }
         public string AvatarUrl { get; set; }
-        public IEnumerable<UserToClientDTO> Users { get; set; }
+        public IEnumerable<UserFunClubToClientDTO> Users { get; set; }
     }
 }

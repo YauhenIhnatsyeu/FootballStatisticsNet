@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using AutoMapper;
+﻿using AutoMapper;
 using FS.Core.Models;
+using FS.Web.Api.Controllers;
 using FS.Web.Api.DTOs;
 
 namespace FS.Web.Helpers
@@ -11,10 +11,9 @@ namespace FS.Web.Helpers
         {
             CreateMap<UserToServerDTO, User>();
             CreateMap<User, UserToClientDTO>();
-            CreateMap<UserFunClub, UserFunClubToClientDTO>();
-            CreateMap<ICollection<UserFunClub>, IEnumerable<UserFunClubToClientDTO>>();
             CreateMap<FunClub, FunClubToClientDTO>()
-                .ForMember(dest => dest.Users, opt => opt.MapFrom(fc => fc.UsersFunClub));
+                .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UsersFunClub));
+            CreateMap<UserFunClub, UserFunClubToClientDTO>();
         }
     }
 }

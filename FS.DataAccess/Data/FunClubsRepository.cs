@@ -20,6 +20,9 @@ namespace FS.DataAccess.Data
             return context.FunClubs
                 .Include(fc => fc.Team)
                 .Include(fc => fc.UsersFunClub)
+                    .ThenInclude(ufc => ufc.User)
+                .Include(fc => fc.UsersFunClub)
+                    .ThenInclude(ufc => ufc.FunClub)
                 .ToList();
         }
 
