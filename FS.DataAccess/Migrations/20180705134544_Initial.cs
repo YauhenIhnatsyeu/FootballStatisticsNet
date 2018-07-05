@@ -169,6 +169,28 @@ namespace FS.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FanClubs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Name = table.Column<string>(nullable: true),
+                    TeamId = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    AvatarUrl = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FanClubs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FanClubs_Teams_TeamId",
+                        column: x => x.TeamId,
+                        principalTable: "Teams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "FavoriteTeams",
                 columns: table => new
                 {
@@ -188,28 +210,6 @@ namespace FS.DataAccess.Migrations
                         name: "FK_FavoriteTeams_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FanClubs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
-                    Name = table.Column<string>(nullable: true),
-                    TeamId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    AvatarUrl = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FanClubs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_FanClubs_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -278,13 +278,13 @@ namespace FS.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_FavoriteTeams_TeamId",
-                table: "FavoriteTeams",
+                name: "IX_FanClubs_TeamId",
+                table: "FanClubs",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FanClubs_TeamId",
-                table: "FanClubs",
+                name: "IX_FavoriteTeams_TeamId",
+                table: "FavoriteTeams",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(

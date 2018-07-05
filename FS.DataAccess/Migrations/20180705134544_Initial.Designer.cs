@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FS.DataAccess.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20180704140221_Initial")]
+    [Migration("20180705134544_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,19 +20,6 @@ namespace FS.DataAccess.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("FS.Core.Models.FavoriteTeam", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<int>("TeamId");
-
-                    b.HasKey("UserId", "TeamId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("FavoriteTeams");
-                });
 
             modelBuilder.Entity("FS.Core.Models.FanClub", b =>
                 {
@@ -52,6 +39,19 @@ namespace FS.DataAccess.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("FanClubs");
+                });
+
+            modelBuilder.Entity("FS.Core.Models.FavoriteTeam", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("TeamId");
+
+                    b.HasKey("UserId", "TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("FavoriteTeams");
                 });
 
             modelBuilder.Entity("FS.Core.Models.Team", b =>
@@ -244,6 +244,14 @@ namespace FS.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("FS.Core.Models.FanClub", b =>
+                {
+                    b.HasOne("FS.Core.Models.Team", "Team")
+                        .WithMany("FanClubs")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("FS.Core.Models.FavoriteTeam", b =>
                 {
                     b.HasOne("FS.Core.Models.Team", "Team")
@@ -254,14 +262,6 @@ namespace FS.DataAccess.Migrations
                     b.HasOne("FS.Core.Models.User", "User")
                         .WithMany("FavoriteTeams")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FS.Core.Models.FanClub", b =>
-                {
-                    b.HasOne("FS.Core.Models.Team", "Team")
-                        .WithMany("FanClubs")
-                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

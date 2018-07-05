@@ -19,19 +19,6 @@ namespace FS.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("FS.Core.Models.FavoriteTeam", b =>
-                {
-                    b.Property<string>("UserId");
-
-                    b.Property<int>("TeamId");
-
-                    b.HasKey("UserId", "TeamId");
-
-                    b.HasIndex("TeamId");
-
-                    b.ToTable("FavoriteTeams");
-                });
-
             modelBuilder.Entity("FS.Core.Models.FanClub", b =>
                 {
                     b.Property<int>("Id")
@@ -50,6 +37,19 @@ namespace FS.DataAccess.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("FanClubs");
+                });
+
+            modelBuilder.Entity("FS.Core.Models.FavoriteTeam", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<int>("TeamId");
+
+                    b.HasKey("UserId", "TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("FavoriteTeams");
                 });
 
             modelBuilder.Entity("FS.Core.Models.Team", b =>
@@ -242,6 +242,14 @@ namespace FS.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("FS.Core.Models.FanClub", b =>
+                {
+                    b.HasOne("FS.Core.Models.Team", "Team")
+                        .WithMany("FanClubs")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("FS.Core.Models.FavoriteTeam", b =>
                 {
                     b.HasOne("FS.Core.Models.Team", "Team")
@@ -252,14 +260,6 @@ namespace FS.DataAccess.Migrations
                     b.HasOne("FS.Core.Models.User", "User")
                         .WithMany("FavoriteTeams")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FS.Core.Models.FanClub", b =>
-                {
-                    b.HasOne("FS.Core.Models.Team", "Team")
-                        .WithMany("FanClubs")
-                        .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
