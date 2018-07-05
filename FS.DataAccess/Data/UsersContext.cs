@@ -11,9 +11,9 @@ namespace FS.DataAccess.Data
         }
 
         public DbSet<Team> Teams { get; set; }
-        public DbSet<FunClub> FunClubs { get; set; }
+        public DbSet<FanClub> FanClubs { get; set; }
         public DbSet<FavoriteTeam> FavoriteTeams { get; set; }
-        public DbSet<UserFunClub> UsersFunClubs { get; set; }
+        public DbSet<UserFanClub> UsersFanClubs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -22,14 +22,14 @@ namespace FS.DataAccess.Data
             builder.Entity<Team>(typeBuilder =>
                 typeBuilder.HasKey(team => team.Id));
 
-            builder.Entity<FunClub>(typeBuilder =>
-                typeBuilder.HasKey(funClub => funClub.Id));
+            builder.Entity<FanClub>(typeBuilder =>
+                typeBuilder.HasKey(fanClub => fanClub.Id));
 
             builder.Entity<FavoriteTeam>(typeBuilder =>
                 typeBuilder.HasKey(teams => new {teams.UserId, teams.TeamId}));
 
-            builder.Entity<UserFunClub>(typeBuilder =>
-                typeBuilder.HasKey(userFunClub => new {userFunClub.UserId, userFunClub.FunClubId}));
+            builder.Entity<UserFanClub>(typeBuilder =>
+                typeBuilder.HasKey(userFanClub => new {userFanClub.UserId, userFanClub.FanClubId}));
         }
     }
 }

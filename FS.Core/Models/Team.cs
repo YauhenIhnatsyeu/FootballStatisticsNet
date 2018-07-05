@@ -8,6 +8,6 @@ namespace FS.Core.Models
         public int Code { get; set; }
 
         public virtual ICollection<FavoriteTeam> FavoriteTeams { get; set; }
-        public virtual ICollection<FunClub> FunClubs { get; set; }
+        public virtual ICollection<FanClub> FanClubs { get; set; }
     }
 }

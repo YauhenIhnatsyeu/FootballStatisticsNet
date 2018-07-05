@@ -95,8 +95,8 @@ namespace FS.Web
             services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
             services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
             services.AddTransient<ITeamsRepository, TeamsRepository>();
-            services.AddTransient<IFunClubsRepository, FunClubsRepository>();
-            services.AddTransient<IUsersFunClubsRepository, UsersFunClubsRepository>();
+            services.AddTransient<IFanClubsRepository, FanClubsRepository>();
+            services.AddTransient<IUsersFanClubsRepository, UsersFanClubsRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

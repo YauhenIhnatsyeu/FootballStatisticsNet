@@ -2,7 +2,7 @@
 
 namespace FS.Web.Api.DTOs
 {
-    public class UserFunClubToClientDTO
+    public class UserFanClubToClientDTO
     {
         public UserToClientDTO User { get; set; }
         public bool UserIsCreator { get; set; }

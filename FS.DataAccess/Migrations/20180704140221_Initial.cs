@@ -193,7 +193,7 @@ namespace FS.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FunClubs",
+                name: "FanClubs",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -205,9 +205,9 @@ namespace FS.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FunClubs", x => x.Id);
+                    table.PrimaryKey("PK_FanClubs", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_FunClubs_Teams_TeamId",
+                        name: "FK_FanClubs_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
                         principalColumn: "Id",
@@ -215,25 +215,25 @@ namespace FS.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersFunClubs",
+                name: "UsersFanClubs",
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    FunClubId = table.Column<int>(nullable: false),
+                    FanClubId = table.Column<int>(nullable: false),
                     UserIsCreator = table.Column<bool>(nullable: true),
                     MemberStatus = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersFunClubs", x => new { x.UserId, x.FunClubId });
+                    table.PrimaryKey("PK_UsersFanClubs", x => new { x.UserId, x.FanClubId });
                     table.ForeignKey(
-                        name: "FK_UsersFunClubs_FunClubs_FunClubId",
-                        column: x => x.FunClubId,
-                        principalTable: "FunClubs",
+                        name: "FK_UsersFanClubs_FanClubs_FanClubId",
+                        column: x => x.FanClubId,
+                        principalTable: "FanClubs",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UsersFunClubs_AspNetUsers_UserId",
+                        name: "FK_UsersFanClubs_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -283,14 +283,14 @@ namespace FS.DataAccess.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FunClubs_TeamId",
-                table: "FunClubs",
+                name: "IX_FanClubs_TeamId",
+                table: "FanClubs",
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsersFunClubs_FunClubId",
-                table: "UsersFunClubs",
-                column: "FunClubId");
+                name: "IX_UsersFanClubs_FanClubId",
+                table: "UsersFanClubs",
+                column: "FanClubId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -314,13 +314,13 @@ namespace FS.DataAccess.Migrations
                 name: "FavoriteTeams");
 
             migrationBuilder.DropTable(
-                name: "UsersFunClubs");
+                name: "UsersFanClubs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "FunClubs");
+                name: "FanClubs");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

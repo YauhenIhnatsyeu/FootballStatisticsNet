@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
+using FS.Core.Models;
 
 namespace FS.Web.Api.DTOs
 {
-    public class FunClubToServerDTO
+    public class FanClubToClientDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int TeamId { get; set; }
         public string Description { get; set; }
         public string AvatarUrl { get; set; }
-        public IEnumerable<string> UsersIds { get; set; }
+        public IEnumerable<UserFanClubToClientDTO> Users { get; set; }
     }
 }

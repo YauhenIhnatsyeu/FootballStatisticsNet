@@ -10,6 +10,6 @@ namespace FS.Core.Models
         public string AvatarUrl { get; set; }
 
         public virtual ICollection<FavoriteTeam> FavoriteTeams { get; set; }
-        public virtual ICollection<UserFunClub> UserFunClubs { get; set; }
+        public virtual ICollection<UserFanClub> UserFanClubs { get; set; }
     }
 }

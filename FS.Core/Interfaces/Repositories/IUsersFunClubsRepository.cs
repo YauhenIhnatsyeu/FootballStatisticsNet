@@ -3,12 +3,12 @@ using FS.Core.Models;
 
 namespace FS.Core.Interfaces.Repositories
 {
-    public interface IUsersFunClubsRepository
+    public interface IUsersFanClubsRepository
     {
-        IReadOnlyList<UserFunClub> Get();
-        UserFunClub GetByUserFunClub(UserFunClub userFunClub);
-        void Add(UserFunClub item);
-        void Remove(UserFunClub item);
-        void Update(UserFunClub source);
+        IReadOnlyList<UserFanClub> Get();
+        UserFanClub GetByUserFanClub(UserFanClub userFanClub);
+        void Add(UserFanClub item);
+        void Remove(UserFanClub item);
+        void Update(UserFanClub source);
     }
 }

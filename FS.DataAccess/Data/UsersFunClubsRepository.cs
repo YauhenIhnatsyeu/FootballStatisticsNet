@@ -6,45 +6,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FS.DataAccess.Data
 {
-    public class UsersFunClubsRepository : IUsersFunClubsRepository
+    public class UsersFanClubsRepository : IUsersFanClubsRepository
     {
         private readonly UsersContext context;
 
-        public UsersFunClubsRepository(UsersContext context)
+        public UsersFanClubsRepository(UsersContext context)
         {
             this.context = context;
         }
 
-        public IReadOnlyList<UserFunClub> Get()
+        public IReadOnlyList<UserFanClub> Get()
         {
-            return context.UsersFunClubs
+            return context.UsersFanClubs
                 .Include(ufc => ufc.User)
-                .Include(ufc => ufc.FunClub)
+                .Include(ufc => ufc.FanClub)
                 .ToList();
         }
 
-        public UserFunClub GetByUserFunClub(UserFunClub userFunClub)
+        public UserFanClub GetByUserFanClub(UserFanClub userFanClub)
         {
             return Get().FirstOrDefault(
-                ufc => ufc.UserId == userFunClub.UserId && ufc.FunClubId == userFunClub.FunClubId);
+                ufc => ufc.UserId == userFanClub.UserId && ufc.FanClubId == userFanClub.FanClubId);
         }
 
-        public void Add(UserFunClub item)
+        public void Add(UserFanClub item)
         {
-            context.UsersFunClubs.Add(item);
+            context.UsersFanClubs.Add(item);
             context.SaveChanges();
         }
 
-        public void Remove(UserFunClub item)
+        public void Remove(UserFanClub item)
         {
-            context.UsersFunClubs.Remove(item);
+            context.UsersFanClubs.Remove(item);
             context.SaveChanges();
         }
 
-        public void Update(UserFunClub userFunClub)
+        public void Update(UserFanClub userFanClub)
         {
-            context.UsersFunClubs.Attach(userFunClub);
-            context.Entry(userFunClub).State = EntityState.Modified;
+            context.UsersFanClubs.Attach(userFanClub);
+            context.Entry(userFanClub).State = EntityState.Modified;
             context.SaveChanges();
         }
     }
