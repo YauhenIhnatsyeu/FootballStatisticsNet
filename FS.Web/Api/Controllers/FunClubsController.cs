@@ -24,8 +24,6 @@ namespace FS.Web.Api.Controllers
         private readonly IUsersFunClubsRepository usersFunClubsRepository;
         private readonly IUsersRepository<User> usersRepository;
 
-        //private User currentUser 
-
         public FunClubsController(
             IFunClubsRepository funClubsRepository,
             IMapper mapper,
@@ -62,11 +60,11 @@ namespace FS.Web.Api.Controllers
         [Route("/api/funclubs/get-unaccepted")]
         public IActionResult GetUnaccepted()
         {
-            User currentUser = usersRepository.GetLoggedInUser();
+            User loggedInUser = usersRepository.GetLoggedInUser();
 
             IEnumerable<FunClub> funClubs = funClubsRepository.Get()
                 .Where(funClub => funClub.UsersFunClub.Any(
-                    ufc => ufc.User == currentUser && ufc.UserIsCreator == true))
+                    ufc => ufc.User == loggedInUser && ufc.UserIsCreator == true))
                 .Select(funClub => funClub.FilterUsersFunClub(
                     ufc => ufc.MemberStatus == MemberStatus.Requested));
 
@@ -146,8 +144,9 @@ namespace FS.Web.Api.Controllers
             {
                 User = usersRepository.GetLoggedInUser(),
                 FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId),
-                MemberStatus = MemberStatus.Requested
-            });
+                MemberStatus = MemberStatus.Requested,
+                UserIsCreator = false
+        });
 
             return Ok();
         }
@@ -161,9 +160,25 @@ namespace FS.Web.Api.Controllers
                 return BadRequest();
             }
 
-            FunClub funClub = funClubsRepository.FindById(userFunClubDto.FunClubId);
+            UserFunClub userFunClub = usersFunClubsRepository.GetByUserFunClub(
+                mapper.Map<UserFunClubToServerDTO, UserFunClub>(userFunClubDto)
+            );
 
-            if (!funClub.IsCreatedBy(usersRepository.GetLoggedInUser()))
+            if (userFunClub?.MemberStatus == MemberStatus.Banned)
+            {
+                return BadRequest();
+            }
+
+            return TryChangeUserFunClubStatus(userFunClub, MemberStatus.In)
+                ? (IActionResult) Ok()
+                : BadRequest();
+        }
+
+        [HttpPost]
+        [Route("/api/funclubs/ban-user")]
+        public IActionResult BanUser([FromBody] UserFunClubToServerDTO userFunClubDto)
+        {
+            if (userFunClubDto == null)
             {
                 return BadRequest();
             }
@@ -172,39 +187,59 @@ namespace FS.Web.Api.Controllers
                 mapper.Map<UserFunClubToServerDTO, UserFunClub>(userFunClubDto)
             );
 
-            if (userFunClub == null)
+            if (userFunClub?.MemberStatus == MemberStatus.Banned)
             {
-                return BadRequest();
+                return Ok();
             }
 
-            if (userFunClub.MemberStatus == MemberStatus.Banned)
-            {
-                return BadRequest();
-            }
-
-            userFunClub.MemberStatus = MemberStatus.In;
-            userFunClub.UserIsCreator = false;
-            usersFunClubsRepository.Update(userFunClub);
-
-            return Ok();
+            return TryChangeUserFunClubStatus(userFunClub, MemberStatus.Banned)
+                ? (IActionResult)Ok()
+                : BadRequest();
         }
 
         [HttpPost]
-        [Route("/api/funclubs/remove-user")]
-        public IActionResult RemoveUser([FromBody] UserFunClubToServerDTO userFunClubDto)
+        [Route("/api/funclubs/expel-user")]
+        [Route("/api/funclubs/unban-user")]
+        public IActionResult ExpelOrUnbanUser([FromBody] UserFunClubToServerDTO userFunClubDto)
         {
             if (userFunClubDto == null)
             {
                 return BadRequest();
             }
 
-            usersFunClubsRepository.Remove(new UserFunClub
-            {
-                User = usersRepository.FindById(userFunClubDto.UserId),
-                FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId)
-            });
+            UserFunClub userFunClub = usersFunClubsRepository.GetByUserFunClub(
+                mapper.Map<UserFunClubToServerDTO, UserFunClub>(userFunClubDto)
+            );
 
-            return Ok();
+            return TryChangeUserFunClubStatus(userFunClub, MemberStatus.Out)
+                ? (IActionResult)Ok()
+                : BadRequest();
+        }
+
+        private bool TryChangeUserFunClubStatus(UserFunClub userFunClub, MemberStatus memberStatus)
+        {
+            if (userFunClub == null)
+            {
+                return false;
+            }
+
+            FunClub funClub = funClubsRepository.FindById(userFunClub.FunClubId);
+            User loggedInUser = usersRepository.GetLoggedInUser();
+
+            if (!funClub.IsCreatedBy(loggedInUser))
+            {
+                return false;
+            }
+
+            if (userFunClub.UserId == loggedInUser.Id)
+            {
+                return false;
+            }
+
+            userFunClub.MemberStatus = memberStatus;
+            usersFunClubsRepository.Update(userFunClub);
+
+            return true;
         }
     }
 }

@@ -82,19 +82,19 @@ namespace FS.Web.Api.Controllers
 
             User user = mapper.Map<User>(userToServerDto);
 
-            User userFromRepository = usersRepository.SignIn(user, userToServerDto.Password);
+            User loggedInUser = usersRepository.SignIn(user, userToServerDto.Password);
 
-            if (userFromRepository == null)
+            if (loggedInUser == null)
             {
                 return BadRequest();
             }
 
-            UserToClientDTO userToClientDto = mapper.Map<UserToClientDTO>(userFromRepository);
+            UserToClientDTO userToClientDto = mapper.Map<UserToClientDTO>(loggedInUser);
 
             return Ok(new
             {
                 User = userToClientDto,
-                Token = jwtService.GetToken(userFromRepository)
+                Token = jwtService.GetToken(loggedInUser)
             });
         }
 
