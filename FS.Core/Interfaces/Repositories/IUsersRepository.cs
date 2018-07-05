@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
 namespace FS.Core.Interfaces.Repositories
@@ -7,8 +8,8 @@ namespace FS.Core.Interfaces.Repositories
     {
         IReadOnlyList<T> Get();
         bool Create(T user, string password);
-        bool SignIn(T user, string password);
+        T SignIn(T user, string password);
         T FindById(string id);
-        T FindByName(string name);
+        T GetLoggedInUser();
     }
 }

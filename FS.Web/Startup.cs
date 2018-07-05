@@ -85,6 +85,7 @@ namespace FS.Web
             });
 
             services.AddAutoMapper();
+            services.AddHttpContextAccessor();
 
             services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<ITwitterService, TwitterService>();

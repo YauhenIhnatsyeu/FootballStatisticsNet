@@ -23,6 +23,12 @@ namespace FS.DataAccess.Data
                 .ToList();
         }
 
+        public UserFunClub GetByUserFunClub(UserFunClub userFunClub)
+        {
+            return Get().FirstOrDefault(
+                ufc => ufc.UserId == userFunClub.UserId && ufc.FunClubId == userFunClub.FunClubId);
+        }
+
         public void Add(UserFunClub item)
         {
             context.UsersFunClubs.Add(item);
@@ -32,6 +38,13 @@ namespace FS.DataAccess.Data
         public void Remove(UserFunClub item)
         {
             context.UsersFunClubs.Remove(item);
+            context.SaveChanges();
+        }
+
+        public void Update(UserFunClub userFunClub)
+        {
+            context.UsersFunClubs.Attach(userFunClub);
+            context.Entry(userFunClub).State = EntityState.Modified;
             context.SaveChanges();
         }
     }

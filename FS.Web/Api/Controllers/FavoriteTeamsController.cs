@@ -30,7 +30,7 @@ namespace FS.Web.Api.Controllers
         [Route("/api/teams/get")]
         public IActionResult GetTeams()
         {
-            User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
+            User userFromRepository = usersRepository.GetLoggedInUser();
             IEnumerable<int> teamIds = favoriteTeamsRepository.Get()
                 .Where(fv => fv.User == userFromRepository)
                 .Select(fv => fv.Team.Code);
@@ -54,7 +54,7 @@ namespace FS.Web.Api.Controllers
             var teamToSave = new Team {Code = favoriteTeamDto.TeamId};
             teamsRepository.Add(teamToSave);
 
-            User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
+            User userFromRepository = usersRepository.GetLoggedInUser();
 
             var favoriteTeamToSave = new FavoriteTeam
             {
@@ -84,7 +84,7 @@ namespace FS.Web.Api.Controllers
                 return BadRequest();
             }
 
-            User userFromRepository = usersRepository.FindByName(HttpContext.User.Identity.Name);
+            User userFromRepository = usersRepository.GetLoggedInUser();
 
             var favoriteTeamToRemove = new FavoriteTeam
             {

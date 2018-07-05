@@ -82,12 +82,13 @@ namespace FS.Web.Api.Controllers
 
             User user = mapper.Map<User>(userToServerDto);
 
-            if (!usersRepository.SignIn(user, userToServerDto.Password))
+            User userFromRepository = usersRepository.SignIn(user, userToServerDto.Password);
+
+            if (userFromRepository == null)
             {
                 return BadRequest();
             }
 
-            User userFromRepository = usersRepository.FindByName(user.UserName);
             UserToClientDTO userToClientDto = mapper.Map<UserToClientDTO>(userFromRepository);
 
             return Ok(new

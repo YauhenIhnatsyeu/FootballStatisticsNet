@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using FS.Core.Enums;
 using FS.Core.Interfaces.Repositories;
@@ -7,7 +9,9 @@ using FS.Core.Models;
 using FS.Web.Api.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FS.Web.Api.Controllers
 {
@@ -20,8 +24,13 @@ namespace FS.Web.Api.Controllers
         private readonly IUsersFunClubsRepository usersFunClubsRepository;
         private readonly IUsersRepository<User> usersRepository;
 
-        public FunClubsController(IFunClubsRepository funClubsRepository, IMapper mapper,
-            ITeamsRepository teamsRepository, IUsersFunClubsRepository usersFunClubsRepository,
+        //private User currentUser 
+
+        public FunClubsController(
+            IFunClubsRepository funClubsRepository,
+            IMapper mapper,
+            ITeamsRepository teamsRepository,
+            IUsersFunClubsRepository usersFunClubsRepository,
             IUsersRepository<User> usersRepository)
         {
             this.funClubsRepository = funClubsRepository;
@@ -31,14 +40,39 @@ namespace FS.Web.Api.Controllers
             this.usersRepository = usersRepository;
         }
 
+        /// <summary>
+        /// Gets all funclubs with users that are accepted into them
+        /// </summary>
         [AllowAnonymous]
         [Route("/api/funclubs/get")]
         public IActionResult Get()
         {
-            IEnumerable<FunClubToClientDTO> funClubs =
-                mapper.Map<IReadOnlyList<FunClub>, IEnumerable<FunClubToClientDTO>>(funClubsRepository.Get());
+            IEnumerable<FunClub> funClubs = funClubsRepository.Get()
+                .Select(funClub => funClub.FilterUsersFunClub(
+                    ufc => ufc.MemberStatus == MemberStatus.In));
 
-            return Ok(funClubs);
+            return Ok(
+                mapper.Map<IEnumerable<FunClub>, IEnumerable<FunClubToClientDTO>>(funClubs)
+            );
+        }
+
+        /// <summary>
+        /// Gets all funclubs, which current user created, with users that want to join them
+        /// </summary>
+        [Route("/api/funclubs/get-unaccepted")]
+        public IActionResult GetUnaccepted()
+        {
+            User currentUser = usersRepository.GetLoggedInUser();
+
+            IEnumerable<FunClub> funClubs = funClubsRepository.Get()
+                .Where(funClub => funClub.UsersFunClub.Any(
+                    ufc => ufc.User == currentUser && ufc.UserIsCreator == true))
+                .Select(funClub => funClub.FilterUsersFunClub(
+                    ufc => ufc.MemberStatus == MemberStatus.Requested));
+
+            return Ok(
+                mapper.Map<IEnumerable<FunClub>, IEnumerable<FunClubToClientDTO>>(funClubs)
+            );
         }
 
         [HttpPost]
@@ -65,7 +99,7 @@ namespace FS.Web.Api.Controllers
             usersFunClubsRepository.Add(new UserFunClub
             {
                 FunClub = funClub,
-                User = usersRepository.FindByName(HttpContext.User.Identity.Name),
+                User = usersRepository.GetLoggedInUser(),
                 UserIsCreator = true,
                 MemberStatus = MemberStatus.In
             });
@@ -86,26 +120,77 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/funclubs/adduser")]
-        public IActionResult AddUser([FromBody] UserFunClubToServerDTO userFunClubDto)
+        [Route("/api/funclubs/send-join-request")]
+        public IActionResult AddJoiningAwaitingUser([FromBody] UserFunClubToServerDTO userFunClubDto)
         {
             if (userFunClubDto == null)
             {
                 return BadRequest();
             }
 
+            UserFunClub userFunClub = usersFunClubsRepository.GetByUserFunClub(
+                mapper.Map<UserFunClubToServerDTO, UserFunClub>(userFunClubDto)
+            );
+
+            if (userFunClub != null)
+            {
+                if (userFunClub.MemberStatus == MemberStatus.Banned)
+                {
+                    return BadRequest();
+                }
+
+                return Ok();
+            }
+
             usersFunClubsRepository.Add(new UserFunClub
             {
-                User = usersRepository.FindById(userFunClubDto.UserId),
+                User = usersRepository.GetLoggedInUser(),
                 FunClub = funClubsRepository.FindById(userFunClubDto.FunClubId),
-                UserIsCreator = false
+                MemberStatus = MemberStatus.Requested
             });
 
             return Ok();
         }
 
         [HttpPost]
-        [Route("/api/funclubs/removeuser")]
+        [Route("/api/funclubs/accept-join-request")]
+        public IActionResult AcceptJoinRequest([FromBody] UserFunClubToServerDTO userFunClubDto)
+        {
+            if (userFunClubDto == null)
+            {
+                return BadRequest();
+            }
+
+            FunClub funClub = funClubsRepository.FindById(userFunClubDto.FunClubId);
+
+            if (!funClub.IsCreatedBy(usersRepository.GetLoggedInUser()))
+            {
+                return BadRequest();
+            }
+
+            UserFunClub userFunClub = usersFunClubsRepository.GetByUserFunClub(
+                mapper.Map<UserFunClubToServerDTO, UserFunClub>(userFunClubDto)
+            );
+
+            if (userFunClub == null)
+            {
+                return BadRequest();
+            }
+
+            if (userFunClub.MemberStatus == MemberStatus.Banned)
+            {
+                return BadRequest();
+            }
+
+            userFunClub.MemberStatus = MemberStatus.In;
+            userFunClub.UserIsCreator = false;
+            usersFunClubsRepository.Update(userFunClub);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("/api/funclubs/remove-user")]
         public IActionResult RemoveUser([FromBody] UserFunClubToServerDTO userFunClubDto)
         {
             if (userFunClubDto == null)

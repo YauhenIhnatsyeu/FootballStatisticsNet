@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Identity;
 
 namespace FS.Core.Models
 {
@@ -12,5 +15,19 @@ namespace FS.Core.Models
 
         public virtual Team Team { get; set; }
         public virtual ICollection<UserFunClub> UsersFunClub { get; set; }
+
+        public FunClub FilterUsersFunClub(Func<UserFunClub, bool> func)
+        {
+            FunClub funClub = this;
+            funClub.UsersFunClub = funClub.UsersFunClub.Where(func).ToList();
+            return funClub;
+        }
+
+        public bool IsCreatedBy(IdentityUser user)
+        {
+            return UsersFunClub.Any(
+                ufc => ufc.UserId == user.Id && ufc.UserIsCreator == true
+            );
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using FS.Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace FS.DataAccess.Data
@@ -9,11 +12,16 @@ namespace FS.DataAccess.Data
     {
         private readonly SignInManager<T> signInManager;
         private readonly UserManager<T> userManager;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public UsersRepository(UserManager<T> userManager, SignInManager<T> signInManager)
+        public UsersRepository(
+            UserManager<T> userManager,
+            SignInManager<T> signInManager,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public IReadOnlyList<T> Get()
@@ -26,10 +34,11 @@ namespace FS.DataAccess.Data
             return userManager.CreateAsync(user, password).Result.Succeeded;
         }
 
-        public bool SignIn(T user, string password)
+        public T SignIn(T user, string password)
         {
-            return signInManager.PasswordSignInAsync(user.UserName, password, false, false)
-                .Result.Succeeded;
+            return signInManager.PasswordSignInAsync(user.UserName, password, false, false).Result.Succeeded
+                ? FindByName(user.UserName)
+                : null;
         }
 
         public T FindById(string id)
@@ -37,7 +46,13 @@ namespace FS.DataAccess.Data
             return userManager.FindByIdAsync(id).Result;
         }
 
-        public T FindByName(string name)
+        public T GetLoggedInUser()
+        {
+            string userName = httpContextAccessor.HttpContext.User.Identity.Name;
+            return FindByName(userName);
+        }
+
+        private T FindByName(string name)
         {
             return userManager.FindByNameAsync(name).Result;
         }
