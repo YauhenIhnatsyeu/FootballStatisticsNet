@@ -8,8 +8,8 @@ export default class LabelInput extends Component {
         const {
             inputProps,
             value,
-            handleChange,
-            handleBlur,
+            onChange,
+            onBlur,
         } = this.props;
 
         return (
@@ -18,9 +18,9 @@ export default class LabelInput extends Component {
                 id={inputProps.name}
                 name={inputProps.name}
                 type={inputProps.type}
-                value={value || ""}
-                onChange={handleChange}
-                onBlur={handleBlur}
+                defaultValue={value || ""}
+                onChange={onChange}
+                onBlur={onBlur}
             />
         );
     }
@@ -33,13 +33,13 @@ LabelInput.propTypes = {
         value: PropTypes.string,
     }),
     value: PropTypes.string,
-    handleChange: PropTypes.func,
-    handleBlur: PropTypes.func,
+    onChange: PropTypes.func,
+    onBlur: PropTypes.func,
 };
 
 LabelInput.defaultProps = {
     inputProps: null,
     value: null,
-    handleChange: null,
-    handleBlur: null,
+    onChange: null,
+    onBlur: null,
 };

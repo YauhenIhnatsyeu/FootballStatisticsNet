@@ -2,10 +2,12 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import TeamItem from "Pages/leaguePage/TeamItem";
+import TeamItem from "Components/TeamItem";
 
 import Loading from "Components/messages/Loading";
 import Error from "Components/messages/Error";
+
+import createTeamUrl from "Utilities/urlsCreators";
 
 import "./index.css";
 
@@ -15,6 +17,35 @@ export default class TeamsList extends Component {
             this.props.getTeamsFromFavorites();
         }
     }
+
+    handleButtonClick = (team, state) => {
+        if (state) {
+            this.props.removeTeamFromFavorites(team);
+        } else {
+            this.props.addTeamToFavorites(team);
+        }
+    }
+
+    isTeamInFavorites = teamId => this.props.favoriteTeams.includes(teamId);
+
+    renderTeamItemWithButton = team => (
+        <TeamItem
+            team={team}
+            teamUrl={createTeamUrl(team.id)}
+            buttonRequired
+            onButtonClick={this.handleButtonClick}
+            falseStateCaption="Add to favorites"
+            trueStateCaption="Remove from favorites"
+            defaultState={this.isTeamInFavorites(team.id)}
+        />
+    )
+
+    renderTeamItemWithoutButton = team => (
+        <TeamItem
+            team={team}
+            teamUrl={createTeamUrl(team.id)}
+        />
+    )
 
     render() {
         if (this.props.teamsFetchingErrorOccured) {
@@ -30,13 +61,9 @@ export default class TeamsList extends Component {
                 {this.props.teams.map((team, index) =>
                     (
                         <div className="teams-list__team-item-container" key={index}>
-                            <TeamItem
-                                team={team}
-                                favoriteTeams={this.props.favoriteTeams}
-                                addTeamToFavorites={this.props.addTeamToFavorites}
-                                removeTeamFromFavorites={this.props.removeTeamFromFavorites}
-                                loggedIn={this.props.loggedIn}
-                            />
+                            {this.props.loggedIn
+                                ? this.renderTeamItemWithButton(team)
+                                : this.renderTeamItemWithoutButton(team)}
                         </div>
                     ))
                 }

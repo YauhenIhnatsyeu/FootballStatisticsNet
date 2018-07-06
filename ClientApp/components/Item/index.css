@@ -11,3 +11,7 @@
     color: #ffffff;
     background: #209030;
 }
+
+.item_clickable {
+    cursor: pointer; 
+}

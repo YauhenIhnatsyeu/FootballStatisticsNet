@@ -100,8 +100,8 @@ export default class LabelInput extends Component {
                     inputProps={inputProps}
                     // if input's type is date, use state to update its value
                     value={this.isDatePicker() ? this.state.value : inputProps.value}
-                    handleChange={this.handleChange}
-                    handleBlur={this.handleBlur}
+                    onChange={this.handleChange}
+                    onBlur={this.handleBlur}
                 />
             );
             break;
