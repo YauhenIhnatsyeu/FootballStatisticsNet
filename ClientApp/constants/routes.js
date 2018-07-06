@@ -6,6 +6,7 @@ import TeamPageContainer from "Containers/TeamPageContainer";
 import RegisterPageContainer from "Containers/RegisterPageContainer";
 import LoginPageContainer from "Containers/LoginPageContainer";
 import LogoutPageContainer from "Containers/LogoutPageContainer";
+import FanClubCreatePageContainer from "../containers/FanClubCreatePageContainer";
 
 export default [
     {
@@ -37,5 +38,10 @@ export default [
         path: routePaths.logout,
         component: LogoutPageContainer,
         caption: "Log out",
+    },
+    {
+        path: routePaths.createfanClub,
+        component: FanClubCreatePageContainer,
+        caption: "Create fan club",
     },
 ];

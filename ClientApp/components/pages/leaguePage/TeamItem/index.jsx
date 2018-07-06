@@ -12,12 +12,15 @@ import "./index.css";
 
 export default class TeamItem extends Component {
     isThisTeamFavorite = () =>
-        this.props.favoriteTeams.includes(this.props.team.id);
+        this.props.favoriteTeams
+            && this.props.favoriteTeams.includes(this.props.team.id);
 
     handleButtonClick = () => {
         if (this.isThisTeamFavorite()) {
-            this.props.removeTeamFromFavorites(this.props.team);
-        } else {
+            if (this.props.removeTeamFromFavorites) {
+                this.props.removeTeamFromFavorites(this.props.team);
+            }
+        } else if (this.props.addTeamToFavorites) {
             this.props.addTeamToFavorites(this.props.team);
         }
     }
@@ -63,14 +66,18 @@ TeamItem.propTypes = {
         shortName: PropTypes.string.isRequired,
         squadMarketValue: PropTypes.string,
     }),
-    favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
-    removeTeamFromFavorites: PropTypes.func.isRequired,
-    addTeamToFavorites: PropTypes.func.isRequired,
-    loggedIn: PropTypes.bool.isRequired,
+    favoriteTeams: PropTypes.arrayOf(PropTypes.number),
+    removeTeamFromFavorites: PropTypes.func,
+    addTeamToFavorites: PropTypes.func,
+    loggedIn: PropTypes.bool,
 };
 
 TeamItem.defaultProps = {
     team: PropTypes.shape({
         crestUrl: null,
     }),
+    favoriteTeams: null,
+    removeTeamFromFavorites: null,
+    addTeamToFavorites: null,
+    loggedIn: false,
 };

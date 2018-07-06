@@ -8,11 +8,11 @@ export default function validate(str, validationOptions) {
     for (let i = 0; i < validationOptionsKeys.length; i += 1) {
         const key = validationOptionsKeys[i];
         const validationRule = validationRules[key];
-        const requestedValue = validationOptions[key];
+        const validationValue = validationOptions[key];
 
         if (validationRule
-            && !validationRule.isValid(str, requestedValue)) {
-            return validationRule.errorMessage(requestedValue);
+            && !validationRule.isValid(str, validationValue)) {
+            return validationRule.errorMessage(validationValue);
         }
     }
 

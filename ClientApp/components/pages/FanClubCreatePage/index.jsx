@@ -14,7 +14,7 @@ export default class FanClubCreatePage extends Component {
         return (
             <InputForm
                 inputProps={inputProps.createFanClub}
-                submitValue="Create fanClub"
+                submitValue="Create fan club"
                 onSubmit={this.handleSubmit}
             />
         );

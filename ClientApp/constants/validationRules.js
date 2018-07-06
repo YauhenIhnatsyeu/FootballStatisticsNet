@@ -1,6 +1,6 @@
 export default {
     allowEmpty: {
-        isValid: (s, value) => (s === "") === value,
+        isValid: (s, value) => (value ? true : (s !== "")),
         errorMessage: () => "This value cannot be empty",
     },
     minLength: {

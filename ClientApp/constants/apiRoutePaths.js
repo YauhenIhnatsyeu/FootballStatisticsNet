@@ -10,5 +10,6 @@ export default {
 
     tweets: "/api/twitter/search",
 
+    createFunClub: "/api/fanClubs/create",
     fanClubsAvatar: "/api/fanClubs/avatar",
 };

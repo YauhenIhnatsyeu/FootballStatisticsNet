@@ -7,6 +7,9 @@ import validate from "Helpers/validationHelper";
 
 import "Css/form.css";
 
+import Input from "../Input";
+import Select from "../Select";
+
 export default class LabelInput extends Component {
     constructor(props) {
         super(props);
@@ -79,20 +82,36 @@ export default class LabelInput extends Component {
             "form__error-message_visible": this.state.errorMessage,
         });
 
+        let inputComponent;
+
+        switch (inputProps.type) {
+        case "select":
+            inputComponent = (
+                <Select
+                    inputProps={inputProps}
+                    handleChange={this.handleChange}
+                />
+            );
+            break;
+
+        default:
+            inputComponent = (
+                <Input
+                    inputProps={inputProps}
+                    // if input's type is date, use state to update its value
+                    value={this.isDatePicker() ? this.state.value : inputProps.value}
+                    handleChange={this.handleChange}
+                    handleBlur={this.handleBlur}
+                />
+            );
+            break;
+        }
+
         return (
             <div className="form__label-input-container">
                 <label className="form__label-input" htmlFor={inputProps.name}>
                     {inputProps.label}:
-                    <input
-                        className="form__input"
-                        id={inputProps.name}
-                        name={inputProps.name}
-                        type={inputProps.type}
-                        // if input's type is date, use state to update its value
-                        value={this.isDatePicker() ? this.state.value : inputProps.value}
-                        onChange={this.handleChange}
-                        onBlur={this.handleBlur}
-                    />
+                    {inputComponent}
                 </label>
 
                 <span className={errorMessageStyle}>{this.state.errorMessage}</span>

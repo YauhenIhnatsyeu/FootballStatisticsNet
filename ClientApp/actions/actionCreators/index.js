@@ -67,3 +67,5 @@ export {
     onTweetsSearchSucceeded,
     onTweetsSearchFailed,
 } from "./twitterActionCreators";
+
+export { createFanClub } from "./fanClubActionCreators";

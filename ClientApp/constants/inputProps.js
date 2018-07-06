@@ -46,10 +46,50 @@ const register = {
     },
 };
 
+const login = {
+    userName: register.userName,
+    password: register.password,
+};
+
+const createFanClub = {
+    name: {
+        name: "name",
+        label: "Name",
+        type: "text",
+        validationOptions: {
+            allowEmpty: false,
+            minLength: 5,
+            maxLength: 20,
+        },
+    },
+    teamId: {
+        name: "teamId",
+        label: "Team",
+        type: "select",
+        options: [
+            {
+                value: "1",
+                title: "a",
+            },
+            {
+                value: "2",
+                title: "b",
+            },
+        ],
+    },
+    description: {
+        name: "description",
+        label: "Description",
+        type: "text",
+        validationOptions: {
+            allowEmpty: true,
+            maxLength: 256,
+        },
+    },
+};
+
 export default {
     register,
-    login: {
-        userName: register.userName,
-        password: register.password,
-    },
+    login,
+    createFanClub,
 };

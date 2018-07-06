@@ -7,13 +7,13 @@ module.exports = {
     entry: ["babel-polyfill", "./ClientApp/index.jsx"],
     output: {
         filename: "bundle[hash].js",
-        path: path.resolve(__dirname, "FS/wwwroot"),
+        path: path.resolve(__dirname, "FS.Web/wwwroot"),
         publicPath: "~",
     },
     plugins: [
-        new CleanWebpackPlugin(path.resolve(__dirname, "FS/wwwroot")),
+        new CleanWebpackPlugin(path.resolve(__dirname, "FS.Web/wwwroot")),
         new HtmlWebpackPlugin({
-            template: "FS/Templates/IndexTemplate.cshtml",
+            template: "FS.Web/Templates/IndexTemplate.cshtml",
             filename: "../Views/Home/Index.cshtml",
         }),
     ],
