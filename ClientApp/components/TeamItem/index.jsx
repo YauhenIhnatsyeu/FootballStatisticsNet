@@ -21,8 +21,6 @@ export default class TeamItem extends Component {
     );
 
     handleButtonClick = (state) => {
-        console.log(this.props.team)
-        console.log(state)
         if (this.props.onButtonClick) {
             this.props.onButtonClick(this.props.team, state);
         }
