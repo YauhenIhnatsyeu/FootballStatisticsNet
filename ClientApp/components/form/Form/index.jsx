@@ -2,9 +2,9 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { retrieveNameAndValueFromEvent } from "Utilities/retrieveNameAndValueFunctions";
+import { injectPropsIntoComponent } from "Helpers/propsHelper";
 
-import formItemHOC from "../formItemHOC";
+import { retrieveNameAndValueFromEvent } from "Utilities/retrieveNameAndValueFunctions";
 
 import "./index.css";
 
@@ -31,7 +31,11 @@ export default class Form extends Component {
         console.log(this.model)
     }
 
-    handleChange = (name, value) => {
+    handleChange = (retrieveNameAndValueFunc, ...params) => {
+        const { name, value } = retrieveNameAndValueFunc
+            ? retrieveNameAndValueFunc(...params)
+            : { name: "", value: "" };
+
         this.changeModel(name, value);
     }
 
@@ -47,32 +51,36 @@ export default class Form extends Component {
 
     render() {
         const { children, submitValue } = this.props;
+        const classNames = this.props.classNames || {};
 
         return (
-            <div className="form-container">
-                <form className="form" onSubmit={this.handleSubmit}>
-                    {children.map((child, index) => {
-                        const wrappedChild = formItemHOC(
-                            child,
-                            this.handleChange,
+            <form className={classNames.form} onSubmit={this.handleSubmit}>
+                {children.map((child, index) => {
+                    const extraProps = {
+                        onChange: (...args) => this.handleChange(
                             child.props.retrieveNameAndValueFunc || retrieveNameAndValueFromEvent,
-                        );
+                            ...args,
+                        ),
+                    };
 
-                        return (
-                            <label key={index} className="form__label-input" htmlFor={wrappedChild.props.name}>
-                                {wrappedChild.props.label && `${wrappedChild.props.label}:`}
-                                {wrappedChild}
-                            </label>
-                        );
-                    })}
+                    const wrappedChild = injectPropsIntoComponent(child, extraProps);
 
+                    return (
+                        <label key={index} className={classNames.label} htmlFor={wrappedChild.props.name}>
+                            {wrappedChild.props.label && `${wrappedChild.props.label}:`}
+                            {wrappedChild}
+                        </label>
+                    );
+                })}
+
+                <div className={classNames["submit-container"]}>
                     <input
-                        className="form__input form__submit"
+                        className={classNames.submit}
                         type="submit"
                         value={submitValue || "Submit"}
                     />
-                </form>
-            </div>
+                </div>
+            </form>
         );
     }
 }
@@ -84,10 +92,17 @@ Form.propTypes = {
     ]),
     submitValue: PropTypes.string,
     onSubmit: PropTypes.func,
+    classNames: PropTypes.shape({
+        form: PropTypes.string,
+        label: PropTypes.string,
+        "submit-container": PropTypes.string,
+        submit: PropTypes.string,
+    }),
 };
 
 Form.defaultProps = {
     children: null,
     submitValue: null,
     onSubmit: null,
+    classNames: null,
 };

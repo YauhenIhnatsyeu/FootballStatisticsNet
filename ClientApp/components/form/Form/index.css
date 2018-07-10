@@ -2,10 +2,6 @@
     width: 30%;
 }
 
-.form__label-input-container {
-    position: relative;
-}
-
 .form__label-input {
     display: flex;
 

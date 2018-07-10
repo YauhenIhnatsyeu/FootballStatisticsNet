@@ -2,13 +2,11 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { injectPropsIntoComponent } from "Helpers/propsHelper";
+
 import "./index.css";
 
 export default class ItemsList extends Component {
-
-    // Adds extra props to component
-    itemHOC = (ItemComponent, extraProps) =>
-        <ItemComponent.type {...ItemComponent.props} {...extraProps} />
 
     render() {
         const { itemComponent } = this.props;
@@ -23,7 +21,7 @@ export default class ItemsList extends Component {
 
                         return (
                             <div className="items-list__item-container" key={index}>
-                                {this.itemHOC(itemComponent, extraProps)}
+                                {injectPropsIntoComponent(itemComponent, extraProps)}
                             </div>
                         );
                     })
