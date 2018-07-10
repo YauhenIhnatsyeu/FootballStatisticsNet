@@ -9,10 +9,11 @@ import {
 
 export default function* fetchTeams(action) {
     try {
-        const leagueId = action.payload;
-        const teams = yield call(getTeams, leagueId);
+        const leaguesIds = action.payload;
+        const teams = yield call(getTeams, leaguesIds);
         yield put(onTeamsFetchSucceeded(teams));
     } catch (error) {
+        console.log(error);
         yield put(onTeamsFetchFailed(error));
     }
 }

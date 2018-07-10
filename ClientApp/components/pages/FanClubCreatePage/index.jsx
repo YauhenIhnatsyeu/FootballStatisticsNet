@@ -2,16 +2,18 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import leaguesData from "Constants/leaguesData";
+
 import ComponentChooser from "Components/ComponentChooser";
 
 import TeamItem from "Components/TeamItem";
 
 export default class FanClubCreatePage extends Component {
     componentDidMount() {
-        this.props.fetchTeams(444);
+        this.props.fetchTeams(leaguesData.map(league => league.id));
     }
 
-    getTeamItems = () => this.props.teams && this.props.teams.map((team, index) => (
+    getTeamItems = teams => teams && teams.map((team, index) => (
         <TeamItem
             team={team}
             onClick={this.handleClick}
@@ -19,28 +21,32 @@ export default class FanClubCreatePage extends Component {
         />
     ))
 
-    handleClick = (e) => {
-        console.log(e);
+    getComponents = (value) => {
+        const relatedTeams = this.props.teams.filter(team =>
+            this.valueRelatesToTeam(value, team));
+
+        return this.getTeamItems(relatedTeams);
+    }
+
+    valueRelatesToTeam = (value, team) => {
+        const { name, shortName } = team;
+
+        return (name && name.toLowerCase().startsWith(value.toLowerCase()))
+            || (shortName && shortName.toLowerCase().startsWith(value.toLowerCase()));
+    }
+
+    handleClick = (component) => {
+        console.log(component);
     }
 
     handleSubmit = (user) => {
         this.props.createFanClub(user);
     }
 
-    valueRelatesToComponent = (value, component) => {
-        const { name, shortName } = component.props.team;
-
-        return (name && name.toLowerCase().startsWith(value.toLowerCase()))
-            || (shortName && shortName.toLowerCase().startsWith(value.toLowerCase()));
-    }
-
     render() {
-        console.log(this.props.teams)
-        console.log(this.getTeamItems())
         return (
             <ComponentChooser
-                components={this.getTeamItems()}
-                valueRelatesToComponent={this.valueRelatesToComponent}
+                getComponents={this.getComponents}
             />
         );
     }

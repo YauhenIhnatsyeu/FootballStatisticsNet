@@ -12,21 +12,22 @@ export default class ComponentChooser extends Component {
     }
 
     handleChange = (e) => {
-        const { components, valueRelatesToComponent } = this.props;
+        const { getComponents } = this.props;
+
+        if (!getComponents) return;
+
         const { value } = e.target;
 
         if (value === "") {
             this.setState({ relatedComponents: [] });
         } else {
-            const relatedComponents = components.filter(component =>
-                valueRelatesToComponent(value, component));
+            const relatedComponents = getComponents(value);
 
             this.setState({ relatedComponents });
         }
     }
 
     render() {
-        console.log("rendered")
         return (
             <div className="chooser">
                 <input type="text" onChange={this.handleChange} />
@@ -37,11 +38,9 @@ export default class ComponentChooser extends Component {
 }
 
 ComponentChooser.propTypes = {
-    components: PropTypes.arrayOf(PropTypes.node),
-    valueRelatesToComponent: PropTypes.func,
+    getComponents: PropTypes.func,
 };
 
 ComponentChooser.defaultProps = {
-    components: null,
-    valueRelatesToComponent: null,
+    getComponents: null,
 };

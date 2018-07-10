@@ -14,7 +14,7 @@ export default class LeaguePage extends Component {
     componentDidMount() {
         const leagueId = leaguesData[this.props.leagueIndex].id;
 
-        this.props.fetchTeams(leagueId);
+        this.props.fetchTeams([leagueId]);
     }
 
     handleSelectorChaged = (leagueIndex) => {
