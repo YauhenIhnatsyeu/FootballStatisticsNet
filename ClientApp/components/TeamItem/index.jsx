@@ -64,8 +64,8 @@ TeamItem.propTypes = {
     team: PropTypes.shape({
         id: PropTypes.number,
         crestUrl: PropTypes.string,
-        name: PropTypes.string.isRequired,
-        shortName: PropTypes.string.isRequired,
+        name: PropTypes.string,
+        shortName: PropTypes.string,
         squadMarketValue: PropTypes.string,
     }),
     teamUrl: PropTypes.string,
@@ -79,7 +79,11 @@ TeamItem.propTypes = {
 
 TeamItem.defaultProps = {
     team: PropTypes.shape({
+        id: null,
         crestUrl: null,
+        name: null,
+        shortName: null,
+        squadMarketValue: null,
     }),
     teamUrl: null,
     onClick: null,
