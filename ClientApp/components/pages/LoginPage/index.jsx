@@ -2,8 +2,11 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import InputForm from "Components/inputForm/InputForm";
 import inputProps from "Constants/inputProps";
+
+import Form from "Components/form/Form";
+
+import { renderInputs } from "Helpers/formHelper";
 
 import { Link } from "react-router-dom";
 
@@ -17,11 +20,12 @@ export default class LoginPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <InputForm
-                    inputProps={inputProps.login}
+                <Form
                     submitValue="Login"
                     onSubmit={this.handleSubmit}
-                />
+                >
+                    {renderInputs(inputProps.login)}
+                </Form>
                 <br />
                 <Link to={routePaths.register}>If you haven{"'"}t got an account, create one</Link>
             </React.Fragment>

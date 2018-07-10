@@ -19,6 +19,8 @@ namespace FS.Web.Api.Controllers
         [Route("/api/fanClubs/avatar")]
         public IActionResult Upload()
         {
+            if (HttpContext.Request == null)
+                return BadRequest();
             if (HttpContext.Request.Form == null)
                 return BadRequest();
             if (HttpContext.Request.Form.Files == null)

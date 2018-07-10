@@ -5,8 +5,10 @@ import PropTypes from "prop-types";
 import "./index.css";
 
 export default class ItemsList extends Component {
-    itemHOC = (props, extraProps) => ItemComponent =>
-        <ItemComponent {...props} {...extraProps} />
+
+    // Adds extra props to component
+    itemHOC = (ItemComponent, extraProps) =>
+        <ItemComponent.type {...ItemComponent.props} {...extraProps} />
 
     render() {
         const { itemComponent } = this.props;
@@ -21,7 +23,7 @@ export default class ItemsList extends Component {
 
                         return (
                             <div className="items-list__item-container" key={index}>
-                                {this.itemHOC(itemComponent.props, extraProps)(itemComponent.type)}
+                                {this.itemHOC(itemComponent, extraProps)}
                             </div>
                         );
                     })

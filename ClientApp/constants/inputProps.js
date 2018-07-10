@@ -15,7 +15,7 @@ const register = {
         name: "birthDate",
         label: "Birth date",
         type: "date",
-        value: "2000-01-01",
+        defaultValue: "2000-01-01",
         validationOptions: {
             allowEmpty: false,
         },
@@ -39,11 +39,6 @@ const register = {
             maxLength: 20,
         },
     },
-    avatar: {
-        name: "avatar",
-        label: "Profile picture",
-        type: "file",
-    },
 };
 
 const login = {
@@ -62,21 +57,21 @@ const createFanClub = {
             maxLength: 20,
         },
     },
-    teamId: {
-        name: "teamId",
-        label: "Team",
-        type: "select",
-        options: [
-            {
-                value: "1",
-                title: "a",
-            },
-            {
-                value: "2",
-                title: "b",
-            },
-        ],
-    },
+    // teamId: {
+    //     name: "teamId",
+    //     label: "Team",
+    //     type: "select",
+    //     options: [
+    //         {
+    //             value: "1",
+    //             title: "a",
+    //         },
+    //         {
+    //             value: "2",
+    //             title: "b",
+    //         },
+    //     ],
+    // },
     description: {
         name: "description",
         label: "Description",
