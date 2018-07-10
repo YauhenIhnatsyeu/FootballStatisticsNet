@@ -7,7 +7,6 @@ import { injectPropsIntoComponent } from "Helpers/propsHelper";
 import "./index.css";
 
 export default class ItemsList extends Component {
-
     render() {
         const { itemComponent } = this.props;
 

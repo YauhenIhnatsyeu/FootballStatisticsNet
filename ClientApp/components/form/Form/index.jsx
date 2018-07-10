@@ -27,8 +27,6 @@ export default class Form extends Component {
 
     changeModel = (name, value) => {
         this.model[name] = value;
-
-        console.log(this.model)
     }
 
     handleChange = (retrieveNameAndValueFunc, ...params) => {
@@ -51,36 +49,37 @@ export default class Form extends Component {
 
     render() {
         const { children, submitValue } = this.props;
-        const classNames = this.props.classNames || {};
 
         return (
-            <form className={classNames.form} onSubmit={this.handleSubmit}>
-                {children.map((child, index) => {
-                    const extraProps = {
-                        onChange: (...args) => this.handleChange(
-                            child.props.retrieveNameAndValueFunc || retrieveNameAndValueFromEvent,
-                            ...args,
-                        ),
-                    };
+            <div className="form-container">
+                <form className="form">
+                    {children.map((child, index) => {
+                        const extraProps = {
+                            onChange: (...args) => this.handleChange(
+                                child.props.retrieveNameAndValueFunc || retrieveNameAndValueFromEvent,
+                                ...args,
+                            ),
+                        };
 
-                    const wrappedChild = injectPropsIntoComponent(child, extraProps);
+                        const wrappedChild = injectPropsIntoComponent(child, extraProps);
 
-                    return (
-                        <label key={index} className={classNames.label} htmlFor={wrappedChild.props.name}>
-                            {wrappedChild.props.label && `${wrappedChild.props.label}:`}
-                            {wrappedChild}
-                        </label>
-                    );
-                })}
+                        return (
+                            <label key={index} className="form__label" htmlFor={wrappedChild.props.name}>
+                                {wrappedChild.props.label && `${wrappedChild.props.label}:`}
+                                {wrappedChild}
+                            </label>
+                        );
+                    })}
 
-                <div className={classNames["submit-container"]}>
-                    <input
-                        className={classNames.submit}
-                        type="submit"
-                        value={submitValue || "Submit"}
-                    />
-                </div>
-            </form>
+                    <div className="form__submit-container">
+                        <input
+                            className="form__input form__submit"
+                            type="submit"
+                            value={submitValue || "Submit"}
+                        />
+                    </div>
+                </form>
+            </div>
         );
     }
 }
@@ -92,17 +91,10 @@ Form.propTypes = {
     ]),
     submitValue: PropTypes.string,
     onSubmit: PropTypes.func,
-    classNames: PropTypes.shape({
-        form: PropTypes.string,
-        label: PropTypes.string,
-        "submit-container": PropTypes.string,
-        submit: PropTypes.string,
-    }),
 };
 
 Form.defaultProps = {
     children: null,
     submitValue: null,
     onSubmit: null,
-    classNames: null,
 };

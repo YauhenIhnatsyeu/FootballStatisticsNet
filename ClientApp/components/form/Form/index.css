@@ -2,7 +2,7 @@
     width: 30%;
 }
 
-.form__label-input {
+.form__label {
     display: flex;
 
     margin-bottom: 1rem;

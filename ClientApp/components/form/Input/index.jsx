@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 export default class Input extends Component {
     render() {
         const {
-            type, name, defaultValue, onChange, className,
+            type, name, defaultValue, onChange,
         } = this.props;
 
         return (
             <input
-                className={className}
+                className="form__input"
                 type={type}
                 name={name}
                 defaultValue={defaultValue}
@@ -25,7 +25,6 @@ Input.propTypes = {
     name: PropTypes.string,
     defaultValue: PropTypes.string,
     onChange: PropTypes.func,
-    className: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -33,5 +32,4 @@ Input.defaultProps = {
     name: null,
     defaultValue: "",
     onChange: null,
-    className: null,
 };
