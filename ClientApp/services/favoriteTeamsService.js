@@ -1,5 +1,7 @@
 import { getFavoriteTeams, addFavoriteTeam, removeFavoriteTeam } from "Clients/favoriteTeamsClient";
 
+import { fetchFunction } from "Services/fetchService";
+
 import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 
 export async function getFromFavorites() {
@@ -16,16 +18,10 @@ export async function getFromFavorites() {
 
 export async function addToFavorites(team) {
     if (!team || !team.id) return false;
-
-    const response = await addFavoriteTeam(team.id);
-
-    return response.ok;
+    return fetchFunction(addFavoriteTeam, team.id);
 }
 
 export async function removeFromFavorites(team) {
     if (!team || !team.id) return false;
-
-    const response = await removeFavoriteTeam(team.id);
-
-    return response.ok;
+    return fetchFunction(removeFavoriteTeam, team.id);
 }

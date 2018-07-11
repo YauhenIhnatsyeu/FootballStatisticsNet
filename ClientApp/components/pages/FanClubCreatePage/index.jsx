@@ -55,7 +55,7 @@ export default class FanClubCreatePage extends Component {
 
     render() {
         return (
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 {[
                     ...renderInputs(inputProps.createFanClub),
                     <Custom

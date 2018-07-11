@@ -8,8 +8,8 @@ export default async function fetchTeams(leaguesIds) {
         return teams;
     });
 
-    const allTeams = await Promise.all(getTeamsPromises).then(teams =>
-        Array.prototype.concat(...teams));
+    const allTeams = await Promise.all(getTeamsPromises)
+        .then(teams => Array.prototype.concat(...teams));
 
     addIdsToTeams(allTeams);
 

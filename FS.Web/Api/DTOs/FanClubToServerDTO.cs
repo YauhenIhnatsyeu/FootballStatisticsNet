@@ -7,6 +7,6 @@ namespace FS.Web.Api.DTOs
         public string Name { get; set; }
         public int TeamId { get; set; }
         public string Description { get; set; }
-        public string AvatarUrl { get; set; }
+        public string AvatarId { get; set; }
     }
 }

@@ -1,35 +1,19 @@
 import {
-    uploadAvatar,
     register as registerUser,
     login as loginUser,
     logout as logoutUser,
 } from "Clients/userClient";
+import { fetchFunctionWithOptionalAvatar } from "Services/fetchService";
 import keys from "Constants/keys";
 import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 import { setValue, setJSONValue, removeValue } from "Helpers/localStorageHelper";
 
 export async function register(user) {
-    if (user) {
-        // If user wants to upload avatar
-        if (user.avatar && user.avatar[0]) {
-            const avatarResponse = await uploadAvatar(user.avatar[0]);
-
-            if (avatarResponse.ok) {
-                const json = await tryExtractJsonFromResponse(avatarResponse);
-
-                if (json && json.avatarId) {
-                    const registerResponse = await registerUser(user, json.avatarId);
-                    return registerResponse.ok;
-                }
-            }
-        // If user doesn't want to upload avatar
-        } else {
-            const registerResponse = await registerUser(user);
-            return registerResponse.ok;
-        }
-    }
-
-    return false;
+    return fetchFunctionWithOptionalAvatar(
+        registerUser,
+        user.avatar && user.avatar[0],
+        user,
+    );
 }
 
 export async function login(user) {

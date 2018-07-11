@@ -18,6 +18,7 @@ namespace FS.Web.Api.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class FanClubsController : Controller
     {
+        private readonly IAvatarsRepository avatarsRepository;
         private readonly IFanClubsRepository fanClubsRepository;
         private readonly IMapper mapper;
         private readonly ITeamsRepository teamsRepository;
@@ -25,12 +26,14 @@ namespace FS.Web.Api.Controllers
         private readonly IUsersRepository<User> usersRepository;
 
         public FanClubsController(
+            IAvatarsRepository avatarsRepository,
             IFanClubsRepository fanClubsRepository,
             IMapper mapper,
             ITeamsRepository teamsRepository,
             IUsersFanClubsRepository usersFanClubsRepository,
             IUsersRepository<User> usersRepository)
         {
+            this.avatarsRepository = avatarsRepository;
             this.fanClubsRepository = fanClubsRepository;
             this.mapper = mapper;
             this.teamsRepository = teamsRepository;
@@ -89,9 +92,20 @@ namespace FS.Web.Api.Controllers
             {
                 Name = fanClubDto.Name,
                 Description = fanClubDto.Description,
-                AvatarUrl = fanClubDto.AvatarUrl,
                 Team = teamsRepository.GetByTeam(teamToSave)
             };
+
+            if (fanClubDto.AvatarId != null)
+            {
+                string avatarUrl = avatarsRepository.Get(fanClubDto.AvatarId);
+
+                if (avatarUrl == null)
+                {
+                    return BadRequest();
+                }
+
+                fanClub.AvatarUrl = avatarUrl;
+            }
 
             usersFanClubsRepository.Add(new UserFanClub
             {

@@ -27,8 +27,6 @@ export default class Form extends Component {
 
     changeModel = (name, value) => {
         this.model[name] = value;
-
-        console.log(this.model)
     }
 
     handleChange = (name, getChangedValueFunc, ...params) => {
@@ -57,7 +55,7 @@ export default class Form extends Component {
 
         return (
             <div className="form-container">
-                <form className="form">
+                <form className="form" onSubmit={this.handleSubmit}>
                     {children.map((child, index) => {
                         const extraProps = {
                             onChange: (...args) => this.handleChange(

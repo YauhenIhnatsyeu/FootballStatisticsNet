@@ -18,6 +18,8 @@ import logout from "./logout";
 
 import searchTweets from "./searchTweets";
 
+import createFanClub from "./createFanClub";
+
 export default function* rootSaga() {
     yield takeEvery("LEAGUE_FETCH_REQUESTED", fetchLeague);
     yield takeEvery("TEAMS_FETCH_REQUESTED", fetchTeams);
@@ -35,4 +37,6 @@ export default function* rootSaga() {
     yield takeEvery("LOGOUT_REQUESTED", logout);
 
     yield takeEvery("TWEETS_SEARCH_REQUESTED", searchTweets);
+
+    yield takeEvery("FAN_CLUB_CREATE_REQUESTED", createFanClub);
 }

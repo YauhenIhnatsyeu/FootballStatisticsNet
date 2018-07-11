@@ -2,13 +2,6 @@ import { fetchUrl } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
 import apiRoutePaths from "Constants/apiRoutePaths";
 
-function getAvatarRequestOptions(avatar) {
-    const body = new FormData();
-    body.append("avatar", avatar);
-
-    return { method: "POST", body };
-}
-
 function getLoginRequestOptions(user) {
     return {
         method: "POST",
@@ -21,13 +14,6 @@ function getRegisterRequestOptions(userParam, avatarId) {
     const user = Object.assign({}, userParam, { avatarId });
 
     return getLoginRequestOptions(user);
-}
-
-export function uploadAvatar(avatar) {
-    return fetchUrl(
-        getCurrentUrl() + apiRoutePaths.avatar,
-        getAvatarRequestOptions(avatar),
-    );
 }
 
 export function register(user, avatarId) {
