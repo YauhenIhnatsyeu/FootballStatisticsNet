@@ -28,7 +28,7 @@ export default class TeamItem extends Component {
 
     render() {
         return (
-            <Item onClick={this.props.onClick}>
+            <Item onClick={() => this.props.onClick(this)}>
                 <div className="team-item">
                     {this.tryWrapWithTeamLink((
                         <div className="team-item__img-container">

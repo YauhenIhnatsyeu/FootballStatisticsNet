@@ -20,7 +20,7 @@ export default class LeaguePage extends Component {
     handleSelectorChaged = (leagueIndex) => {
         this.props.updateLeagueIndex(leagueIndex);
 
-        this.props.fetchTeams(leaguesData[leagueIndex].id);
+        this.props.fetchTeams([leaguesData[leagueIndex].id]);
     }
 
     render() {

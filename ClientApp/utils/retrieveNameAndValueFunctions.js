@@ -25,3 +25,17 @@ export function retrieveNameAndValueFromFileEvent(e) {
         value: "",
     };
 }
+
+export function retrieveNameAndValueFromTeamChooser(teamComponent) {
+    if (teamComponent && teamComponent.props && teamComponent.props.team && teamComponent.props.team.id) {
+        return {
+            name: "teamId",
+            value: teamComponent.props.team.id,
+        };
+    }
+
+    return {
+        name: "teamId",
+        value: 0,
+    };
+}

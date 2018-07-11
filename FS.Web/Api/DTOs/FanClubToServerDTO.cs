@@ -8,6 +8,5 @@ namespace FS.Web.Api.DTOs
         public int TeamId { get; set; }
         public string Description { get; set; }
         public string AvatarUrl { get; set; }
-        public IEnumerable<string> UsersIds { get; set; }
     }
 }

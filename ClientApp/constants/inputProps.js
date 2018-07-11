@@ -57,21 +57,6 @@ const createFanClub = {
             maxLength: 20,
         },
     },
-    // teamId: {
-    //     name: "teamId",
-    //     label: "Team",
-    //     type: "select",
-    //     options: [
-    //         {
-    //             value: "1",
-    //             title: "a",
-    //         },
-    //         {
-    //             value: "2",
-    //             title: "b",
-    //         },
-    //     ],
-    // },
     description: {
         name: "description",
         label: "Description",

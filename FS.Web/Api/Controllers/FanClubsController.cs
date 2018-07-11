@@ -93,7 +93,6 @@ namespace FS.Web.Api.Controllers
                 Team = teamsRepository.GetByTeam(teamToSave)
             };
 
-            // User-creator
             usersFanClubsRepository.Add(new UserFanClub
             {
                 FanClub = fanClub,
@@ -101,18 +100,6 @@ namespace FS.Web.Api.Controllers
                 UserIsCreator = true,
                 MemberStatus = MemberStatus.In
             });
-
-            // Other users
-            foreach (string userId in fanClubDto.UsersIds)
-            {
-                usersFanClubsRepository.Add(new UserFanClub
-                {
-                    FanClub = fanClub,
-                    User = usersRepository.FindById(userId),
-                    UserIsCreator = false,
-                    MemberStatus = MemberStatus.In
-                });
-            }
 
             return Ok();
         }

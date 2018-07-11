@@ -27,6 +27,8 @@ export default class Form extends Component {
 
     changeModel = (name, value) => {
         this.model[name] = value;
+
+        console.log(this.model)
     }
 
     handleChange = (retrieveNameAndValueFunc, ...params) => {
@@ -48,7 +50,10 @@ export default class Form extends Component {
     }
 
     render() {
-        const { children, submitValue } = this.props;
+        const { submitValue } = this.props;
+        const children = Array.isArray(this.props.children)
+            ? this.props.children
+            : [this.props.children];
 
         return (
             <div className="form-container">

@@ -10,7 +10,6 @@ import App from "Components/App";
 import "Css/reset.css";
 import "Css/wrapper.css";
 import "Css/font.css";
-import "Css/item.css";
 
 import rootReducer from "./reducers";
 import rootSaga from "./sagas";

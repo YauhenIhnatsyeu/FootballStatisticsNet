@@ -1,0 +1,17 @@
+.chooser {
+    position: relative;
+}
+
+.chooser__components-container {
+    position: absolute;
+
+    margin-top: 1em;
+}
+
+.chooser__component-container {
+    width: 20rem;
+
+    font-size: 0.8rem;
+
+    margin-bottom: 0.4rem;
+}

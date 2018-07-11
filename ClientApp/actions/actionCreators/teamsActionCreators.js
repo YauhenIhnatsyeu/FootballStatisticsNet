@@ -1,9 +1,9 @@
 import actionTypes from "ActionTypes";
 
-export function fetchTeams(leagueId) {
+export function fetchTeams(leaguesIds) {
     return {
         type: actionTypes.TEAMS_FETCH_REQUESTED,
-        payload: leagueId,
+        payload: leaguesIds,
     };
 }
 
