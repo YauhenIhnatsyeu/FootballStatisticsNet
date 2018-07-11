@@ -6,14 +6,19 @@ import inputProps from "Constants/inputProps";
 import leaguesData from "Constants/leaguesData";
 
 import Form from "Components/form/Form";
+import Input from "Components/form/Input";
 import Custom from "Components/form/Custom";
+
 import ComponentChooser from "Components/ComponentChooser";
 
 import TeamItem from "Components/TeamItem";
 
 import { renderInputs } from "Helpers/formHelper";
 
-import { getChangedValueFromTeamChooser } from "Helpers/getChangedValueHelper";
+import {
+    getChangedValueFromTeamChooser,
+    getChangedValueFromFileEvent,
+} from "Helpers/getChangedValueHelper";
 
 export default class FanClubCreatePage extends Component {
     componentDidMount() {
@@ -64,6 +69,13 @@ export default class FanClubCreatePage extends Component {
                         }
                         getChangedValueFunc={getChangedValueFromTeamChooser}
                         key={Object.keys(inputProps.createFanClub).length}
+                    />,
+                    <Input
+                        name="avatar"
+                        type="file"
+                        label="Fan club picture"
+                        getChangedValueFunc={getChangedValueFromFileEvent}
+                        key={Object.keys(inputProps.register).length + 1}
                     />,
                 ]}
             </Form>
