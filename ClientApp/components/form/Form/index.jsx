@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { injectPropsIntoComponent } from "Helpers/propsHelper";
 
-import { retrieveNameAndValueFromEvent } from "Utilities/retrieveNameAndValueFunctions";
+import { getChangedValueFromEvent } from "Helpers/getChangedValueHelper";
 
 import "./index.css";
 
@@ -16,25 +16,23 @@ export default class Form extends Component {
     }
 
     componentDidMount() {
-        for (let i = 0; i < this.props.children.length; i += 1) {
-            const { props: childProps } = this.props.children[i];
+        this.props.children.forEach((child) => {
+            const { props: childProps } = child;
             this.changeModel(
                 childProps.name,
-                childProps.value || childProps.defaultValue,
+                childProps.defaultValue || null,
             );
-        }
+        });
     }
 
     changeModel = (name, value) => {
         this.model[name] = value;
-
-        console.log(this.model)
     }
 
-    handleChange = (retrieveNameAndValueFunc, ...params) => {
-        const { name, value } = retrieveNameAndValueFunc
-            ? retrieveNameAndValueFunc(...params)
-            : { name: "", value: "" };
+    handleChange = (name, getChangedValueFunc, ...params) => {
+        const value = getChangedValueFunc
+            ? getChangedValueFunc(...params)
+            : "";
 
         this.changeModel(name, value);
     }
@@ -61,7 +59,8 @@ export default class Form extends Component {
                     {children.map((child, index) => {
                         const extraProps = {
                             onChange: (...args) => this.handleChange(
-                                child.props.retrieveNameAndValueFunc || retrieveNameAndValueFromEvent,
+                                child.props.name,
+                                child.props.getChangedValueFunc || getChangedValueFromEvent,
                                 ...args,
                             ),
                         };

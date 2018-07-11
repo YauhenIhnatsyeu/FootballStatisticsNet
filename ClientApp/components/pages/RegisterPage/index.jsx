@@ -9,7 +9,7 @@ import Input from "Components/form/Input";
 
 import { renderInputs } from "Helpers/formHelper";
 
-import { retrieveNameAndValueFromFileEvent } from "Utilities/retrieveNameAndValueFunctions";
+import { getChangedValueFromFileEvent } from "Helpers/getChangedValueHelper";
 
 export default class RegisterPage extends Component {
     handleSubmit = (user) => {
@@ -28,7 +28,7 @@ export default class RegisterPage extends Component {
                         name="avatar"
                         type="file"
                         label="Profile picture"
-                        retrieveNameAndValueFunc={retrieveNameAndValueFromFileEvent}
+                        getChangedValueFunc={getChangedValueFromFileEvent}
                         key={Object.keys(inputProps.register).length}
                     />,
                 ]}

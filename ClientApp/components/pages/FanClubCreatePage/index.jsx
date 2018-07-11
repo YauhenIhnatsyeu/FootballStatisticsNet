@@ -13,7 +13,7 @@ import TeamItem from "Components/TeamItem";
 
 import { renderInputs } from "Helpers/formHelper";
 
-import { retrieveNameAndValueFromTeamChooser } from "Utilities/retrieveNameAndValueFunctions";
+import { getChangedValueFromTeamChooser } from "Helpers/getChangedValueHelper";
 
 export default class FanClubCreatePage extends Component {
     componentDidMount() {
@@ -54,6 +54,7 @@ export default class FanClubCreatePage extends Component {
                 {[
                     ...renderInputs(inputProps.createFanClub),
                     <Custom
+                        name="teamId"
                         label="Team"
                         component={
                             <ComponentChooser
@@ -61,7 +62,7 @@ export default class FanClubCreatePage extends Component {
                                 getSelectedComponentValue={this.getSelectedComponentValue}
                             />
                         }
-                        retrieveNameAndValueFunc={retrieveNameAndValueFromTeamChooser}
+                        getChangedValueFunc={getChangedValueFromTeamChooser}
                         key={Object.keys(inputProps.createFanClub).length}
                     />,
                 ]}
