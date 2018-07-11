@@ -17,21 +17,34 @@ export default class ComponentChooser extends Component {
     }
 
     handleInputChange = (e) => {
-        const { getComponents } = this.props;
+        const { getComponents, onChange, getSelectedComponentValue } = this.props;
 
         if (!getComponents) return;
 
         const { value } = e.target;
-        let relatedComponents = [];
 
-        if (value !== "") {
-            relatedComponents = getComponents(value);
+        if (value === "") {
+            this.setState({
+                inputValue: value,
+                relatedComponents: [],
+            });
+        } else {
+            const relatedComponents = getComponents(value);
+
+            if (onChange) {
+                if (relatedComponents.length === 1
+                    && value === getSelectedComponentValue(relatedComponents[0])) {
+                    onChange(relatedComponents[0]);
+                } else {
+                    onChange(null);
+                }
+            }
+
+            this.setState({
+                inputValue: value,
+                relatedComponents,
+            });
         }
-
-        this.setState({
-            inputValue: value,
-            relatedComponents,
-        });
     }
 
     handleComponentClick = (component) => {

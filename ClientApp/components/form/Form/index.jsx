@@ -27,6 +27,8 @@ export default class Form extends Component {
 
     changeModel = (name, value) => {
         this.model[name] = value;
+
+        console.log(this.model)
     }
 
     handleChange = (name, getChangedValueFunc, ...params) => {
