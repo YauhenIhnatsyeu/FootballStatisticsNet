@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 import "./index.css";
 
 export default class Table extends Component {
-    renderColumn = (column, index, isHeader) => {
+    renderColumn = (column, key, isHeader) => {
         const props = {
             className: `table__col${isHeader ? " table__col_header" : ""}`,
-            key: index,
+            key,
         };
         const children = column;
 
@@ -17,10 +17,10 @@ export default class Table extends Component {
             : <td {...props}>{children}</td>;
     }
 
-    renderRow = (row, index, isHeader) => Array.isArray(row) && (
+    renderRow = (row, key, isHeader) => Array.isArray(row) && (
         <tr
             className={`table__row${isHeader ? " table__row_header" : ""}`}
-            key={isHeader ? 0 : index + 1}
+            key={isHeader ? 0 : key + 1}
         >
             {row.map((column, columnIndex) =>
                 this.renderColumn(column, columnIndex, isHeader))}
