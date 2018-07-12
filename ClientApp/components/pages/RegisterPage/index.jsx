@@ -30,6 +30,9 @@ export default class RegisterPage extends Component {
                         label="Profile picture"
                         getChangedValueFunc={getChangedValueFromFileEvent}
                         key={Object.keys(inputProps.register).length}
+                        validation={{
+                            required: true,
+                        }}
                     />,
                 ]}
             </Form>

@@ -5,10 +5,10 @@ const register = {
         name: "userName",
         label: "Name",
         type: "text",
-        validationOptions: {
-            allowEmpty: false,
-            minLength: 5,
-            maxLength: 20,
+        validation: {
+            required: true,
+            pattern: "\\w{5,25}",
+            title: "5 to 25 letters or numbers",
         },
     },
     birthDate: {
@@ -16,27 +16,29 @@ const register = {
         label: "Birth date",
         type: "date",
         defaultValue: "2000-01-01",
-        validationOptions: {
-            allowEmpty: false,
+        validation: {
+            required: true,
+            title: "Required",
         },
     },
     email: {
         name: "email",
         label: "Email",
         type: "text",
-        validationOptions: {
-            allowEmpty: false,
-            regex: emailRegex,
+        validation: {
+            required: true,
+            pattern: "[A-Za-z0-9]{5,25}",
+            title: "Must match email pattern",
         },
     },
     password: {
         name: "password",
         label: "Password",
         type: "Password",
-        validationOptions: {
-            allowEmpty: false,
-            minLength: 5,
-            maxLength: 20,
+        validation: {
+            required: true,
+            pattern: "^.{5,25}$",
+            title: "5 to 25 characters",
         },
     },
 };

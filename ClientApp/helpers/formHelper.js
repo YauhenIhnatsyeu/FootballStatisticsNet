@@ -11,6 +11,7 @@ export function renderInputs(inputProps) {
                 label: inputProps[key].label,
                 type: inputProps[key].type,
                 defaultValue: inputProps[key].defaultValue,
+                validation: inputProps[key].validation,
                 key: index,
             },
         )
