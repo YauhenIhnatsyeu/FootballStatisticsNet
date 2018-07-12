@@ -19,6 +19,7 @@ export default class TablePage extends Component {
                 <Tabs
                     titles={leaguesData.map(leagueData => leagueData.title)}
                     onTabClick={this.handleTabClick}
+                    defaultIndex={this.props.leagueIndex}
                 />
 
                 <LeagueTable
