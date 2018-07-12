@@ -32,6 +32,14 @@ export default class TeamPage extends Component {
         this.props.fetchTeam(this.teamId);
     }
 
+    renderRoutes = () => teamRoutes.map((route, index) => (
+        <Route
+            path={routePaths.team + route.path}
+            render={() => <route.component />}
+            key={index}
+        />
+    ))
+
     render() {
         if (this.props.teamFetchingErrorOccured) {
             return <Error />;
@@ -46,20 +54,11 @@ export default class TeamPage extends Component {
         return (
             <div className="team-page">
                 <div className="team-page__team-item-for-header-container">
-                    <TeamItemForHeader
-                        team={this.props.team}
-                    />
+                    <TeamItemForHeader team={this.props.team} />
                 </div>
                 <div className="team-page__info-container">
                     <Switch>
-                        {teamRoutes.map((route, index) => (
-                            <Route
-                                path={routePaths.team + route.path}
-                                render={() => <route.component />}
-                                key={index}
-                            />
-                        ))}
-
+                        {this.renderRoutes()}
                         <Redirect to={currentTeamUrl + teamRoutePaths.players} />
                     </Switch>
                 </div>
