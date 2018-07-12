@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 
 import { Link } from "react-router-dom";
 
+import Table from "Components/Table";
+
 import Loading from "Components/messages/Loading";
 import Error from "Components/messages/Error";
 
 import leaguesData from "Constants/leaguesData";
-import leagueTable from "Constants/leagueTable";
+import teamProperties from "Constants/teamProperties";
 
 import createTeamUrl from "Utilities/urlsCreators";
 
@@ -25,6 +27,13 @@ export default class LeagueTable extends Component {
         }
     }
 
+    getHeader = () => teamProperties.map(({ caption }) => caption);
+
+    getRows = () => this.props.league.map(team =>
+        teamProperties.map(({ key }) => (key === "teamName"
+            ? <Link to={createTeamUrl(team.id)}>{team[key]}</Link>
+            : team[key])))
+
     render() {
         if (this.props.leagueFetchingErrorOccured) {
             return <Error />;
@@ -35,37 +44,10 @@ export default class LeagueTable extends Component {
         }
 
         return (
-            <table className="league-table">
-                <tbody>
-                    <tr className="league-table__row league-table__row_header" key={0}>
-                        {leagueTable.map((attribute, index) =>
-                            (
-                                <th className="league-table__col league-table__col_header" key={index}>
-                                    {attribute.caption}
-                                </th>
-                            ))
-                        }
-                    </tr>
-
-                    {this.props.league.map((team, rowIndex) => {
-                        const teamUrl = createTeamUrl(team.id);
-                        return (
-                            <tr className="league-table__row" key={rowIndex + 1}>
-                                {leagueTable.map((attribute, colIndex) =>
-                                    (
-                                        <td className="league-table__col" key={colIndex}>
-                                            {attribute.property === "teamName"
-                                                ? <Link to={teamUrl}>{team[attribute.property]}</Link>
-                                                : team[attribute.property]
-                                            }
-                                        </td>
-                                    ))
-                                }
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </table>
+            <Table
+                header={this.getHeader()}
+                rows={this.getRows()}
+            />
         );
     }
 }

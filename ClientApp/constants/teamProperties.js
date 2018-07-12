@@ -1,38 +1,38 @@
 export default [
     {
         caption: "Position",
-        property: "position",
+        key: "position",
     },
     {
         caption: "Team",
-        property: "teamName",
+        key: "teamName",
     },
     {
         caption: "G",
-        property: "playedGames",
+        key: "playedGames",
     },
     {
         caption: "W",
-        property: "wins",
+        key: "wins",
     },
     {
         caption: "D",
-        property: "draws",
+        key: "draws",
     },
     {
         caption: "L",
-        property: "losses",
+        key: "losses",
     },
     {
         caption: "GS",
-        property: "goals",
+        key: "goals",
     },
     {
         caption: "GC",
-        property: "goalsAgainst",
+        key: "goalsAgainst",
     },
     {
         caption: "P",
-        property: "points",
+        key: "points",
     },
 ];

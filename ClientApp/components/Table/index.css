@@ -1,21 +1,21 @@
-/* .league-table {
+.table {
     width: 100%;
 
     border: 0.15rem solid #209030;
 }
 
-.league-table__row:nth-child(2n+3) {
+.table__row:nth-child(2n+3) {
     background: #eeeeee;
 }
 
-.league-table__row_header {
+.table__row_header {
     color: #ffffff;
 
     background: #209030;
 }
 
-.league-table__col {
+.table__col {
     padding: 0.4rem 0;
 
     text-align: center;
-} */
+}
