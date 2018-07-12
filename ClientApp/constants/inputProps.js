@@ -27,7 +27,7 @@ const register = {
         type: "text",
         validation: {
             required: true,
-            pattern: "[A-Za-z0-9]{5,25}",
+            pattern: emailRegex.source,
             title: "Must match email pattern",
         },
     },
