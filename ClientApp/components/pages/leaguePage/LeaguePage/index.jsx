@@ -17,6 +17,8 @@ export default class LeaguePage extends Component {
         this.props.fetchTeams([leagueId]);
     }
 
+    getTitle = () => leaguesData[this.props.leagueIndex].title
+
     handleSelectorChaged = (leagueIndex) => {
         this.props.updateLeagueIndex(leagueIndex);
 
@@ -26,7 +28,7 @@ export default class LeaguePage extends Component {
     render() {
         return (
             <React.Fragment>
-                <SectionHeader title={leaguesData[this.props.leagueIndex].title} />
+                <SectionHeader title={this.getTitle()} />
 
                 <div className="league-panel__legue-selector-container">
                     <LeagueSelector
