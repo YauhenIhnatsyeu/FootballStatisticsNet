@@ -57,7 +57,7 @@ namespace FS.Web
 
             services.AddHttpsRedirection(options =>
             {
-                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
                 options.HttpsPort = 5001;
             });
 
@@ -110,7 +110,8 @@ namespace FS.Web
                 app.UseHsts();
             }
 
-            app.UseMiddleware<HttpsRedirectionMiddleware>();
+            // app.UseMiddleware<HttpsRedirectionMiddleware>();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
 
