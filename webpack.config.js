@@ -1,22 +1,12 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
     devtool: "source-map",
     entry: ["babel-polyfill", "./ClientApp/index.jsx"],
     output: {
-        filename: "bundle[hash].js",
+        filename: "bundle.js",
         path: path.resolve(__dirname, "FS.Web/wwwroot"),
-        publicPath: "~",
     },
-    plugins: [
-        new CleanWebpackPlugin(path.resolve(__dirname, "FS.Web/wwwroot")),
-        new HtmlWebpackPlugin({
-            template: "FS.Web/Templates/IndexTemplate.cshtml",
-            filename: "../Views/Home/Index.cshtml",
-        }),
-    ],
     resolve: {
         alias: {
             Css: path.resolve(__dirname, "ClientApp/css"),

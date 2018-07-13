@@ -8,7 +8,13 @@ namespace FS.Web.Controllers
         [Route("{*url}")]
         public IActionResult Index()
         {
-            return View();
+            string htmlFile = System.IO.File.ReadAllText("wwwroot/index.html");
+
+            return new ContentResult
+            {
+                Content = htmlFile,
+                ContentType = "text/html"
+            };
         }
     }
 }
