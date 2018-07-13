@@ -7,10 +7,17 @@ const to = new Date(from.getTime() + millisecondsValues.twoWeeks);
 
 const initialState = { from, to };
 
+function validateDate(date) {
+    return Number.isNaN(date.getTime()) ? new Date() : date;
+}
+
 export default function dates(state = initialState, action) {
     switch (action.type) {
     case actionTypes.DATES_UPDATE:
-        return action.payload;
+        return {
+            from: validateDate(action.payload.from),
+            to: validateDate(action.payload.to),
+        };
 
     default:
         return state;
