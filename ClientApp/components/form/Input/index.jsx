@@ -15,7 +15,7 @@ export default class Input extends Component {
                 name={name}
                 defaultValue={defaultValue}
                 onChange={onChange}
-                required={validation && validation.required}
+                required={validation ? validation.required : false}
                 pattern={validation && validation.pattern}
                 title={validation && validation.title}
             />
