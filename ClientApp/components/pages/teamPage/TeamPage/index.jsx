@@ -33,8 +33,7 @@ export default class TeamPage extends Component {
     }
 
     handleTabClick = (index) => {
-        console.log(index)
-        // this.props.updateTeamPageIndex(index);
+        this.props.updateTeamPageIndex(index);
     }
 
     renderRoutes = () => teamRoutes.map((route, index) => (
