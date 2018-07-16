@@ -32,6 +32,11 @@ export default class TeamPage extends Component {
         this.props.fetchTeam(this.teamId);
     }
 
+    handleTabClick = (index) => {
+        console.log(index)
+        // this.props.updateTeamPageIndex(index);
+    }
+
     renderRoutes = () => teamRoutes.map((route, index) => (
         <Route
             path={routePaths.team + route.path}
@@ -54,7 +59,11 @@ export default class TeamPage extends Component {
         return (
             <div className="team-page">
                 <div className="team-page__team-item-for-header-container">
-                    <TeamItemForHeader team={this.props.team} />
+                    <TeamItemForHeader
+                        team={this.props.team}
+                        defaultTeamPageIndex={this.props.teamPageIndex}
+                        onTabClick={this.handleTabClick}
+                    />
                 </div>
                 <div className="team-page__info-container">
                     <Switch>
@@ -83,9 +92,12 @@ TeamPage.propTypes = {
         shortName: PropTypes.string.isRequired,
         squadMarketValue: PropTypes.string,
     }),
+    teamPageIndex: PropTypes.number,
+    updateTeamPageIndex: PropTypes.func.isRequired,
 };
 
 TeamPage.defaultProps = {
     team: null,
     teamFetchingErrorOccured: false,
+    teamPageIndex: 0,
 };

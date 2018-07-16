@@ -11,6 +11,7 @@ import favoriteTeams from "./favoriteTeams";
 import dates from "./dates";
 import user from "./user";
 import tweets from "./tweets";
+import teamPageIndex from "./teamPageIndex";
 
 export default combineReducers({
     fetchingErrors,
@@ -24,4 +25,5 @@ export default combineReducers({
     dates,
     user,
     tweets,
+    teamPageIndex,
 });
