@@ -25,7 +25,7 @@ export default class Main extends Component {
                                     key={index}
                                 />
                             ))}
-                            <Redirect to={routePaths.teams} />
+                            <Redirect to={routePaths.table} />
                         </Switch>
                     </div>
                 </div>
