@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using FS.Core.Models;
-using FS.Web.Api.Controllers;
 using FS.Web.Api.DTOs;
 
 namespace FS.Web.Helpers

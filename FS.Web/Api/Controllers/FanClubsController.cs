@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using FS.Core.Enums;
 using FS.Core.Interfaces.Repositories;
@@ -9,13 +7,12 @@ using FS.Core.Models;
 using FS.Web.Api.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace FS.Web.Api.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("api/fanClubs")]
     public class FanClubsController : Controller
     {
         private readonly IAvatarsRepository avatarsRepository;
@@ -42,10 +39,10 @@ namespace FS.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Gets all fanClubs with users that are accepted into them
+        ///     Gets all fanClubs with users that are accepted into them
         /// </summary>
         [AllowAnonymous]
-        [Route("/api/fanClubs/get")]
+        [Route("get")]
         public IActionResult Get()
         {
             IEnumerable<FanClub> fanClubs = fanClubsRepository.Get()
@@ -58,9 +55,9 @@ namespace FS.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Gets all fanClubs, which current user created, with users that want to join them
+        ///     Gets all fanClubs, which current user created, with users that want to join them
         /// </summary>
-        [Route("/api/fanClubs/get-unaccepted")]
+        [Route("get-unaccepted")]
         public IActionResult GetUnaccepted()
         {
             User loggedInUser = usersRepository.GetLoggedInUser();
@@ -77,7 +74,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/fanClubs/create")]
+        [Route("create")]
         public IActionResult Create([FromBody] FanClubToServerDTO fanClubDto)
         {
             if (fanClubDto == null)
@@ -119,7 +116,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/fanClubs/send-join-request")]
+        [Route("send-join-request")]
         public IActionResult AddJoiningAwaitingUser([FromBody] UserFanClubToServerDTO userFanClubDto)
         {
             if (userFanClubDto == null)
@@ -147,13 +144,13 @@ namespace FS.Web.Api.Controllers
                 FanClub = fanClubsRepository.FindById(userFanClubDto.FanClubId),
                 MemberStatus = MemberStatus.Requested,
                 UserIsCreator = false
-        });
+            });
 
             return Ok();
         }
 
         [HttpPost]
-        [Route("/api/fanClubs/accept-join-request")]
+        [Route("accept-join-request")]
         public IActionResult AcceptJoinRequest([FromBody] UserFanClubToServerDTO userFanClubDto)
         {
             if (userFanClubDto == null)
@@ -176,7 +173,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/fanClubs/ban-user")]
+        [Route("ban-user")]
         public IActionResult BanUser([FromBody] UserFanClubToServerDTO userFanClubDto)
         {
             if (userFanClubDto == null)
@@ -194,13 +191,13 @@ namespace FS.Web.Api.Controllers
             }
 
             return TryChangeUserFanClubStatus(userFanClub, MemberStatus.Banned)
-                ? (IActionResult)Ok()
+                ? (IActionResult) Ok()
                 : BadRequest();
         }
 
         [HttpPost]
-        [Route("/api/fanClubs/expel-user")]
-        [Route("/api/fanClubs/unban-user")]
+        [Route("expel-user")]
+        [Route("unban-user")]
         public IActionResult ExpelOrUnbanUser([FromBody] UserFanClubToServerDTO userFanClubDto)
         {
             if (userFanClubDto == null)
@@ -213,7 +210,7 @@ namespace FS.Web.Api.Controllers
             );
 
             return TryChangeUserFanClubStatus(userFanClub, MemberStatus.Out)
-                ? (IActionResult)Ok()
+                ? (IActionResult) Ok()
                 : BadRequest();
         }
 

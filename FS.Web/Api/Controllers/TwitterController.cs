@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FS.Web.Api.Controllers
 {
+    [Route("api/twitter")]
     public class TwitterController : Controller
     {
         private readonly IConfiguration configuration;
@@ -18,7 +19,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/api/twitter/search")]
+        [Route("search")]
         public async Task<IActionResult> Search()
         {
             string queryKey = configuration["Twitter:QueryKey"];

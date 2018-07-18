@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using FS.Core.Interfaces.Repositories;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FS.Web.Api.Controllers
 {
+    [Route("api/users")]
     public class UsersController : Controller
     {
         private readonly IAvatarsRepository avatarsRepository;
@@ -31,7 +31,7 @@ namespace FS.Web.Api.Controllers
             this.jwtService = jwtService;
         }
 
-        [Route("/api/users/get")]
+        [Route("get")]
         public IActionResult Get()
         {
             IEnumerable<UserToClientDTO> users =
@@ -40,7 +40,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/users/register")]
+        [Route("register")]
         public IActionResult Register([FromBody] UserToServerDTO userDtoParam)
         {
             if (userDtoParam == null)
@@ -70,7 +70,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Route("/api/users/login")]
+        [Route("login")]
         public async Task<IActionResult> Login([FromBody] UserToServerDTO userToServerDto)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);
@@ -98,7 +98,7 @@ namespace FS.Web.Api.Controllers
             });
         }
 
-        [Route("/api/users/logout")]
+        [Route("logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(IdentityConstants.ApplicationScheme);

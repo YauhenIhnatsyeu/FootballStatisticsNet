@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using FS.Core.Models;
 
 namespace FS.Web.Api.DTOs
 {

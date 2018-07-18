@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FS.Web.Api.DTOs
+﻿namespace FS.Web.Api.DTOs
 {
     public class FanClubToServerDTO
     {

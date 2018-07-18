@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FS.Web.Api.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("api/teams")]
     public class FavoriteTeamsController : Controller
     {
         private readonly IFavoriteTeamsRepository favoriteTeamsRepository;
@@ -27,7 +28,7 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpGet]
-        [Route("/api/teams/get")]
+        [Route("get")]
         public IActionResult GetTeams()
         {
             User loggedInUser = usersRepository.GetLoggedInUser();
@@ -43,7 +44,7 @@ namespace FS.Web.Api.Controllers
 
         [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("/api/teams/add")]
+        [Route("add")]
         public IActionResult AddTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
             if (favoriteTeamDto == null)
@@ -69,7 +70,7 @@ namespace FS.Web.Api.Controllers
 
         [HttpDelete]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("/api/teams/remove")]
+        [Route("remove")]
         public IActionResult RemoveTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
             if (favoriteTeamDto == null)

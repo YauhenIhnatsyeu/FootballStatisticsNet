@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FS.Core.Enums
+﻿namespace FS.Core.Enums
 {
     public enum MemberStatus
     {

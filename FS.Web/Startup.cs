@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -117,10 +116,7 @@ namespace FS.Web
 
             app.UseMvc();
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "../ClientApp";
-            });
+            app.UseSpa(spa => { spa.Options.SourcePath = "../ClientApp"; });
         }
     }
 }

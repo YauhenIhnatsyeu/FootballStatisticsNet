@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using FS.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -10,9 +8,9 @@ namespace FS.DataAccess.Data
 {
     public class UsersRepository<T> : IUsersRepository<T> where T : IdentityUser
     {
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly SignInManager<T> signInManager;
         private readonly UserManager<T> userManager;
-        private readonly IHttpContextAccessor httpContextAccessor;
 
         public UsersRepository(
             UserManager<T> userManager,
