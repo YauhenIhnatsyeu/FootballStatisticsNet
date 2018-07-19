@@ -1,11 +1,9 @@
 import { fetchFixtures as getFixtures } from "Clients/footballApiClient";
-import filterFixturesByDate from "Utilities/fixturesUtils/filterFixturesByDate";
 import addPropertiesToFixtures from "Utilities/fixturesUtils/addPropertiesToFixtures";
 
 export default async function fetchFixtures(teamId, dates) {
-    const fixturesData = await getFixtures(teamId);
-    let { fixtures } = fixturesData;
-    fixtures = filterFixturesByDate(fixtures, dates);
+    const fixturesData = await getFixtures(teamId, dates);
+    const { fixtures } = fixturesData;
     addPropertiesToFixtures(fixtures);
     return fixtures;
 }

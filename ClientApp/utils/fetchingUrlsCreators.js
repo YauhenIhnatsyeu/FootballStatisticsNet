@@ -10,8 +10,8 @@ export function createTeamUrl(teamId) {
     return `//api.football-data.org/v1/teams/${teamId}`;
 }
 
-export function createFixturesUrl(teamId) {
-    return `//api.football-data.org/v1/teams/${teamId}/fixtures`;
+export function createFixturesUrl(teamId, dateFrom, dateTo) {
+    return `//api.football-data.org/v1/teams/${teamId}/fixtures?timeFrameStart=${dateFrom}&timeFrameEnd=${dateTo}`;
 }
 
 export function createHead2HeadUrl(fixtureId) {

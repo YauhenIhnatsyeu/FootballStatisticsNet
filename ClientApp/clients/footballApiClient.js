@@ -1,4 +1,5 @@
 import { fetchFootballUrl } from "Helpers/ajaxHelper";
+import { dateToString } from "Utilities/castDate";
 
 import {
     createLeagueUrl,
@@ -27,8 +28,12 @@ export function fetchPlayers(playersUrl) {
     return fetchFootballUrl(playersUrl);
 }
 
-export function fetchFixtures(teamId) {
-    const fixturesUrl = createFixturesUrl(teamId);
+export function fetchFixtures(teamId, dates) {
+    const fixturesUrl = createFixturesUrl(
+        teamId,
+        dateToString(dates.from),
+        dateToString(dates.to),
+    );
     return fetchFootballUrl(fixturesUrl);
 }
 
