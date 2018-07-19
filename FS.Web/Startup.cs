@@ -116,7 +116,7 @@ namespace FS.Web
 
             app.UseMvc();
 
-            app.UseSpa(spa => { spa.Options.SourcePath = "../ClientApp"; });
+            app.UseSpa(spa => { spa.Options.SourcePath = "wwwroot"; });
         }
     }
 }
