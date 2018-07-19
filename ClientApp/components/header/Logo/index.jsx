@@ -2,14 +2,14 @@ import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
 
-import routePaths from "Constants/routePaths";
+import defaultRoutePaths from "Constants/defaultRoutePaths";
 
 import "./index.css";
 
 export default class Logo extends Component {
     render() {
         return (
-            <Link to={routePaths.table} className="logo">Football Statistics</Link>
+            <Link to={defaultRoutePaths.rootDefaultPath} className="logo">Football Statistics</Link>
         );
     }
 }
