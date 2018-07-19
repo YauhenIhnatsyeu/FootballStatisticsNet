@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import routes from "Constants/routes";
-import routePaths from "Constants/routePaths";
+import defaultRoutePaths from "Constants/defaultRoutePaths";
 
 import "./index.css";
 
@@ -25,7 +25,7 @@ export default class Main extends Component {
                                     key={index}
                                 />
                             ))}
-                            <Redirect to={routePaths.table} />
+                            <Redirect to={defaultRoutePaths.rootDefaultPath} />
                         </Switch>
                     </div>
                 </div>

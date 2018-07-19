@@ -11,6 +11,7 @@ import {
 import routePaths from "Constants/routePaths";
 import teamRoutes from "Constants/teamRoutes";
 import teamRoutePaths from "Constants/teamRoutePaths";
+import defaultRoutePaths from "Constants/defaultRoutePaths";
 
 import Loading from "Components/messages/Loading";
 import Error from "Components/messages/Error";
@@ -72,7 +73,7 @@ export default class TeamPage extends Component {
                 <div className="team-page__info-container">
                     <Switch>
                         {this.renderRoutes()}
-                        <Redirect to={currentTeamUrl + teamRoutePaths.players} />
+                        <Redirect to={currentTeamUrl + defaultRoutePaths.teamDefaultPath} />
                     </Switch>
                 </div>
             </div>
