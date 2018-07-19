@@ -27,34 +27,40 @@ export default class TeamItem extends Component {
     }
 
     render() {
+        const {
+            onClick, team, buttonRequired, falseStateCaption, trueStateCaption, defaultState, children,
+        } = this.props;
+
         return (
-            <Item onClick={this.props.onClick ? () => this.props.onClick(this) : null}>
+            <Item onClick={onClick ? () => onClick(this) : null}>
                 <div className="team-item">
                     {this.tryWrapWithTeamLink((
                         <div className="team-item__img-container">
-                            <img src={this.props.team.crestUrl} className="team-item__img" alt="" />
+                            <img src={team.crestUrl} className="team-item__img" alt="" />
                         </div>
                     ))}
                     <div className="team-item__info-container">
                         {this.tryWrapWithTeamLink((
-                            <p className="team-item__name">{this.props.team.name}</p>
+                            <p className="team-item__name">{team.name}</p>
                         ))}
-                        <p>Short name: {this.props.team.shortName}</p>
+                        <p>Short name: {team.shortName}</p>
 
-                        {this.props.team.squadMarketValue
-                            && <p>Squad market value: {this.props.team.squadMarketValue}</p>}
+                        {team.squadMarketValue
+                            && <p>Squad market value: {team.squadMarketValue}</p>}
 
-                        {this.props.buttonRequired && (
+                        {buttonRequired && (
                             <TwoStatesButton
                                 className="team-item__button"
                                 onClick={this.handleButtonClick}
-                                falseStateCaption={this.props.falseStateCaption}
-                                trueStateCaption={this.props.trueStateCaption}
-                                defaultState={this.props.defaultState}
+                                falseStateCaption={falseStateCaption}
+                                trueStateCaption={trueStateCaption}
+                                defaultState={defaultState}
                             />
                         )}
                     </div>
                 </div>
+
+                {children}
             </Item>
         );
     }
@@ -75,6 +81,10 @@ TeamItem.propTypes = {
     falseStateCaption: PropTypes.string,
     trueStateCaption: PropTypes.string,
     defaultState: PropTypes.bool,
+    children: PropTypes.oneOfType([
+        PropTypes.node,
+        PropTypes.arrayOf(PropTypes.node),
+    ]),
 };
 
 TeamItem.defaultProps = {
@@ -92,4 +102,5 @@ TeamItem.defaultProps = {
     falseStateCaption: null,
     trueStateCaption: null,
     defaultState: false,
+    children: null,
 };

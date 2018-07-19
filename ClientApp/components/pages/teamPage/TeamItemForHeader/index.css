@@ -1,4 +1,4 @@
-.team-item-for-header__team {
+/* .team-item-for-header__team {
     display: flex;
 }
 
@@ -10,8 +10,8 @@
 .team-item-for-header__name {
     font-size: 1.3rem;
     font-weight: 500;
-}
+} */
 
-.team-item-for-header__tabs-container {
-    margin-top: 1rem;
+.team-item__tabs-container {
+    margin-top: 1em;
 }
