@@ -6,7 +6,7 @@ module.exports = {
     devtool: "source-map",
     entry: ["babel-polyfill", "./ClientApp/index.jsx"],
     output: {
-        filename: "bundle.js",
+        filename: "bundle[hash].js",
         path: path.resolve(__dirname, "FS.Web/wwwroot"),
         publicPath: "/",
     },
