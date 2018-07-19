@@ -29,7 +29,6 @@ export default class TeamItemForHeader extends Component {
                         titles={teamRoutes.map(route => route.caption)}
                         defaultIndex={this.props.defaultTeamPageIndex}
                         hrefs={teamRoutes.map(route => createTeamUrl(this.props.team.id) + route.path)}
-                        // onTabClick={this.props.onTabClick}
                     />
                 </div>
             </Item>
@@ -45,7 +44,6 @@ TeamItemForHeader.propTypes = {
         shortName: PropTypes.string.isRequired,
     }).isRequired,
     defaultTeamPageIndex: PropTypes.number,
-    onTabClick: PropTypes.func.isRequired,
 };
 
 TeamItemForHeader.defaultProps = {

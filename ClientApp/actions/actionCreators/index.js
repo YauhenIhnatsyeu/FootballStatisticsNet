@@ -37,7 +37,6 @@ export {
 } from "./head2HeadActionCreators";
 
 export {
-    updateTeamPageIndex,
     updatePlayersPageIndex,
     updateFixturesPageIndex,
 } from "./updateIndexActionCreators";
