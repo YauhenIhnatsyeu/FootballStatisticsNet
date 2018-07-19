@@ -1,4 +1,6 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 module.exports = {
     devtool: "source-map",
@@ -6,7 +8,15 @@ module.exports = {
     output: {
         filename: "bundle.js",
         path: path.resolve(__dirname, "FS.Web/wwwroot"),
+        publicPath: "/",
     },
+    plugins: [
+        new CleanWebpackPlugin(path.resolve(__dirname, "FS.Web/wwwroot")),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, "FS.Web/Templates/index.html"),
+            filename: "../wwwroot/index.html",
+        }),
+    ],
     resolve: {
         alias: {
             Css: path.resolve(__dirname, "ClientApp/css"),
