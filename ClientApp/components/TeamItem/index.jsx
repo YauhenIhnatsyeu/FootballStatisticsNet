@@ -7,6 +7,8 @@ import TwoStatesButton from "Components/TwoStatesButton";
 
 import { Link } from "react-router-dom";
 
+import unavailableUrl from "Constants/unavailableUrl";
+
 import "./index.css";
 
 export default class TeamItem extends Component {
@@ -26,6 +28,10 @@ export default class TeamItem extends Component {
         }
     }
 
+    handleImageError = (e) => {
+        e.target.src = unavailableUrl;
+    }
+
     render() {
         const {
             onClick, team, buttonRequired, falseStateCaption, trueStateCaption, defaultState, children,
@@ -36,7 +42,12 @@ export default class TeamItem extends Component {
                 <div className="team-item">
                     {this.tryWrapWithTeamLink((
                         <div className="team-item__img-container">
-                            <img src={team.crestUrl} className="team-item__img" alt="" />
+                            <img
+                                className="team-item__img"
+                                src={team.crestUrl}
+                                alt=""
+                                onError={this.handleImageError}
+                            />
                         </div>
                     ))}
                     <div className="team-item__info-container">

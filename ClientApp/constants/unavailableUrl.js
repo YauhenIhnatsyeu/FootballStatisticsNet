@@ -1,0 +1,1 @@
+export default "https://png.icons8.com/metro/1600/cancel-2.png";
