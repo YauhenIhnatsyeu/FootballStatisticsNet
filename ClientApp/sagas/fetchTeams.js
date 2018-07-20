@@ -13,7 +13,6 @@ export default function* fetchTeams(action) {
         const teams = yield call(getTeams, leaguesIds);
         yield put(onTeamsFetchSucceeded(teams));
     } catch (error) {
-        console.log(error);
         yield put(onTeamsFetchFailed(error));
     }
 }

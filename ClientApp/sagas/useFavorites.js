@@ -1,40 +1,42 @@
 import { call, put } from "redux-saga/effects";
 
-import { onGetTeamsFromFavoritesSucceeded } from "ActionCreators";
+import { onGetTeamsFromFavoritesSucceeded, notify } from "ActionCreators";
 import {
     addToFavorites,
     removeFromFavorites,
     getFromFavorites,
 } from "Services/favoriteTeamsService";
 
+import notifications from "Constants/notifications";
+
 export function* getTeamsFromFavorites() {
-    try {
-        const teams = yield call(getFromFavorites);
-        yield teams && put(onGetTeamsFromFavoritesSucceeded(teams));
-    } catch (error) {
-        // TODO
-        console.log(error);
+    const teams = yield call(getFromFavorites);
+
+    if (teams) {
+        yield put(onGetTeamsFromFavoritesSucceeded(teams));
+    } else {
+        yield put(notify(notifications.getFavoriteTeamsFailed));
     }
 }
 
 export function* addTeamToFavorites(action) {
-    try {
-        const team = action.payload;
-        const result = yield call(addToFavorites, team);
-        yield result && call(getTeamsFromFavorites);
-    } catch (error) {
-        // TODO
-        console.log(error);
+    const team = action.payload;
+    const result = yield call(addToFavorites, team);
+
+    if (result) {
+        yield call(getTeamsFromFavorites);
+    } else {
+        yield put(notify(notifications.addTeamToFavoritesFailed));
     }
 }
 
 export function* removeTeamFromFavorites(action) {
-    try {
-        const team = action.payload;
-        const result = yield call(removeFromFavorites, team);
-        yield result && call(getTeamsFromFavorites);
-    } catch (error) {
-        // TODO
-        console.log(error);
+    const team = action.payload;
+    const result = yield call(removeFromFavorites, team);
+
+    if (result) {
+        yield call(getTeamsFromFavorites);
+    } else {
+        yield put(notify(notifications.removeTeamFromFavoritesFailed));
     }
 }

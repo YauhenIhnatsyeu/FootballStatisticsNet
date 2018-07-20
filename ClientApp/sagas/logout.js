@@ -5,11 +5,7 @@ import { push as pushToHistory } from "Helpers/historyHelper";
 import routePaths from "Constants/routePaths";
 
 export default function* logout() {
-    try {
-        yield call(logoutUser);
+    yield call(logoutUser);
 
-        pushToHistory(routePaths.table);
-    } catch (error) {
-        console.log(error);
-    }
+    pushToHistory(routePaths.table);
 }
