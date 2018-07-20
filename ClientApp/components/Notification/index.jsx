@@ -15,14 +15,18 @@ export default class Notification extends Component {
 
     componentDidMount() {
         if (!this.props.alwaysVisible) {
-            window.setTimeout(this.handleCrossClick, this.props.timeout);
+            window.setTimeout(this.closeNotification, this.props.timeout);
         }
     }
 
-    handleCrossClick = () => {
+    closeNotification = () => {
         this.setState({
             visible: false,
         });
+    }
+
+    handleCrossClick = () => {
+        this.closeNotification();
     }
 
     renderTitle = () => this.props.title && (

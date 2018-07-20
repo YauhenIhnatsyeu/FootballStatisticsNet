@@ -1,0 +1,3 @@
+export default {
+    NOTIFICATION_REQUESTED: "NOTIFICATION_REQUESTED",
+};

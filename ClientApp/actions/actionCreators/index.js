@@ -68,3 +68,5 @@ export {
 } from "./twitterActionCreators";
 
 export { createFanClub } from "./fanClubActionCreators";
+
+export { notify } from "./notificationsActionCreators";
