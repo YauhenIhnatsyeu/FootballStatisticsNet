@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ItemList from "Components/ItemsList";
 
-import Loading from "Components/messages/Loading";
+import Spinner from "Components/Spinner";
 import Error from "Components/messages/Error";
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
@@ -32,7 +32,7 @@ export default class DetailsSection extends React.Component {
         }
 
         if (!this.props.head2Head) {
-            return <Loading />;
+            return <Spinner />;
         }
 
         const fixtureItem = (

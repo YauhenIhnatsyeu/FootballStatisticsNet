@@ -6,15 +6,13 @@ import { Link } from "react-router-dom";
 
 import Table from "Components/Table";
 
-import Loading from "Components/messages/Loading";
+import Spinner from "Components/Spinner";
 import Error from "Components/messages/Error";
 
 import leaguesData from "Constants/leaguesData";
 import teamProperties from "Constants/teamProperties";
 
 import createTeamUrl from "Utilities/urlsCreators";
-
-import "./index.css";
 
 export default class LeagueTable extends Component {
     componentDidMount() {
@@ -40,7 +38,7 @@ export default class LeagueTable extends Component {
         }
 
         if (!this.props.league) {
-            return <Loading />;
+            return <Spinner />;
         }
 
         return (

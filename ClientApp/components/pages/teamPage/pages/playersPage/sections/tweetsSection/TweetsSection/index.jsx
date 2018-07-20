@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ItemsList from "Components/ItemsList";
 
-import Loading from "Components/messages/Loading";
+import Spinner from "Components/Spinner";
 import Error from "Components/messages/Error";
 
 import TweetItem from "../TweetItem";
@@ -20,7 +20,7 @@ export default class TweetsSection extends Component {
         }
 
         if (!this.props.tweets) {
-            return <Loading />;
+            return <Spinner />;
         }
 
         return (

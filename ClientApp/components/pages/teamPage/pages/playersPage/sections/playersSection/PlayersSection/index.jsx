@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";
 
-import Loading from "Components/messages/Loading";
+import Spinner from "Components/Spinner";
 import Error from "Components/messages/Error";
 
 import PlayerItem from "PlayersPageSections/playersSection/PlayerItem";
@@ -24,7 +24,7 @@ export default class PlayersSection extends Component {
         }
 
         if (!this.props.players) {
-            return <Loading />;
+            return <Spinner />;
         }
 
         return (

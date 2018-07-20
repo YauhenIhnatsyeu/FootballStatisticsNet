@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Message from "Components/messages/Message";
-import Loading from "Components/messages/Loading";
+import Spinner from "Components/Spinner";
 import Error from "Components/messages/Error";
 
 import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";
@@ -24,7 +24,7 @@ export default class FixturesList extends Component {
         }
 
         if (!this.props.fixtures) {
-            return <Loading />;
+            return <Spinner />;
         }
 
         if (this.props.fixtures.length < 1) {

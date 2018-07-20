@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import TeamItem from "Components/TeamItem";
 
-import Loading from "Components/messages/Loading";
+import Spinner from "Components/Spinner";
 import Error from "Components/messages/Error";
 
 import createTeamUrl from "Utilities/urlsCreators";
@@ -53,7 +53,7 @@ export default class TeamsList extends Component {
         }
 
         if (!this.props.teams) {
-            return <Loading />;
+            return <Spinner />;
         }
 
         return (
