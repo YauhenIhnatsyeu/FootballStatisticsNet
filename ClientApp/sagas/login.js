@@ -6,12 +6,21 @@ import { push as pushToHistory } from "Helpers/historyHelper";
 import routePaths from "Constants/routePaths";
 import notifications from "Constants/notifications";
 
-import { onLoginSucceeded, notify } from "ActionCreators";
+import {
+    onLoginSucceeded,
+    notify,
+    startLoading,
+    finishLoading,
+} from "ActionCreators";
 
 export default function* login(action) {
+    yield put(startLoading());
+
     let user = action.payload;
 
     user = yield call(loginUser, user);
+
+    yield put(finishLoading());
 
     if (user) {
         yield put(onLoginSucceeded(user));

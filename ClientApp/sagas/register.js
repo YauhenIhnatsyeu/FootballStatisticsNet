@@ -6,11 +6,19 @@ import { push as pushToHistory } from "Helpers/historyHelper";
 import routePaths from "Constants/routePaths";
 import notifications from "Constants/notifications";
 
-import { notify } from "ActionCreators";
+import {
+    notify,
+    startLoading,
+    finishLoading,
+} from "ActionCreators";
 
 export default function* register(action) {
+    yield put(startLoading());
+
     const user = action.payload;
     const result = yield call(registerUser, user);
+
+    yield put(finishLoading());
 
     if (result) {
         pushToHistory(routePaths.login);
