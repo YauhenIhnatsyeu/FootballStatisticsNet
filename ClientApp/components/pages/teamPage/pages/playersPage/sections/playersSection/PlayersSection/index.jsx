@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";
 
-import Spinner from "Components/Spinner";
+import Spinner from "Components/spinners/Spinner";
 import Error from "Components/messages/Error";
 
 import PlayerItem from "PlayersPageSections/playersSection/PlayerItem";

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import Table from "Components/Table";
 
-import Spinner from "Components/Spinner";
+import Spinner from "Components/spinners/Spinner";
 import Error from "Components/messages/Error";
 
 import leaguesData from "Constants/leaguesData";

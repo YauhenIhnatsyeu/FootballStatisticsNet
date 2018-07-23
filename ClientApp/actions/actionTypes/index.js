@@ -1,28 +1,17 @@
 import leagueActionTypes from "./leagueActionTypes";
-
 import teamsActionTypes from "./teamsActionTypes";
-
 import teamActionTypes from "./teamActionTypes";
-
 import playersActionTypes from "./playersActionTypes";
-
 import fixturesActionTypes from "./fixturesActionTypes";
-
 import head2HeadActionTypes from "./head2HeadActionTypes";
-
 import updateIndexActionTypes from "./updateIndexActionTypes";
-
 import updateDatesActionTypes from "./updateDatesActionTypes";
-
 import favoriteTeamsActionTypes from "./favoriteTeamsActionTypes";
-
 import userActionTypes from "./userActionTypes";
-
 import twitterActionTypes from "./twitterActionTypes";
-
 import fanClubActionTypes from "./fanClubActionTypes";
-
 import notificationsActionTypes from "./notificationsActionTypes";
+import loadingActionTypes from "./loadingActionTypes";
 
 export default Object.assign(
     {},
@@ -39,4 +28,5 @@ export default Object.assign(
     twitterActionTypes,
     fanClubActionTypes,
     notificationsActionTypes,
+    loadingActionTypes,
 );

@@ -68,5 +68,9 @@ export {
 } from "./twitterActionCreators";
 
 export { createFanClub } from "./fanClubActionCreators";
-
 export { notify } from "./notificationsActionCreators";
+
+export {
+    startLoading,
+    finishLoading,
+} from "./loadingActionCreators";

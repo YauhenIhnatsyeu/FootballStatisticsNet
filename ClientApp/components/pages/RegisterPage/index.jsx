@@ -39,4 +39,9 @@ export default class RegisterPage extends Component {
 
 RegisterPage.propTypes = {
     register: PropTypes.func.isRequired,
+    isRegistering: PropTypes.bool,
+};
+
+RegisterPage.defaultProps = {
+    isRegistering: false,
 };

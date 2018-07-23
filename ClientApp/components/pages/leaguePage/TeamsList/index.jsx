@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import TeamItem from "Components/TeamItem";
 
-import Spinner from "Components/Spinner";
+import Spinner from "Components/spinners/Spinner";
 import Error from "Components/messages/Error";
 
 import createTeamUrl from "Utilities/urlsCreators";

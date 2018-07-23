@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ItemsList from "Components/ItemsList";
 
-import Spinner from "Components/Spinner";
+import Spinner from "Components/spinners/Spinner";
 import Error from "Components/messages/Error";
 
 import TweetItem from "../TweetItem";

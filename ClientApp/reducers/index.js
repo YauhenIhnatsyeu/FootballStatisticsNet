@@ -12,6 +12,7 @@ import dates from "./dates";
 import user from "./user";
 import tweets from "./tweets";
 import notification from "./notification";
+import isLoading from "./isLoading";
 
 export default combineReducers({
     fetchingErrors,
@@ -26,4 +27,5 @@ export default combineReducers({
     user,
     tweets,
     notification,
+    isLoading,
 });

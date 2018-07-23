@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Message from "Components/messages/Message";
-import Spinner from "Components/Spinner";
+import Spinner from "Components/spinners/Spinner";
 import Error from "Components/messages/Error";
 
 import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";

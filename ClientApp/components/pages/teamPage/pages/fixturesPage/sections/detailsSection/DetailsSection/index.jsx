@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import ItemList from "Components/ItemsList";
 
-import Spinner from "Components/Spinner";
+import Spinner from "Components/spinners/Spinner";
 import Error from "Components/messages/Error";
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
