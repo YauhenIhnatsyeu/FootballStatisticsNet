@@ -21,6 +21,7 @@ export default class Main extends Component {
                             {routes.map((route, index) => (
                                 <Route
                                     path={route.path}
+                                    exact
                                     render={props => <route.component {...props} />}
                                     key={index}
                                 />
