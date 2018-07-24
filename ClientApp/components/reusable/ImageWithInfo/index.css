@@ -1,0 +1,35 @@
+.iwi-item {
+    display: flex;
+}
+
+.iwi-item__image {
+    width: 6em;
+    height: 6em;
+}
+
+.iwi-item__info-container {
+    margin-left: 1em;
+}
+
+.iwi-item__title {
+    margin-bottom: 0.25em;
+
+    font-size: 1.3em;
+    font-weight: 500;
+    
+    text-decoration: underline;
+}
+
+.iwi-item__info {
+    margin-bottom: 0.1em;
+}
+
+.iwi-item__button {
+    display: block;
+}
+
+.iwi-item__link {
+    color: #000000;
+
+    text-decoration: none;
+}

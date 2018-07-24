@@ -14,40 +14,48 @@ export default [
         path: routePaths.table,
         component: TablePageContainer,
         caption: "Table",
+        exact: true,
     },
     {
         path: routePaths.teams,
         component: LeaguePageContainer,
         caption: "Teams",
+        exact: true,
     },
     {
         path: routePaths.fanClubs,
         component: FanClubsPageContainer,
         caption: "Fan clubs",
+        exact: true,
     },
     {
         path: routePaths.team,
         component: TeamPageContainer,
         caption: "Team",
+        exact: false,
     },
     {
         path: routePaths.register,
         component: RegisterPageContainer,
         caption: "Register",
+        exact: true,
     },
     {
         path: routePaths.login,
         component: LoginPageContainer,
         caption: "Log in",
+        exact: true,
     },
     {
         path: routePaths.logout,
         component: LogoutPageContainer,
         caption: "Log out",
+        exact: true,
     },
     {
         path: routePaths.createfanClub,
         component: FanClubCreatePageContainer,
         caption: "Create fan club",
+        exact: true,
     },
 ];

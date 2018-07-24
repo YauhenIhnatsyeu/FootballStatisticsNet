@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Item from "Reusable/items/Item";
+import ImageWithInfo from "Reusable/ImageWithInfo";
 import TwoStatesButton from "Reusable/TwoStatesButton";
 
 import { Link } from "react-router-dom";
@@ -12,6 +13,14 @@ import unavailableUrl from "Constants/unavailableUrl";
 import "./index.css";
 
 export default class TeamItem extends Component {
+    getInfo = () => {
+        const { shortName, squadMarketValue } = this.props.team;
+        return [
+            shortName && `Short name: ${shortName}`,
+            squadMarketValue && `Squad market value: ${squadMarketValue}`,
+        ];
+    }
+
     tryWrapWithTeamLink = component => (
         this.props.teamUrl && !this.props.onClick
             ? (
@@ -32,44 +41,34 @@ export default class TeamItem extends Component {
         e.target.src = unavailableUrl;
     }
 
-    render() {
+    renderButton = () => {
         const {
-            onClick, team, buttonRequired, falseStateCaption, trueStateCaption, defaultState, children,
+            buttonRequired, falseStateCaption, trueStateCaption, defaultState,
         } = this.props;
+
+        return buttonRequired && (
+            <TwoStatesButton
+                className="team-item__button"
+                onClick={this.handleButtonClick}
+                falseStateCaption={falseStateCaption}
+                trueStateCaption={trueStateCaption}
+                defaultState={defaultState}
+            />
+        );
+    }
+
+    render() {
+        const { onClick, team, children } = this.props;
 
         return (
             <Item onClick={onClick ? () => onClick(this) : null}>
-                <div className="team-item">
-                    {this.tryWrapWithTeamLink((
-                        <div className="team-item__img-container">
-                            <img
-                                className="team-item__img"
-                                src={team.crestUrl}
-                                alt=""
-                                onError={this.handleImageError}
-                            />
-                        </div>
-                    ))}
-                    <div className="team-item__info-container">
-                        {this.tryWrapWithTeamLink((
-                            <p className="team-item__name">{team.name}</p>
-                        ))}
-                        <p>Short name: {team.shortName}</p>
-
-                        {team.squadMarketValue
-                            && <p>Squad market value: {team.squadMarketValue}</p>}
-
-                        {buttonRequired && (
-                            <TwoStatesButton
-                                className="team-item__button"
-                                onClick={this.handleButtonClick}
-                                falseStateCaption={falseStateCaption}
-                                trueStateCaption={trueStateCaption}
-                                defaultState={defaultState}
-                            />
-                        )}
-                    </div>
-                </div>
+                <ImageWithInfo
+                    imageUrl={team.crestUrl}
+                    title={team.name}
+                    info={this.getInfo()}
+                    link={this.props.teamUrl}
+                    extraComponentForInfo={this.renderButton()}
+                />
 
                 {children}
             </Item>

@@ -3,12 +3,21 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import Item from "Reusable/items/Item";
+import ImageWithInfo from "Reusable/ImageWithInfo";
 
 import unavailableUrl from "Constants/unavailableUrl";
 
 import "./index.css";
 
 export default class FanClubItem extends Component {
+    getInfo = () => {
+        const { description, users } = this.props.fanClub;
+        return [
+            description && `Description: ${description}`,
+            users && `Users count: ${users.length}`,
+        ];
+    }
+
     handleImageError = (e) => {
         e.target.src = unavailableUrl;
     }
@@ -18,21 +27,11 @@ export default class FanClubItem extends Component {
 
         return (
             <Item>
-                <div className="fan-club-item">
-                    <div className="fan-club-item__img-container">
-                        <img
-                            className="fan-club-item__img"
-                            src={fanClub.avatarUrl}
-                            alt=""
-                            onError={this.handleImageError}
-                        />
-                    </div>
-                    <div className="fan-club-item__info-container">
-                        <p className="fan-club-item__name">{fanClub.name}</p>
-                        <p>Description: {fanClub.description}</p>
-                        {fanClub.users && <p>Users count: {fanClub.users.length}</p>}
-                    </div>
-                </div>
+                <ImageWithInfo
+                    imageUrl={fanClub.avatarUrl}
+                    title={fanClub.name}
+                    info={this.getInfo()}
+                />
             </Item>
         );
     }

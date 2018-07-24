@@ -16,13 +16,12 @@ export default class Item extends Component {
             },
         );
 
-        const props = this.props.onClick &&
-            {
-                onClick: this.props.onClick,
-                onKeyDown: this.props.onClick,
-                role: "link",
-                tabIndex: "0",
-            };
+        const props = this.props.onClick && {
+            onClick: this.props.onClick,
+            onKeyDown: this.props.onClick,
+            role: "link",
+            tabIndex: "0",
+        };
 
         return (
             <div className={itemStyle} {...props} >
