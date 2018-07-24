@@ -60,7 +60,7 @@ LeaguePage.propTypes = {
     teamsFetchingErrorOccured: PropTypes.bool,
     getTeamsFromFavorites: PropTypes.func.isRequired,
     fetchTeams: PropTypes.func.isRequired,
-    favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
+    favoriteTeams: PropTypes.arrayOf(PropTypes.number),
     removeTeamFromFavorites: PropTypes.func.isRequired,
     addTeamToFavorites: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool.isRequired,
@@ -69,4 +69,5 @@ LeaguePage.propTypes = {
 LeaguePage.defaultProps = {
     teams: null,
     teamsFetchingErrorOccured: false,
+    favoriteTeams: null,
 };

@@ -48,11 +48,15 @@ export default class TeamsList extends Component {
     )
 
     render() {
-        if (this.props.teamsFetchingErrorOccured) {
+        const {
+            teamsFetchingErrorOccured, teams, loggedIn, favoriteTeams,
+        } = this.props;
+
+        if (teamsFetchingErrorOccured) {
             return <Error />;
         }
 
-        if (!this.props.teams) {
+        if (!teams || (loggedIn && !favoriteTeams)) {
             return <Spinner />;
         }
 
@@ -76,7 +80,7 @@ TeamsList.propTypes = {
     teams: PropTypes.arrayOf(PropTypes.object),
     teamsFetchingErrorOccured: PropTypes.bool,
     getTeamsFromFavorites: PropTypes.func.isRequired,
-    favoriteTeams: PropTypes.arrayOf(PropTypes.number).isRequired,
+    favoriteTeams: PropTypes.arrayOf(PropTypes.number),
     removeTeamFromFavorites: PropTypes.func.isRequired,
     addTeamToFavorites: PropTypes.func.isRequired,
     loggedIn: PropTypes.bool.isRequired,
@@ -85,4 +89,5 @@ TeamsList.propTypes = {
 TeamsList.defaultProps = {
     teams: null,
     teamsFetchingErrorOccured: false,
+    favoriteTeams: null,
 };

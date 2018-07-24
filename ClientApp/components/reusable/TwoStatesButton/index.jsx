@@ -11,14 +11,6 @@ export default class TwoStatesButton extends Component {
         };
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (this.state.currentState !== nextProps.defaultState) {
-            this.setState({
-                currentState: nextProps.defaultState,
-            });
-        }
-    }
-
     handleClick = () => {
         this.setState({
             currentState: !this.state.currentState,
