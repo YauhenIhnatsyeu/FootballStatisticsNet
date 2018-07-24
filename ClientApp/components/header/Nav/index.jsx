@@ -11,6 +11,7 @@ export default class Nav extends Component {
         <li className="nav__item">
             <NavLink
                 to={route.path}
+                exact
                 className="nav__link"
                 activeClassName="nav__link_state_active"
             >
