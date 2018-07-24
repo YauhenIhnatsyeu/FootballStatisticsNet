@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";
+import ItemsListWithPagingControls from "Reusable/ItemsListWithPagingControls";
 
-import Spinner from "Components/spinners/Spinner";
-import Error from "Components/messages/Error";
+import Spinner from "Reusable/spinners/Spinner";
+import Error from "Reusable/messages/Error";
 
 import PlayerItem from "PlayersPageSections/playersSection/PlayerItem";
 

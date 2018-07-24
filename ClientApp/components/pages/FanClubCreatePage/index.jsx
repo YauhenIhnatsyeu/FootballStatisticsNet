@@ -9,9 +9,9 @@ import Form from "Components/form/Form";
 import Input from "Components/form/Input";
 import Custom from "Components/form/Custom";
 
-import ComponentChooser from "Components/ComponentChooser";
+import ComponentChooser from "Reusable/ComponentChooser";
 
-import TeamItem from "Components/TeamItem";
+import TeamItem from "Reusable/TeamItem";
 
 import { renderInputs } from "Helpers/formHelper";
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Select from "Components/Select";
+import Select from "Reusable/Select";
 
 import leaguesData from "Constants/leaguesData";
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import SectionHeader from "Components/SectionHeader";
+import SectionHeader from "Reusable/SectionHeader";
 
 export default class Section extends Component {
     render() {

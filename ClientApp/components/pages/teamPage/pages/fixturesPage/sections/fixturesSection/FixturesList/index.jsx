@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Message from "Components/messages/Message";
-import Spinner from "Components/spinners/Spinner";
-import Error from "Components/messages/Error";
+import Message from "Reusable/messages/Message";
+import Spinner from "Reusable/spinners/Spinner";
+import Error from "Reusable/messages/Error";
 
-import ItemsListWithPagingControls from "Components/ItemsListWithPagingControls";
+import ItemsListWithPagingControls from "Reusable/ItemsListWithPagingControls";
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 

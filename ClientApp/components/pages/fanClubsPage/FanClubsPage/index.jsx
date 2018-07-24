@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Spinner from "Components/spinners/Spinner";
-import Error from "Components/messages/Error";
+import Spinner from "Reusable/spinners/Spinner";
+import Error from "Reusable/messages/Error";
 
 import FanClubItem from "../FanClubItem";
 

@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsList from "Components/ItemsList";
+import ItemsList from "Reusable/ItemsList";
 
-import Spinner from "Components/spinners/Spinner";
-import Error from "Components/messages/Error";
+import Spinner from "Reusable/spinners/Spinner";
+import Error from "Reusable/messages/Error";
 
 import TweetItem from "../TweetItem";
 

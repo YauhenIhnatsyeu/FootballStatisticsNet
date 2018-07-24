@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Item from "Components/Item";
-import TwoStatesButton from "Components/TwoStatesButton";
+import Item from "Reusable/Item";
+import TwoStatesButton from "Reusable/TwoStatesButton";
 
 import { Link } from "react-router-dom";
 

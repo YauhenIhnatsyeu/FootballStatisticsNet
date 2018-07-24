@@ -26,6 +26,8 @@ module.exports = {
             Components: path.resolve(__dirname, "ClientApp/components"),
             Containers: path.resolve(__dirname, "ClientApp/containers"),
 
+            Reusable: path.resolve(__dirname, "ClientApp/components/reusable"),
+
             Pages: path.resolve(__dirname, "ClientApp/components/pages"),
             PlayersPageSections: path.resolve(__dirname, "ClientApp/components/pages/teamPage/pages/playersPage/sections"),
             FixturesPageSections: path.resolve(__dirname, "ClientApp/components/pages/teamPage/pages/fixturesPage/sections"),

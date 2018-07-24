@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Tabs from "Components/Tabs";
+import Tabs from "Reusable/Tabs";
 
 import LeagueTable from "Pages/tablePage/LeagueTable";
 

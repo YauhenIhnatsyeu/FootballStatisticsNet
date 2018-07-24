@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import classNames from "classnames";
 
-import Item from "Components/Item";
+import Item from "Reusable/Item";
 import FixtureInfo from "../FixtureInfo";
 
 import "./index.css";

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Item from "Components/Item";
+import Item from "Reusable/Item";
 
 import DatesForms from "../DatesForm";
 import FixturesList from "../FixturesList";

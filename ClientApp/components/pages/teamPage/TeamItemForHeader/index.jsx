@@ -6,10 +6,10 @@ import createTeamUrl from "Utilities/urlsCreators";
 
 import teamRoutes from "Constants/teamRoutes";
 
-import Tabs from "Components/Tabs";
+import Tabs from "Reusable/Tabs";
 
-// import Item from "Components/Item";
-import TeamItem from "Components/TeamItem";
+// import Item from "Reusable/Item";
+import TeamItem from "Reusable/TeamItem";
 
 import "./index.css";
 

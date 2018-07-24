@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Notification from "Components/Notification";
+import Notification from "Reusable/Notification";
 
 export default class Notifications extends Component {
     constructor(props) {

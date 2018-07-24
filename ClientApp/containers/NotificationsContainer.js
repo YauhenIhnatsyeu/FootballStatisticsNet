@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import Notifications from "Components/Notifications";
+import Notifications from "Reusable/Notifications";
 
 const mapStateToProps = state => ({
     notification: state.notification,

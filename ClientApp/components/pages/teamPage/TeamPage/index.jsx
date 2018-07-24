@@ -13,8 +13,8 @@ import teamRoutes from "Constants/teamRoutes";
 import teamRoutePaths from "Constants/teamRoutePaths";
 import defaultRoutePaths from "Constants/defaultRoutePaths";
 
-import Loading from "Components/messages/Loading";
-import Error from "Components/messages/Error";
+import Loading from "Reusable/messages/Loading";
+import Error from "Reusable/messages/Error";
 
 import createTeamUrl from "Utilities/urlsCreators";
 

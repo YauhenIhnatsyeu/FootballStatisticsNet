@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 
-import OverlaySpinner from "Components/spinners/OverlaySpinner";
+import OverlaySpinner from "Reusable/spinners/OverlaySpinner";
 
 const mapStateToProps = state => ({
     isLoading: state.isLoading,

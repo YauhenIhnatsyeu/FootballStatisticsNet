@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsList from "Components/ItemsList";
-import PagingControls from "Components/PagingControls";
+import ItemsList from "Reusable/ItemsList";
+import PagingControls from "Reusable/PagingControls";
 
 import itemsOnOnePageCount from "Constants/itemsOnOnePageCount";
 

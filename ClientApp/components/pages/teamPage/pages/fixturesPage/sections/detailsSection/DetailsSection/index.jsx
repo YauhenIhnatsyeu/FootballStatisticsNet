@@ -2,10 +2,10 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import ItemList from "Components/ItemsList";
+import ItemList from "Reusable/ItemsList";
 
-import Spinner from "Components/spinners/Spinner";
-import Error from "Components/messages/Error";
+import Spinner from "Reusable/spinners/Spinner";
+import Error from "Reusable/messages/Error";
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 
