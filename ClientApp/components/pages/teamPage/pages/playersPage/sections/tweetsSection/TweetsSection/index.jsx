@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsList from "Reusable/ItemsList";
+import ItemsList from "Reusable/items/ItemsList";
 
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
