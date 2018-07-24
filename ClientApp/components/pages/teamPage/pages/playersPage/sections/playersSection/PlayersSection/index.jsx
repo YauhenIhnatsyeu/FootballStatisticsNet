@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsListWithPagingControls from "Reusable/ItemsListWithPagingControls";
+import ItemsListWithPagingControls from "Reusable/items/ItemsListWithPagingControls";
 
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";

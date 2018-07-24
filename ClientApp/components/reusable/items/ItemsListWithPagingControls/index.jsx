@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsList from "Reusable/ItemsList";
+import ItemsList from "Reusable/items/ItemsList";
 import PagingControls from "Reusable/PagingControls";
 
 import itemsOnOnePageCount from "Constants/itemsOnOnePageCount";
