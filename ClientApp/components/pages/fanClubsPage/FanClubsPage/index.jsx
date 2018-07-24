@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import ItemsList from "Reusable/items/ItemsList";
+
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
 
@@ -24,11 +26,11 @@ export default class FanClubsPage extends Component {
         }
 
         return (
-            <div className="fan-club-list">
-                {this.props.fanClubs.map((fanClub, index) => (
-                    <FanClubItem fanClub={fanClub} key={index} />
-                ))}
-            </div>
+            <ItemsList
+                items={this.props.fanClubs}
+                itemComponent={<FanClubItem />}
+                itemKey="fanClub"
+            />
         );
     }
 }
