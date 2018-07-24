@@ -2,11 +2,12 @@ import routePaths from "Constants/routePaths";
 
 import TablePageContainer from "Containers/TablePageContainer";
 import LeaguePageContainer from "Containers/LeaguePageContainer";
+import FanClubsPageContainer from "Containers/FanClubsPageContainer";
 import TeamPageContainer from "Containers/TeamPageContainer";
 import RegisterPageContainer from "Containers/RegisterPageContainer";
 import LoginPageContainer from "Containers/LoginPageContainer";
 import LogoutPageContainer from "Containers/LogoutPageContainer";
-import FanClubCreatePageContainer from "../containers/FanClubCreatePageContainer";
+import FanClubCreatePageContainer from "Containers/FanClubCreatePageContainer";
 
 export default [
     {
@@ -18,6 +19,11 @@ export default [
         path: routePaths.teams,
         component: LeaguePageContainer,
         caption: "Teams",
+    },
+    {
+        path: routePaths.fanClubs,
+        component: FanClubsPageContainer,
+        caption: "Fan clubs",
     },
     {
         path: routePaths.team,

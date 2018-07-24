@@ -25,3 +25,7 @@ export function create(fanClub, avatarId) {
         getCreateRequestOptions(fanClub, avatarId),
     );
 }
+
+export function fetch() {
+    return fetchUrl(getCurrentUrl() + apiRoutePaths.fetchFanClubs);
+}

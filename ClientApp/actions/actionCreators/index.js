@@ -67,7 +67,13 @@ export {
     onTweetsSearchFailed,
 } from "./twitterActionCreators";
 
-export { createFanClub } from "./fanClubActionCreators";
+export {
+    createFanClub,
+    fetchFanClubs,
+    onFanClubsFetchSucceeded,
+    onFanClubsFetchFailed,
+} from "./fanClubActionCreators";
+
 export { notify } from "./notificationsActionCreators";
 
 export {

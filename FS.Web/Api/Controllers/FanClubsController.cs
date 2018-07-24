@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FS.Web.Api.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Route("api/fanClubs")]
+    [Route("api/fanclubs")]
     public class FanClubsController : Controller
     {
         private readonly IAvatarsRepository avatarsRepository;

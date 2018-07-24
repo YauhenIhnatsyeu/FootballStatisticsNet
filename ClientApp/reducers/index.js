@@ -13,6 +13,7 @@ import user from "./user";
 import tweets from "./tweets";
 import notification from "./notification";
 import isLoading from "./isLoading";
+import fanClubs from "./fanClubs";
 
 export default combineReducers({
     fetchingErrors,
@@ -28,4 +29,5 @@ export default combineReducers({
     tweets,
     notification,
     isLoading,
+    fanClubs,
 });

@@ -8,6 +8,7 @@ const initialState = {
     fixturesFetchingErrorOccured: false,
     head2HeadFetchingErrorOccured: false,
     tweetsSearchingErrorOccured: false,
+    fanClubsFetchingErrorOccured: false,
 };
 
 export default function fetchingErrors(state = initialState, action) {
@@ -32,6 +33,9 @@ export default function fetchingErrors(state = initialState, action) {
 
     case actionTypes.TWEETS_SEARCH_FAILED:
         return { ...state, tweetsSearchingErrorOccured: true };
+
+    case actionTypes.FAN_CLUBS_FETCH_FAILED:
+        return { ...state, fanClubsFetchingErrorOccured: true };
 
     default:
         return state;
