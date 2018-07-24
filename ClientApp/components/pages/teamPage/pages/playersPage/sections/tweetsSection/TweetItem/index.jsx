@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import Item from "Reusable/Item";
+import Item from "Reusable/items/Item";
 
 import { fromStringToDateString } from "Utilities/castDate";
 

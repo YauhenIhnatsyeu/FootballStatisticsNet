@@ -25,6 +25,7 @@ export default class Nav extends Component {
                 <ul className="nav__list">
                     {this.renderNavItem(routes[0])}
                     {this.renderNavItem(routes[1])}
+                    {this.renderNavItem(routes[2])}
                 </ul>
             </nav>
         );

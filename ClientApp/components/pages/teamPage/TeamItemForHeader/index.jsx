@@ -8,7 +8,7 @@ import teamRoutes from "Constants/teamRoutes";
 
 import Tabs from "Reusable/Tabs";
 
-// import Item from "Reusable/Item";
+// import Item from "Reusable/items/Item";
 import TeamItem from "Reusable/TeamItem";
 
 import "./index.css";

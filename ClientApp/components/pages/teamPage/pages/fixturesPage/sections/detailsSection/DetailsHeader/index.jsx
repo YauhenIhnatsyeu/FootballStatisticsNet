@@ -2,7 +2,7 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import Item from "Reusable/Item";
+import Item from "Reusable/items/Item";
 import FixtureInfo from "Pages/teamPage/pages/fixturesPage/FixtureInfo";
 
 import "./index.css";
