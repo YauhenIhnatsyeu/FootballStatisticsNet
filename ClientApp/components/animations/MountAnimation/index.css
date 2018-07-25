@@ -1,0 +1,9 @@
+.animation-container {
+    opacity: 0;
+
+    transition: opacity .25s;
+}
+
+.animation-container_visible {
+    opacity: 1;
+}
