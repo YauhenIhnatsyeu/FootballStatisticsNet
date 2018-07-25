@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import classNames from "classnames";
 
+import startAnimation from "Helpers/animationHelper";
+
 import "./index.css";
 
 export default class MountAnimation extends Component {
@@ -14,9 +16,7 @@ export default class MountAnimation extends Component {
     }
 
     componentDidMount() {
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => this.setState({ visible: true }));
-        });
+        startAnimation(() => this.setState({ visible: true }));
     }
 
     getStyle = () => classNames({
