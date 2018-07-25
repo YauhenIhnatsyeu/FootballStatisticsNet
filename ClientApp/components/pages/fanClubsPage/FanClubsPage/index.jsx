@@ -7,6 +7,8 @@ import ItemsList from "Reusable/items/ItemsList";
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 import FanClubItem from "../FanClubItem";
 
 export default class FanClubsPage extends Component {
@@ -26,11 +28,13 @@ export default class FanClubsPage extends Component {
         }
 
         return (
-            <ItemsList
-                items={this.props.fanClubs}
-                itemComponent={<FanClubItem />}
-                itemKey="fanClub"
-            />
+            <MountAnimation>
+                <ItemsList
+                    items={this.props.fanClubs}
+                    itemComponent={<FanClubItem />}
+                    itemKey="fanClub"
+                />
+            </MountAnimation>
         );
     }
 }
