@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 
 import App from "Components/App";
 
+import "Css/html.css";
 import "Css/reset.css";
 import "Css/wrapper.css";
 import "Css/font.css";
