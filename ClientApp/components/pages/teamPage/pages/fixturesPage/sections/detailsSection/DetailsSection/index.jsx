@@ -11,6 +11,8 @@ import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 
 import head2HeadsOnOnePageCount from "Constants/head2HeadsOnOnePageCount";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 import DetailsHeader from "../DetailsHeader";
 
 import "./index.css";
@@ -42,22 +44,24 @@ export default class DetailsSection extends React.Component {
         );
 
         return (
-            <div className="details-section">
-                <div className="details-section__details-header-container">
-                    <DetailsHeader
-                        head2Head={this.props.head2Head}
+            <MountAnimation>
+                <div className="details-section">
+                    <div className="details-section__details-header-container">
+                        <DetailsHeader
+                            head2Head={this.props.head2Head}
+                        />
+                    </div>
+
+                    <ItemList
+                        items={
+                            this.props.head2Head.fixtures
+                                .slice(0, head2HeadsOnOnePageCount)
+                        }
+                        itemComponent={fixtureItem}
+                        itemKey="fixture"
                     />
                 </div>
-
-                <ItemList
-                    items={
-                        this.props.head2Head.fixtures
-                            .slice(0, head2HeadsOnOnePageCount)
-                    }
-                    itemComponent={fixtureItem}
-                    itemKey="fixture"
-                />
-            </div>
+            </MountAnimation>
         );
     }
 }

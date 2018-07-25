@@ -9,6 +9,8 @@ import Error from "Reusable/messages/Error";
 
 import PlayerItem from "PlayersPageSections/playersSection/PlayerItem";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 export default class PlayersSection extends Component {
     componentDidMount() {
         this.props.fetchPlayers(this.props.team._links.players.href);
@@ -28,13 +30,15 @@ export default class PlayersSection extends Component {
         }
 
         return (
-            <ItemsListWithPagingControls
-                items={this.props.players}
-                itemComponent={<PlayerItem />}
-                itemKey="player"
-                currentPageIndex={this.props.playersPageIndex}
-                onPageChanged={this.handlePageChanged}
-            />
+            <MountAnimation>
+                <ItemsListWithPagingControls
+                    items={this.props.players}
+                    itemComponent={<PlayerItem />}
+                    itemKey="player"
+                    currentPageIndex={this.props.playersPageIndex}
+                    onPageChanged={this.handlePageChanged}
+                />
+            </MountAnimation>
         );
     }
 }

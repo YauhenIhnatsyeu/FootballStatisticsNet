@@ -9,6 +9,8 @@ import Error from "Reusable/messages/Error";
 
 import createTeamUrl from "Utilities/urlsCreators";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 import "./index.css";
 
 export default class TeamsList extends Component {
@@ -61,17 +63,19 @@ export default class TeamsList extends Component {
         }
 
         return (
-            <div className="teams-list">
-                {this.props.teams.map((team, index) =>
-                    (
-                        <div className="teams-list__team-item-container" key={index}>
-                            {this.props.loggedIn
-                                ? this.renderTeamItemWithButton(team)
-                                : this.renderTeamItemWithoutButton(team)}
-                        </div>
-                    ))
-                }
-            </div>
+            <MountAnimation>
+                <div className="teams-list">
+                    {this.props.teams.map((team, index) =>
+                        (
+                            <div className="teams-list__team-item-container" key={index}>
+                                {this.props.loggedIn
+                                    ? this.renderTeamItemWithButton(team)
+                                    : this.renderTeamItemWithoutButton(team)}
+                            </div>
+                        ))
+                    }
+                </div>
+            </MountAnimation>
         );
     }
 }

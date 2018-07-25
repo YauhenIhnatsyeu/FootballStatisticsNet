@@ -7,6 +7,8 @@ import ItemsList from "Reusable/items/ItemsList";
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 import TweetItem from "../TweetItem";
 
 export default class TweetsSection extends Component {
@@ -24,11 +26,13 @@ export default class TweetsSection extends Component {
         }
 
         return (
-            <ItemsList
-                items={this.props.tweets}
-                itemComponent={<TweetItem />}
-                itemKey="tweet"
-            />
+            <MountAnimation>
+                <ItemsList
+                    items={this.props.tweets}
+                    itemComponent={<TweetItem />}
+                    itemKey="tweet"
+                />
+            </MountAnimation>
         );
     }
 }

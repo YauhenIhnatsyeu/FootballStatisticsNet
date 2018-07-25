@@ -10,6 +10,8 @@ import ItemsListWithPagingControls from "Reusable/items/ItemsListWithPagingContr
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 export default class FixturesList extends Component {
     handlePageChanged = (pageIndex) => {
         this.props.updateFixturesPageIndex(pageIndex);
@@ -43,13 +45,15 @@ export default class FixturesList extends Component {
         );
 
         return (
-            <ItemsListWithPagingControls
-                items={this.props.fixtures}
-                itemComponent={fixtureItem}
-                itemKey="fixture"
-                currentPageIndex={this.props.fixturesPageIndex}
-                onPageChanged={this.handlePageChanged}
-            />
+            <MountAnimation>
+                <ItemsListWithPagingControls
+                    items={this.props.fixtures}
+                    itemComponent={fixtureItem}
+                    itemKey="fixture"
+                    currentPageIndex={this.props.fixturesPageIndex}
+                    onPageChanged={this.handlePageChanged}
+                />
+            </MountAnimation>
         );
     }
 }

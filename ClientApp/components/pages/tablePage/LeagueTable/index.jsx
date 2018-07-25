@@ -14,7 +14,17 @@ import teamProperties from "Constants/teamProperties";
 
 import createTeamUrl from "Utilities/urlsCreators";
 
+import classNames from "classnames";
+
+import MountAnimation from "Components/animations/MountAnimation";
+
 export default class LeagueTable extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = ({ visible: true });
+    }
+
     componentDidMount() {
         this.props.fetchLeague(leaguesData[this.props.leagueIndex].id);
     }
@@ -24,6 +34,11 @@ export default class LeagueTable extends Component {
             this.props.fetchLeague(leaguesData[nextProps.leagueIndex].id);
         }
     }
+
+    getClassName = () => classNames({
+        "table-container": true,
+        "table-container_visible": this.state.visible,
+    })
 
     getHeader = () => teamProperties.map(({ caption }) => caption);
 
@@ -42,10 +57,12 @@ export default class LeagueTable extends Component {
         }
 
         return (
-            <Table
-                header={this.getHeader()}
-                rows={this.getRows()}
-            />
+            <MountAnimation>
+                <Table
+                    header={this.getHeader()}
+                    rows={this.getRows()}
+                />
+            </MountAnimation>
         );
     }
 }
