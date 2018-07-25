@@ -25,6 +25,7 @@ export default function* login(action) {
     if (user) {
         yield put(onLoginSucceeded(user));
         pushToHistory(routePaths.teams);
+        yield put(notify(notifications.loginSucceeded));
     } else {
         yield put(notify(notifications.loginFailed));
     }

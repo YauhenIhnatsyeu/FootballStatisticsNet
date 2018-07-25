@@ -22,6 +22,7 @@ export default function* register(action) {
 
     if (result) {
         pushToHistory(routePaths.login);
+        yield put(notify(notifications.registerSucceeded));
     } else {
         yield put(notify(notifications.registerFailed));
     }

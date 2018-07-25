@@ -43,15 +43,13 @@ export default class FixturesList extends Component {
         );
 
         return (
-            <React.Fragment>
-                <ItemsListWithPagingControls
-                    items={this.props.fixtures}
-                    itemComponent={fixtureItem}
-                    itemKey="fixture"
-                    currentPageIndex={this.props.fixturesPageIndex}
-                    onPageChanged={this.handlePageChanged}
-                />
-            </React.Fragment>
+            <ItemsListWithPagingControls
+                items={this.props.fixtures}
+                itemComponent={fixtureItem}
+                itemKey="fixture"
+                currentPageIndex={this.props.fixturesPageIndex}
+                onPageChanged={this.handlePageChanged}
+            />
         );
     }
 }

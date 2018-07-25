@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "webpack",
-    "build": "webpack --mode development",
+    "build": "webpack --mode production",
     "watch": "webpack --mode development --watch",
     "server": "webpack-dev-server --mode development --inline --hot --history-api-fallback",
     "lint": "./node_modules/.bin/eslint ./ClientApp --ext .js,.jsx",
