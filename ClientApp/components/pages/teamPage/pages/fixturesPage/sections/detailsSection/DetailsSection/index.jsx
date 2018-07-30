@@ -2,10 +2,12 @@ import React from "react";
 
 import PropTypes from "prop-types";
 
-import ItemList from "Reusable/items/ItemsList";
+import ItemsList from "Reusable/items/ItemsList";
 
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
+
+import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 
@@ -28,6 +30,11 @@ export default class DetailsSection extends React.Component {
         }
     }
 
+    getFixtures = () => this.props.head2Head.fixtures
+        .slice(0, head2HeadsOnOnePageCount)
+
+    getFixtureItemProps = () => ({ currentFixtureId: this.props.currentFixtureId })
+
     render() {
         if (this.props.head2HeadFetchingErrorOccured) {
             return <Error />;
@@ -36,12 +43,6 @@ export default class DetailsSection extends React.Component {
         if (!this.props.head2Head) {
             return <Spinner />;
         }
-
-        const fixtureItem = (
-            <FixtureItem
-                currentFixtureId={this.props.currentFixtureId}
-            />
-        );
 
         return (
             <MountAnimation>
@@ -52,14 +53,14 @@ export default class DetailsSection extends React.Component {
                         />
                     </div>
 
-                    <ItemList
-                        items={
-                            this.props.head2Head.fixtures
-                                .slice(0, head2HeadsOnOnePageCount)
-                        }
-                        itemComponent={fixtureItem}
-                        itemKey="fixture"
-                    />
+                    <ItemsList>
+                        {getComponentsUsingArrayOfProps(
+                            FixtureItem,
+                            "fixture",
+                            this.getFixtures(),
+                            this.getFixtureItemProps(),
+                        )}
+                    </ItemsList>
                 </div>
             </MountAnimation>
         );

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
+
 import ItemsList from "Reusable/items/ItemsList";
 
 import Spinner from "Reusable/spinners/Spinner";
@@ -29,11 +31,13 @@ export default class FanClubsPage extends Component {
 
         return (
             <MountAnimation>
-                <ItemsList
-                    items={this.props.fanClubs}
-                    itemComponent={<FanClubItem />}
-                    itemKey="fanClub"
-                />
+                <ItemsList>
+                    {getComponentsUsingArrayOfProps(
+                        FanClubItem,
+                        "fanClub",
+                        this.props.fanClubs,
+                    )}
+                </ItemsList>
             </MountAnimation>
         );
     }

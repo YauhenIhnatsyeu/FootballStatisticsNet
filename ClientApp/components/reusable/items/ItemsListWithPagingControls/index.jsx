@@ -10,22 +10,34 @@ import itemsOnOnePageCount from "Constants/itemsOnOnePageCount";
 import "./index.css";
 
 export default class ItemsListWithPagingControls extends Component {
-    getItems = () => {
+    getChildren = () => {
+        const { children } = this.props;
+
+        if (!Array.isArray(children)) {
+            return null;
+        }
+
         const startIndex = this.props.currentPageIndex * itemsOnOnePageCount;
 
-        return this.props.items.slice(
+        return children.slice(
             startIndex,
             startIndex + itemsOnOnePageCount,
         );
     }
 
     renderPagingControls = () => {
-        if (this.props.items.length <= itemsOnOnePageCount) {
+        const { children } = this.props;
+
+        if (!Array.isArray(children)) {
+            return null;
+        }
+
+        if (children.length <= itemsOnOnePageCount) {
             return null;
         }
 
         const pagingControlsPagesCount =
-            Math.ceil(this.props.items.length / itemsOnOnePageCount);
+            Math.ceil(children.length / itemsOnOnePageCount);
 
         return (
             <PagingControls
@@ -38,27 +50,30 @@ export default class ItemsListWithPagingControls extends Component {
 
     render() {
         return (
-            <React.Fragment>
+            <div className="ilwpc">
                 {this.renderPagingControls()}
 
-                <div className="items-list-with-paging-controls__items-list-container">
-                    <ItemsList
-                        items={this.getItems()}
-                        itemComponent={this.props.itemComponent}
-                        itemKey={this.props.itemKey}
-                    />
+                <div className="ilwpc__items-list-container">
+                    <ItemsList>
+                        {this.getChildren()}
+                    </ItemsList>
                 </div>
 
                 {this.renderPagingControls()}
-            </React.Fragment>
+            </div>
         );
     }
 }
 
 ItemsListWithPagingControls.propTypes = {
-    currentPageIndex: PropTypes.number.isRequired,
-    items: PropTypes.arrayOf(PropTypes.object).isRequired,
-    itemComponent: PropTypes.node.isRequired,
-    itemKey: PropTypes.string.isRequired,
-    onPageChanged: PropTypes.func.isRequired,
+    children: PropTypes.arrayOf(PropTypes.node),
+    currentPageIndex: PropTypes.number,
+    onPageChanged: PropTypes.func,
 };
+
+ItemsListWithPagingControls.defaultProps = {
+    children: null,
+    currentPageIndex: 0,
+    onPageChanged: null,
+};
+
