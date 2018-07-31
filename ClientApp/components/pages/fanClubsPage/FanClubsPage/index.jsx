@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
 
-import ItemsList from "Reusable/items/ItemsList";
+import ItemsListInColumns from "Reusable/items/ItemsListInColumns";
 
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
@@ -31,13 +31,13 @@ export default class FanClubsPage extends Component {
 
         return (
             <MountAnimation>
-                <ItemsList>
+                <ItemsListInColumns>
                     {getComponentsUsingArrayOfProps(
                         FanClubItem,
                         "fanClub",
                         this.props.fanClubs,
                     )}
-                </ItemsList>
+                </ItemsListInColumns>
             </MountAnimation>
         );
     }
