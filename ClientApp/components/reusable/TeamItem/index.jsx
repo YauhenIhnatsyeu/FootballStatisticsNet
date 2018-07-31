@@ -6,13 +6,9 @@ import Item from "Reusable/items/Item";
 import ImageWithInfo from "Reusable/ImageWithInfo";
 import TwoStatesButton from "Reusable/TwoStatesButton";
 
-import { Link } from "react-router-dom";
-
 import unavailableUrl from "Constants/unavailableUrl";
 
 import createTeamUrl from "Utilities/urlsCreators";
-
-import "./index.css";
 
 export default class TeamItem extends Component {
     getInfo = () => {
@@ -42,7 +38,6 @@ export default class TeamItem extends Component {
 
         return buttonRequired && (
             <TwoStatesButton
-                className="team-item__button"
                 onClick={this.handleButtonClick}
                 falseStateCaption={falseStateCaption}
                 trueStateCaption={trueStateCaption}

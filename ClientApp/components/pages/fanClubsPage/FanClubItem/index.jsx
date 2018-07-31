@@ -7,8 +7,6 @@ import ImageWithInfo from "Reusable/ImageWithInfo";
 
 import unavailableUrl from "Constants/unavailableUrl";
 
-import "./index.css";
-
 export default class FanClubItem extends Component {
     getInfo = () => {
         const { description, users } = this.props.fanClub;
