@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import ItemsListInColumns from "Reusable/items/ItemsListInColumns";
+import ItemsList from "Reusable/items/ItemsList";
 
 import TeamItem from "Reusable/TeamItem";
 
@@ -66,11 +66,11 @@ export default class TeamsList extends Component {
 
         return (
             <MountAnimation>
-                <ItemsListInColumns>
+                <ItemsList inColumns>
                     {this.props.teams.map((team, index) => (this.props.loggedIn
                         ? this.renderTeamItemWithButton(team, index)
                         : this.renderTeamItemWithoutButton(team, index)))}
-                </ItemsListInColumns>
+                </ItemsList>
             </MountAnimation>
         );
     }
