@@ -50,10 +50,10 @@ export default class ItemsListWithPagingControls extends Component {
 
     render() {
         return (
-            <div className="ilwpc">
+            <div className="items-list-with-paging-controls">
                 {this.renderPagingControls()}
 
-                <div className="ilwpc__items-list-container">
+                <div className="items-list-with-paging-controls__items-list-container">
                     <ItemsList>
                         {this.getChildren()}
                     </ItemsList>
