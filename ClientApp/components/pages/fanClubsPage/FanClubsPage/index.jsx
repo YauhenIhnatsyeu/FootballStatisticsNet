@@ -2,10 +2,14 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
+
 import ItemsList from "Reusable/items/ItemsList";
 
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
+
+import MountAnimation from "Components/animations/MountAnimation";
 
 import FanClubItem from "../FanClubItem";
 
@@ -26,11 +30,15 @@ export default class FanClubsPage extends Component {
         }
 
         return (
-            <ItemsList
-                items={this.props.fanClubs}
-                itemComponent={<FanClubItem />}
-                itemKey="fanClub"
-            />
+            <MountAnimation>
+                <ItemsList inColumns>
+                    {getComponentsUsingArrayOfProps(
+                        FanClubItem,
+                        "fanClub",
+                        this.props.fanClubs,
+                    )}
+                </ItemsList>
+            </MountAnimation>
         );
     }
 }

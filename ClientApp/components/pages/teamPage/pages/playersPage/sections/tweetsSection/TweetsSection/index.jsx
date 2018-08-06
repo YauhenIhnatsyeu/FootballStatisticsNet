@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
+
 import ItemsList from "Reusable/items/ItemsList";
 
 import Spinner from "Reusable/spinners/Spinner";
@@ -27,11 +29,13 @@ export default class TweetsSection extends Component {
 
         return (
             <MountAnimation>
-                <ItemsList
-                    items={this.props.tweets}
-                    itemComponent={<TweetItem />}
-                    itemKey="tweet"
-                />
+                <ItemsList>
+                    {getComponentsUsingArrayOfProps(
+                        TweetItem,
+                        "tweet",
+                        this.props.tweets,
+                    )}
+                </ItemsList>
             </MountAnimation>
         );
     }

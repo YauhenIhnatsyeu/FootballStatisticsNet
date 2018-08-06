@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 import classNames from "classnames";
 
-import startAnimation from "Helpers/animationHelper";
+import Animation from "Helpers/animationHelper";
 
 import "./index.css";
 
@@ -12,11 +12,16 @@ export default class MountAnimation extends Component {
     constructor(props) {
         super(props);
 
+        this.animation = new Animation();
         this.state = ({ visible: false });
     }
 
     componentDidMount() {
-        startAnimation(() => this.setState({ visible: true }));
+        this.animation.start(() => this.setState({ visible: true }));
+    }
+
+    componentWillUnmount() {
+        this.animation.stop();
     }
 
     getStyle = () => classNames({

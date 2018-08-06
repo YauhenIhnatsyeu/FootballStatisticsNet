@@ -16,7 +16,7 @@ export default class ImageWithInfo extends Component {
     tryWrapWithLink = component => (
         this.props.link
             ? (
-                <Link to={this.props.link} className="team-item__link">
+                <Link to={this.props.link} className="iwi-item__link">
                     {component}
                 </Link>
             )

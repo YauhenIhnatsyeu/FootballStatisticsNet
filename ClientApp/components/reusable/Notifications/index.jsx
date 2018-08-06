@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import Notification from "Reusable/Notification";
 
+import MountAnimation from "Components/animations/MountAnimation";
+
 export default class Notifications extends Component {
     constructor(props) {
         super(props);
@@ -20,11 +22,13 @@ export default class Notifications extends Component {
     }
 
     renderNotification = (notification, key) => notification && (
-        <Notification
-            title={notification.title}
-            text={notification.text}
-            key={key}
-        />
+        <MountAnimation>
+            <Notification
+                title={notification.title}
+                text={notification.text}
+                key={key}
+            />
+        </MountAnimation>
     )
 
     render() {

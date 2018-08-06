@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
+
 import ItemsListWithPagingControls from "Reusable/items/ItemsListWithPagingControls";
 
 import Spinner from "Reusable/spinners/Spinner";
@@ -32,12 +34,15 @@ export default class PlayersSection extends Component {
         return (
             <MountAnimation>
                 <ItemsListWithPagingControls
-                    items={this.props.players}
-                    itemComponent={<PlayerItem />}
-                    itemKey="player"
                     currentPageIndex={this.props.playersPageIndex}
                     onPageChanged={this.handlePageChanged}
-                />
+                >
+                    {getComponentsUsingArrayOfProps(
+                        PlayerItem,
+                        "player",
+                        this.props.players,
+                    )}
+                </ItemsListWithPagingControls>
             </MountAnimation>
         );
     }

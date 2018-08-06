@@ -6,6 +6,8 @@ import Message from "Reusable/messages/Message";
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
 
+import { getComponentsUsingArrayOfProps } from "Helpers/reactHelper";
+
 import ItemsListWithPagingControls from "Reusable/items/ItemsListWithPagingControls";
 
 import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
@@ -13,9 +15,13 @@ import FixtureItem from "Pages/teamPage/pages/fixturesPage/FixtureItem";
 import MountAnimation from "Components/animations/MountAnimation";
 
 export default class FixturesList extends Component {
-    handlePageChanged = (pageIndex) => {
-        this.props.updateFixturesPageIndex(pageIndex);
-    }
+    getFixtureItemProps = () => ({
+        currentFixtureId: this.props.currentFixtureId,
+        onClick: this.handleFixtureClick,
+    })
+
+    handlePageChanged = pageIndex =>
+        this.props.updateFixturesPageIndex(pageIndex)
 
     handleFixtureClick = fixtureId =>
         this.props.updateCurrentFixtureId(fixtureId)
@@ -37,22 +43,19 @@ export default class FixturesList extends Component {
             );
         }
 
-        const fixtureItem = (
-            <FixtureItem
-                currentFixtureId={this.props.currentFixtureId}
-                onClick={this.handleFixtureClick}
-            />
-        );
-
         return (
             <MountAnimation>
                 <ItemsListWithPagingControls
-                    items={this.props.fixtures}
-                    itemComponent={fixtureItem}
-                    itemKey="fixture"
                     currentPageIndex={this.props.fixturesPageIndex}
                     onPageChanged={this.handlePageChanged}
-                />
+                >
+                    {getComponentsUsingArrayOfProps(
+                        FixtureItem,
+                        "fixture",
+                        this.props.fixtures,
+                        this.getFixtureItemProps(),
+                    )}
+                </ItemsListWithPagingControls>
             </MountAnimation>
         );
     }

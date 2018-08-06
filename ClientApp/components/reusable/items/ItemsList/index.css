@@ -1,7 +1,21 @@
+.items-list_in-columns {
+    display: flex;
+
+    justify-content: space-between;
+
+    flex-wrap: wrap;
+}
+
 .items-list__item-container {
     margin-bottom: 1rem;
 }
 
 .items-list__item-container:last-child {
     margin-bottom: 0;
+}
+
+.items-list__item-container_in-columns {
+    margin-bottom: 1rem;
+
+    flex-basis: 49%;
 }

@@ -2,12 +2,12 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import ItemsList from "Reusable/items/ItemsList";
+
 import TeamItem from "Reusable/TeamItem";
 
 import Spinner from "Reusable/spinners/Spinner";
 import Error from "Reusable/messages/Error";
-
-import createTeamUrl from "Utilities/urlsCreators";
 
 import MountAnimation from "Components/animations/MountAnimation";
 
@@ -30,22 +30,24 @@ export default class TeamsList extends Component {
 
     isTeamInFavorites = teamId => this.props.favoriteTeams.includes(teamId);
 
-    renderTeamItemWithButton = team => (
+    renderTeamItemWithButton = (team, index) => (
         <TeamItem
             team={team}
-            teamUrl={createTeamUrl(team.id)}
+            linkRequired
             buttonRequired
             onButtonClick={this.handleButtonClick}
             falseStateCaption="Add to favorites"
             trueStateCaption="Remove from favorites"
             defaultState={this.isTeamInFavorites(team.id)}
+            key={index}
         />
     )
 
-    renderTeamItemWithoutButton = team => (
+    renderTeamItemWithoutButton = (team, index) => (
         <TeamItem
             team={team}
-            teamUrl={createTeamUrl(team.id)}
+            linkRequired
+            key={index}
         />
     )
 
@@ -64,17 +66,11 @@ export default class TeamsList extends Component {
 
         return (
             <MountAnimation>
-                <div className="teams-list">
-                    {this.props.teams.map((team, index) =>
-                        (
-                            <div className="teams-list__team-item-container" key={index}>
-                                {this.props.loggedIn
-                                    ? this.renderTeamItemWithButton(team)
-                                    : this.renderTeamItemWithoutButton(team)}
-                            </div>
-                        ))
-                    }
-                </div>
+                <ItemsList inColumns>
+                    {this.props.teams.map((team, index) => (this.props.loggedIn
+                        ? this.renderTeamItemWithButton(team, index)
+                        : this.renderTeamItemWithoutButton(team, index)))}
+                </ItemsList>
             </MountAnimation>
         );
     }

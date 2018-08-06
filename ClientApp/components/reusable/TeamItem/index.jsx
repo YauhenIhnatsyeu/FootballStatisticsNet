@@ -6,11 +6,9 @@ import Item from "Reusable/items/Item";
 import ImageWithInfo from "Reusable/ImageWithInfo";
 import TwoStatesButton from "Reusable/TwoStatesButton";
 
-import { Link } from "react-router-dom";
-
 import unavailableUrl from "Constants/unavailableUrl";
 
-import "./index.css";
+import createTeamUrl from "Utilities/urlsCreators";
 
 export default class TeamItem extends Component {
     getInfo = () => {
@@ -21,15 +19,7 @@ export default class TeamItem extends Component {
         ];
     }
 
-    tryWrapWithTeamLink = component => (
-        this.props.teamUrl && !this.props.onClick
-            ? (
-                <Link to={this.props.teamUrl} className="team-item__link">
-                    {component}
-                </Link>
-            )
-            : component
-    );
+    getTeamUrl = () => createTeamUrl(this.props.team.id)
 
     handleButtonClick = (state) => {
         if (this.props.onButtonClick) {
@@ -48,7 +38,6 @@ export default class TeamItem extends Component {
 
         return buttonRequired && (
             <TwoStatesButton
-                className="team-item__button"
                 onClick={this.handleButtonClick}
                 falseStateCaption={falseStateCaption}
                 trueStateCaption={trueStateCaption}
@@ -66,7 +55,9 @@ export default class TeamItem extends Component {
                     imageUrl={team.crestUrl}
                     title={team.name}
                     info={this.getInfo()}
-                    link={this.props.teamUrl}
+                    link={this.props.linkRequired
+                        && !this.props.onClick
+                        && this.getTeamUrl()}
                     extraComponentForInfo={this.renderButton()}
                 />
 
@@ -84,7 +75,7 @@ TeamItem.propTypes = {
         shortName: PropTypes.string,
         squadMarketValue: PropTypes.string,
     }),
-    teamUrl: PropTypes.string,
+    linkRequired: PropTypes.bool,
     onClick: PropTypes.func,
     buttonRequired: PropTypes.bool,
     onButtonClick: PropTypes.func,
@@ -105,7 +96,7 @@ TeamItem.defaultProps = {
         shortName: null,
         squadMarketValue: null,
     }),
-    teamUrl: null,
+    linkRequired: false,
     onClick: null,
     buttonRequired: false,
     onButtonClick: null,

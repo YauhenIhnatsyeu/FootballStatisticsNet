@@ -2,36 +2,43 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { injectPropsIntoComponent } from "Helpers/propsHelper";
+import classNames from "classnames";
 
 import "./index.css";
 
 export default class ItemsList extends Component {
+    getListStyle = () => classNames({
+        "items-list": true,
+        "items-list_in-columns": this.props.inColumns,
+    })
+
+    getItemStyle = () => classNames({
+        "items-list__item-container": true,
+        "items-list__item-container_in-columns": this.props.inColumns,
+    })
+
+    renderItem = (node, index) => (
+        <div className={this.getItemStyle()} key={index}>
+            {node}
+        </div>
+    )
+
     render() {
-        const { itemComponent } = this.props;
-
-        const extraProps = {};
-
         return (
-            <div className="items-list">
-                {this.props.items && this.props.items
-                    .map((item, index) => {
-                        extraProps[this.props.itemKey] = item;
-
-                        return (
-                            <div className="items-list__item-container" key={index}>
-                                {injectPropsIntoComponent(itemComponent, extraProps)}
-                            </div>
-                        );
-                    })
-                }
+            <div className={this.getListStyle()}>
+                {this.props.children && this.props.children.map((child, index) =>
+                    this.renderItem(child, index))}
             </div>
         );
     }
 }
 
 ItemsList.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object).isRequired,
-    itemComponent: PropTypes.node.isRequired,
-    itemKey: PropTypes.string.isRequired,
+    children: PropTypes.arrayOf(PropTypes.node),
+    inColumns: PropTypes.bool,
+};
+
+ItemsList.defaultProps = {
+    children: null,
+    inColumns: false,
 };
