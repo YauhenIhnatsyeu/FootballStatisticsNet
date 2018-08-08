@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FS.DataAccess.Migrations
 {
     [DbContext(typeof(UsersContext))]
-    [Migration("20180705134544_Initial")]
+    [Migration("20180808081352_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,14 @@ namespace FS.DataAccess.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("Code");
+
+                    b.Property<string>("CrestUrl");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("ShortName");
+
+                    b.Property<string>("SquadMarketValue");
 
                     b.HasKey("Id");
 

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using AutoMapper;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
@@ -17,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure;
 
 namespace FS.Web
 {
@@ -34,7 +36,10 @@ namespace FS.Web
             var connectionString = configuration["Database:ConnectionString"];
             var secretKey = configuration["Jwt:SecretKey"];
 
-            services.AddDbContext<UsersContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<UsersContext>(options => options.UseNpgsql(
+                connectionString,
+                npgsqlOptions => npgsqlOptions.MigrationsAssembly("FS.DataAccess")
+            ));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<UsersContext>()
