@@ -4,9 +4,9 @@ export default {
     login: "/api/users/login",
     logout: "/api/users/logout",
 
-    getFavoriteTeams: "/api/teams/get",
-    addFavoriteTeam: "/api/teams/add",
-    removeFavoriteTeam: "/api/teams/remove",
+    getFavoriteTeams: "/api/favorite-teams/get",
+    addFavoriteTeam: "/api/favorite-teams/add",
+    removeFavoriteTeam: "/api/favorite-teams/remove",
 
     tweets: "/api/twitter/search",
 

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FS.Web.Api.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Route("api/teams")]
+    [Route("api/favorite-teams")]
     public class FavoriteTeamsController : Controller
     {
         private readonly IFavoriteTeamsRepository favoriteTeamsRepository;
