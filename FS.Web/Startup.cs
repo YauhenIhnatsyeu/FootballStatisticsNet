@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using AutoMapper;
+using FS.Core.Clients;
+using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
@@ -95,6 +97,7 @@ namespace FS.Web
             services.AddTransient<IJWTService, JWTService>();
             services.AddTransient<ITwitterService, TwitterService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<ITeamsService, TeamsService>();
 
             services.AddTransient<IAvatarsRepository, AvatarsRepository>();
             services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
@@ -102,6 +105,8 @@ namespace FS.Web
             services.AddTransient<ITeamsRepository, TeamsRepository>();
             services.AddTransient<IFanClubsRepository, FanClubsRepository>();
             services.AddTransient<IUsersFanClubsRepository, UsersFanClubsRepository>();
+
+            services.AddTransient<ITeamsClient, TeamsClient>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
