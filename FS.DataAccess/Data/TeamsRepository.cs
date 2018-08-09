@@ -1,49 +1,54 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
+using FS.Core.Helpers;
+using FS.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Linq;
 
 namespace FS.DataAccess.Data
 {
     public class TeamsRepository : ITeamsRepository
     {
         private readonly UsersContext context;
+        private readonly ITeamsService teamsService;
 
-        public TeamsRepository(UsersContext context)
+        public TeamsRepository(UsersContext context, ITeamsService teamsService)
         {
             this.context = context;
+            this.teamsService = teamsService;
         }
 
-        public IReadOnlyList<Team> Get()
+        public Team GetByCode(int code)
         {
-            return context.Teams.ToList();
-        }
+            Team team = FindByCode(code);
 
-        public Team GetByTeam(Team item)
-        {
-            return Get().FirstOrDefault(team => team.Code == item.Code);
-        }
-
-        public void Add(Team item)
-        {
-            if (Contains(item))
+            if (team != null)
             {
-                return;
+                return team;
             }
 
+            team = teamsService.GetByCode(code);
+
+            if (team != null)
+            {
+                Add(team);
+
+                return FindByCode(code);
+            }
+
+            return null;
+        }
+
+        private void Add(Team item)
+        {
             context.Teams.Add(item);
             context.SaveChanges();
         }
 
-        public void Remove(Team item)
+        private Team FindByCode(int code)
         {
-            context.Teams.Remove(item);
-            context.SaveChanges();
-        }
-
-        public bool Contains(Team item)
-        {
-            return GetByTeam(item) != null;
+            return context.Teams.FirstOrDefault(t => t.Code == code);
         }
     }
 }

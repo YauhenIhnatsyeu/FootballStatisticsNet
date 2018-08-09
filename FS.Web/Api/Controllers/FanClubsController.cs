@@ -39,7 +39,7 @@ namespace FS.Web.Api.Controllers
         }
 
         /// <summary>
-        ///     Gets all fanClubs with users that are accepted into them
+        /// Gets all fanClubs with users that are accepted into them
         /// </summary>
         [AllowAnonymous]
         [Route("get")]
@@ -55,7 +55,7 @@ namespace FS.Web.Api.Controllers
         }
 
         /// <summary>
-        ///     Gets all fanClubs, which current user created, with users that want to join them
+        /// Gets all fanClubs, which current user created, with users that want to join them
         /// </summary>
         [Route("get-unaccepted")]
         public IActionResult GetUnaccepted()
@@ -82,15 +82,8 @@ namespace FS.Web.Api.Controllers
                 return BadRequest();
             }
 
-            var teamToSave = new Team {Code = fanClubDto.TeamId};
-            teamsRepository.Add(teamToSave);
-
-            var fanClub = new FanClub
-            {
-                Name = fanClubDto.Name,
-                Description = fanClubDto.Description,
-                Team = teamsRepository.GetByTeam(teamToSave)
-            };
+            var fanClub = mapper.Map<FanClubToServerDTO, FanClub>(fanClubDto);
+            fanClub.Team = teamsRepository.GetByCode(fanClubDto.TeamId);
 
             if (fanClubDto.AvatarId != null)
             {
@@ -140,7 +133,7 @@ namespace FS.Web.Api.Controllers
 
             usersFanClubsRepository.Add(new UserFanClub
             {
-                User = usersRepository.GetLoggedInUser(),
+                User = usersRepository.FindById(userFanClubDto.UserId),
                 FanClub = fanClubsRepository.FindById(userFanClubDto.FanClubId),
                 MemberStatus = MemberStatus.Requested,
                 UserIsCreator = false

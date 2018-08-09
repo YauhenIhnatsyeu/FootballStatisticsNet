@@ -10,6 +10,7 @@ namespace FS.Web.Helpers
         {
             CreateMap<UserToServerDTO, User>();
             CreateMap<User, UserToClientDTO>();
+            CreateMap<FanClubToServerDTO, FanClub>();
             CreateMap<FanClub, FanClubToClientDTO>()
                 .ForMember(dest => dest.Users, opt => opt.MapFrom(src => src.UsersFanClub));
             CreateMap<UserFanClubToServerDTO, UserFanClub>();

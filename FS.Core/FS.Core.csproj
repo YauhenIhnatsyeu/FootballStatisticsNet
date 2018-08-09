@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="CloudinaryDotNet" Version="1.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+    <PackageReference Include="Webber" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

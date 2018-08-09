@@ -8,12 +8,12 @@ namespace FS.Core.Helpers
         public class HttpHelperResponse
         {
             public readonly int StatusCode;
-            public readonly string Response;
+            public readonly string ResponseString;
 
-            public HttpHelperResponse(int statusCode, string response)
+            public HttpHelperResponse(int statusCode, string responseString)
             {
                 StatusCode = statusCode;
-                Response = response;
+                ResponseString = responseString;
             }
         }
 
