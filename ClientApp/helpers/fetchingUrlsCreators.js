@@ -7,7 +7,11 @@ export function createTeamsUrl(leagueId) {
 }
 
 export function createTeamUrl(teamId) {
-    return `//api.football-data.org/v1/teams/${teamId}`;
+    return `/api/football/teams/${teamId}`;
+}
+
+export function createPlayersUrl(teamId) {
+    return `//api.football-data.org/v1/teams/${teamId}/players`;
 }
 
 export function createFixturesUrl(teamId, dateFrom, dateTo) {

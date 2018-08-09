@@ -5,9 +5,10 @@ import {
     createLeagueUrl,
     createTeamsUrl,
     createTeamUrl,
+    createPlayersUrl,
     createFixturesUrl,
     createHead2HeadUrl,
-} from "Utilities/fetchingUrlsCreators";
+} from "Helpers/fetchingUrlsCreators";
 
 export function fetchLeague(leagueId) {
     const leagueUrl = createLeagueUrl(leagueId);
@@ -24,7 +25,8 @@ export function fetchTeam(teamId) {
     return fetchFootballUrl(teamUrl);
 }
 
-export function fetchPlayers(playersUrl) {
+export function fetchPlayers(teamId) {
+    const playersUrl = createPlayersUrl(teamId);
     return fetchFootballUrl(playersUrl);
 }
 

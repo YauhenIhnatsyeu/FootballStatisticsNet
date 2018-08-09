@@ -90,13 +90,7 @@ TeamPage.propTypes = {
     }).isRequired,
     fetchTeam: PropTypes.func.isRequired,
     teamFetchingErrorOccured: PropTypes.bool,
-    team: PropTypes.shape({
-        id: PropTypes.number,
-        crestUrl: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        shortName: PropTypes.string.isRequired,
-        squadMarketValue: PropTypes.string,
-    }),
+    team: PropTypes.shape({}),
     location: PropTypes.shape({
         pathname: PropTypes.string.isRequired,
     }).isRequired,

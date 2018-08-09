@@ -15,7 +15,7 @@ import MountAnimation from "Components/animations/MountAnimation";
 
 export default class PlayersSection extends Component {
     componentDidMount() {
-        this.props.fetchPlayers(this.props.team._links.players.href);
+        this.props.fetchPlayers(this.props.team.id);
     }
 
     handlePageChanged = (pageIndex) => {
@@ -53,16 +53,13 @@ PlayersSection.propTypes = {
     updatePlayersPageIndex: PropTypes.func.isRequired,
     playersFetchingErrorOccured: PropTypes.bool.isRequired,
     team: PropTypes.shape({
-        _links: PropTypes.shape({
-            players: PropTypes.shape({
-                href: PropTypes.string.isRequired,
-            }).isRequired,
-        }).isRequired,
-    }).isRequired,
+        id: PropTypes.number,
+    }),
     players: PropTypes.arrayOf(PropTypes.object),
     playersPageIndex: PropTypes.number.isRequired,
 };
 
 PlayersSection.defaultProps = {
+    team: null,
     players: null,
 };
