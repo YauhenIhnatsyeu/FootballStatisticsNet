@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FS.Core.Models
 {
-    public class LeagueTeam
+    public class LeagueTable
     {
         public int Code { get; set; }
         public int Position { get; set; }

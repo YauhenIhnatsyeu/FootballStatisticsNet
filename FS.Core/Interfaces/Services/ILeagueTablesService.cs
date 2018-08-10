@@ -5,8 +5,8 @@ using FS.Core.Models;
 
 namespace FS.Core.Interfaces.Services
 {
-    public interface ILeaguesService
+    public interface ILeagueTablesService
     {
-        ICollection<LeagueTeam> GetByCode(int code);
+        ICollection<LeagueTable> GetByCode(int code);
     }
 }

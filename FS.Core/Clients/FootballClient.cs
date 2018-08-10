@@ -19,7 +19,7 @@ namespace FS.Core.Clients
             this.configuration = configuration;
         }
 
-        public JObject GetLeagueByCode(int code)
+        public JObject GetLeagueTableByCode(int code)
         {
             string url = String.Format(configuration["Football:LeagueUrl"], code);
             return GetByUrl(url);
