@@ -1,10 +1,7 @@
 ﻿using System.Linq;
 using FS.Core.Interfaces.Repositories;
-using FS.Core.Models;
-using FS.Core.Helpers;
 using FS.Core.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Linq;
+using FS.Core.Models;
 
 namespace FS.DataAccess.Data
 {

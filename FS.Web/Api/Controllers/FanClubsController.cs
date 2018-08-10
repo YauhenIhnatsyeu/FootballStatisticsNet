@@ -39,7 +39,7 @@ namespace FS.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Gets all fanClubs with users that are accepted into them
+        ///     Gets all fanClubs with users that are accepted into them
         /// </summary>
         [AllowAnonymous]
         [Route("get")]
@@ -55,7 +55,7 @@ namespace FS.Web.Api.Controllers
         }
 
         /// <summary>
-        /// Gets all fanClubs, which current user created, with users that want to join them
+        ///     Gets all fanClubs, which current user created, with users that want to join them
         /// </summary>
         [Route("get-unaccepted")]
         public IActionResult GetUnaccepted()

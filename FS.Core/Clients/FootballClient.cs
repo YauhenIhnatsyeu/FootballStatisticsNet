@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FS.Core.Helpers;
+﻿using FS.Core.Helpers;
 using FS.Core.Interfaces.Clients;
-using FS.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json.Linq;
@@ -21,19 +17,19 @@ namespace FS.Core.Clients
 
         public JObject GetLeagueTablesByCode(int code)
         {
-            string url = String.Format(configuration["Football:LeagueTablesUrl"], code);
+            string url = string.Format(configuration["Football:LeagueTablesUrl"], code);
             return GetByUrl(url);
         }
 
         public JObject GetLeagueTeamsByCode(int code)
         {
-            string url = String.Format(configuration["Football:LeagueTeamsUrl"], code);
+            string url = string.Format(configuration["Football:LeagueTeamsUrl"], code);
             return GetByUrl(url);
         }
 
         public JObject GetTeamByCode(int code)
         {
-            string url = String.Format(configuration["Football:TeamUrl"], code);
+            string url = string.Format(configuration["Football:TeamUrl"], code);
             return GetByUrl(url);
         }
 

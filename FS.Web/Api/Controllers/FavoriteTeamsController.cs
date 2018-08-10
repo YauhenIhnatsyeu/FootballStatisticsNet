@@ -67,7 +67,7 @@ namespace FS.Web.Api.Controllers
 
             if (favoriteTeamsRepository.GetByUserAndTeam(loggedInUser, team) == null)
             {
-                favoriteTeamsRepository.Add(new FavoriteTeam { User = loggedInUser, Team = team});
+                favoriteTeamsRepository.Add(new FavoriteTeam {User = loggedInUser, Team = team});
             }
 
             return Ok();
@@ -77,7 +77,6 @@ namespace FS.Web.Api.Controllers
         [Route("remove")]
         public IActionResult RemoveTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
-
             if (favoriteTeamDto == null)
             {
                 return BadRequest();

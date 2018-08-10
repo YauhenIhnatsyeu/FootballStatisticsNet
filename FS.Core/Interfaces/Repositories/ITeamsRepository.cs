@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FS.Core.Models;
+﻿using FS.Core.Models;
 
 namespace FS.Core.Interfaces.Repositories
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using Microsoft.Extensions.Caching.Memory;
@@ -9,8 +8,8 @@ namespace FS.DataAccess.Data
 {
     public class LeagueTeamsRepository : ILeagueTeamsRepository
     {
-        private readonly ILeagueTeamsService leagueTeamsService;
         private readonly IMemoryCache cache;
+        private readonly ILeagueTeamsService leagueTeamsService;
 
         public LeagueTeamsRepository(ILeagueTeamsService leagueTeamsService, IMemoryCache cache)
         {

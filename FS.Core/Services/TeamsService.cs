@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FS.Core.Helpers;
-using FS.Core.Interfaces.Clients;
+﻿using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using Newtonsoft.Json.Linq;

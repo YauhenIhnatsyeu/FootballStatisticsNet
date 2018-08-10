@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using FS.Core.Interfaces.Repositories;
-using FS.Core.Models;
-using FS.Core.Helpers;
 using FS.Core.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
+using FS.Core.Models;
 using Microsoft.Extensions.Caching.Memory;
-using Newtonsoft.Json.Linq;
 
 namespace FS.DataAccess.Data
 {
     public class LeagueTablesRepository : ILeagueTablesRepository
     {
-        private readonly ILeagueTablesService leagueTablesService;
         private readonly IMemoryCache cache;
+        private readonly ILeagueTablesService leagueTablesService;
 
         public LeagueTablesRepository(ILeagueTablesService leagueTablesService, IMemoryCache memoryCache)
         {

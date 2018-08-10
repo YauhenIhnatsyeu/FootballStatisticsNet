@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FS.Core.Models
+﻿namespace FS.Core.Models
 {
     public class LeagueTableDTO
     {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.Policy;
-using System.Text;
-
-namespace FS.Core.Utils
+﻿namespace FS.Core.Utils
 {
     public static class UrlUtils
     {

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
@@ -65,14 +63,14 @@ namespace FS.Core.Services
         private static void AddCodeToTeam(Team team, JToken teamJson)
         {
             if (teamJson == null) return;
-            if (!((JObject)teamJson).ContainsKey("_links")) return;
-            if (!((JObject)teamJson["_links"]).ContainsKey("self")) return;
-            if (!((JObject)teamJson["_links"]["self"]).ContainsKey("href")) return;
+            if (!((JObject) teamJson).ContainsKey("_links")) return;
+            if (!((JObject) teamJson["_links"]).ContainsKey("self")) return;
+            if (!((JObject) teamJson["_links"]["self"]).ContainsKey("href")) return;
 
             string teamUrl = teamJson["_links"]["self"]["href"].ToString();
             string lastPartOfTeamUrl = UrlUtils.GetLastPartOfUrl(teamUrl);
 
-            if (Int32.TryParse(lastPartOfTeamUrl, out var code))
+            if (int.TryParse(lastPartOfTeamUrl, out var code))
             {
                 team.Code = code;
             }

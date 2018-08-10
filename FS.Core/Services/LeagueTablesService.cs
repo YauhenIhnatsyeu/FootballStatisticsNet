@@ -1,11 +1,10 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
 using FS.Core.Utils;
+using Newtonsoft.Json.Linq;
 
 namespace FS.Core.Services
 {
@@ -64,14 +63,14 @@ namespace FS.Core.Services
         private static void AddCodeToTable(LeagueTable table, JToken tableJson)
         {
             if (tableJson == null) return;
-            if (!((JObject)tableJson).ContainsKey("_links")) return;
-            if (!((JObject)tableJson["_links"]).ContainsKey("team")) return;
-            if (!((JObject)tableJson["_links"]["team"]).ContainsKey("href")) return;
+            if (!((JObject) tableJson).ContainsKey("_links")) return;
+            if (!((JObject) tableJson["_links"]).ContainsKey("team")) return;
+            if (!((JObject) tableJson["_links"]["team"]).ContainsKey("href")) return;
 
             string teamUrl = tableJson["_links"]["team"]["href"].ToString();
             string lastPartOfTeamUrl = UrlUtils.GetLastPartOfUrl(teamUrl);
 
-            if (Int32.TryParse(lastPartOfTeamUrl, out var code))
+            if (int.TryParse(lastPartOfTeamUrl, out var code))
             {
                 table.Code = code;
             }

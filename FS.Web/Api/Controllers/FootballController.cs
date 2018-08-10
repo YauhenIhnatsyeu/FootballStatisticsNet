@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using AutoMapper;
-using FS.Core.Enums;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using FS.Web.Api.DTOs;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FS.Web.Api.Controllers
@@ -15,9 +10,9 @@ namespace FS.Web.Api.Controllers
     [Route("api/football")]
     public class FootballController : Controller
     {
-        private readonly IMapper mapper;
         private readonly ILeagueTablesRepository leagueTablesRepository;
         private readonly ILeagueTeamsRepository leagueTeamsRepository;
+        private readonly IMapper mapper;
         private readonly ITeamsRepository teamsRepository;
 
         public FootballController(
@@ -38,7 +33,7 @@ namespace FS.Web.Api.Controllers
             ICollection<LeagueTable> leagueTables = leagueTablesRepository.GetByCode(code);
 
             return leagueTables != null
-                ? (IActionResult)Json(
+                ? (IActionResult) Json(
                     mapper.Map<ICollection<LeagueTable>, ICollection<LeagueTableDTO>>(leagueTables))
                 : BadRequest();
         }
@@ -49,7 +44,7 @@ namespace FS.Web.Api.Controllers
             ICollection<Team> leagueTeams = leagueTeamsRepository.GetByCode(code);
 
             return leagueTeams != null
-                ? (IActionResult)Json(
+                ? (IActionResult) Json(
                     mapper.Map<ICollection<Team>, ICollection<TeamDTO>>(leagueTeams))
                 : BadRequest();
         }
