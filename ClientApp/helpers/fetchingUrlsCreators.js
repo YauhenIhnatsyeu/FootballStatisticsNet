@@ -3,7 +3,7 @@ export function createLeagueUrl(leagueId) {
 }
 
 export function createTeamsUrl(leagueId) {
-    return `//api.football-data.org/v1/competitions/${leagueId}/teams`;
+    return `/api/football/league/${leagueId}/teams`;
 }
 
 export function createTeamUrl(teamId) {

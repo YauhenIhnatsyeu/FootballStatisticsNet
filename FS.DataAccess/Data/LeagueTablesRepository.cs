@@ -25,7 +25,7 @@ namespace FS.DataAccess.Data
 
         public ICollection<LeagueTable> GetByCode(int code)
         {
-            string key = $"league-table_{code}";
+            string key = $"league-tables_{code}";
 
             if (cache.TryGetValue(key, out ICollection<LeagueTable> leagueTables))
             {

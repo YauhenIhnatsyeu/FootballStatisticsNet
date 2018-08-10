@@ -100,12 +100,14 @@ namespace FS.Web
             services.AddTransient<ITwitterService, TwitterService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
             services.AddTransient<ILeagueTablesService, LeagueTablesService>();
+            services.AddTransient<ILeagueTeamsService, LeagueTeamsService>();
             services.AddTransient<ITeamsService, TeamsService>();
 
             services.AddTransient<IAvatarsRepository, AvatarsRepository>();
             services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
             services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
             services.AddTransient<ILeagueTablesRepository, LeagueTablesRepository>();
+            services.AddTransient<ILeagueTeamsRepository, LeagueTeamsRepository>();
             services.AddTransient<ITeamsRepository, TeamsRepository>();
             services.AddTransient<IFanClubsRepository, FanClubsRepository>();
             services.AddTransient<IUsersFanClubsRepository, UsersFanClubsRepository>();

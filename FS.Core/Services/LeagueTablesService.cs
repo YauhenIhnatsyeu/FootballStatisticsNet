@@ -20,7 +20,7 @@ namespace FS.Core.Services
 
         public ICollection<LeagueTable> GetByCode(int code)
         {
-            JObject json = footballClient.GetLeagueTableByCode(code);
+            JObject json = footballClient.GetLeagueTablesByCode(code);
 
             if (json == null)
             {

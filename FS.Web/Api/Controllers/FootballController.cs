@@ -17,26 +17,40 @@ namespace FS.Web.Api.Controllers
     {
         private readonly IMapper mapper;
         private readonly ILeagueTablesRepository leagueTablesRepository;
+        private readonly ILeagueTeamsRepository leagueTeamsRepository;
         private readonly ITeamsRepository teamsRepository;
 
         public FootballController(
             IMapper mapper,
             ILeagueTablesRepository leagueTablesRepository,
+            ILeagueTeamsRepository leagueTeamsRepository,
             ITeamsRepository teamsRepository)
         {
             this.mapper = mapper;
             this.leagueTablesRepository = leagueTablesRepository;
+            this.leagueTeamsRepository = leagueTeamsRepository;
             this.teamsRepository = teamsRepository;
         }
 
         [Route("league/{code}/tables")]
-        public IActionResult GetLeague(int code)
+        public IActionResult GetLeagueTables(int code)
         {
             ICollection<LeagueTable> leagueTables = leagueTablesRepository.GetByCode(code);
 
             return leagueTables != null
                 ? (IActionResult)Json(
                     mapper.Map<ICollection<LeagueTable>, ICollection<LeagueTableDTO>>(leagueTables))
+                : BadRequest();
+        }
+
+        [Route("league/{code}/teams")]
+        public IActionResult GetLeagueTeams(int code)
+        {
+            ICollection<Team> leagueTeams = leagueTeamsRepository.GetByCode(code);
+
+            return leagueTeams != null
+                ? (IActionResult)Json(
+                    mapper.Map<ICollection<Team>, ICollection<TeamDTO>>(leagueTeams))
                 : BadRequest();
         }
 
