@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using FS.Core.Interfaces.Repositories;
@@ -32,7 +33,7 @@ namespace FS.DataAccess.Data
             }
 
             league = leaguesService.GetByCode(code);
-            cache.Set(key, league);
+            cache.Set(key, league, TimeSpan.FromMinutes(5));
 
             return league;
         }
