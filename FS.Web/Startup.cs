@@ -68,6 +68,8 @@ namespace FS.Web
                 options.HttpsPort = 5001;
             });
 
+            services.AddMemoryCache();
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
