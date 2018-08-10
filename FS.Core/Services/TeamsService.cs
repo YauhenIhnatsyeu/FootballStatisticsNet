@@ -11,23 +11,23 @@ namespace FS.Core.Services
 {
     public class TeamsService : ITeamsService
     {
-        private readonly ITeamsClient teamsClient;
+        private readonly IFootballClient footballClient;
 
-        public TeamsService(ITeamsClient teamsClient)
+        public TeamsService(IFootballClient footballClient)
         {
-            this.teamsClient = teamsClient;
+            this.footballClient = footballClient;
         }
 
         public Team GetByCode(int code)
         {
-            JObject teamJson = teamsClient.GetByCode(code);
+            JObject teamJson = footballClient.GetTeamByCode(code);
 
             if (teamJson == null)
             {
                 return null;
             }
 
-            var team = teamJson.ToObject<Team>();
+            Team team = teamJson.ToObject<Team>();
 
             team.Code = code;
 

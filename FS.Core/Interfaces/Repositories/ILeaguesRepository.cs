@@ -3,8 +3,8 @@ using FS.Core.Models;
 
 namespace FS.Core.Interfaces.Repositories
 {
-    public interface ITeamsRepository
+    public interface ILeaguesRepository
     {
-        Team GetByCode(int code);
+        ICollection<LeagueTeam> GetByCode(int code);
     }
 }

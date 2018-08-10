@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 
-import getLeague from "Services/leagueService";
+import { fetchLeague as getLeague } from "Clients/footballApiClient";
 
 import {
     onLeagueFetchSucceeded,
