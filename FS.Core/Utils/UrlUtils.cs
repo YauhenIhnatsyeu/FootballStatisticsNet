@@ -18,5 +18,12 @@
 
             return url.Substring(indexOfLastSlash + 1);
         }
+
+        public static string HttpToHttps(string url)
+        {
+            return url.StartsWith("http://") && !url.StartsWith("https://")
+                ? url.Insert(4, "s")
+                : url;
+        }
     }
 }
