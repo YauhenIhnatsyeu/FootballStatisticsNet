@@ -5,8 +5,18 @@ using Newtonsoft.Json.Linq;
 
 namespace FS.Core.Extensions
 {
-    public static class JsonExtensions
+    public static class JTokenExtensions
     {
+        public static bool ContainsKey(this JToken jToken, string key)
+        {
+            if (!(jToken is JObject jObject))
+            {
+                return false;
+            }
+
+            return jObject.ContainsKey(key);
+        }
+
         public static bool ContainsKeysTree(this JToken jToken, params string[] keys)
         {
             JToken jTokenForTesting = JToken.Parse(jToken.ToString());

@@ -5,8 +5,30 @@ using Xunit;
 
 namespace FS.Tests
 {
-    public class JsonExtensionsTests
+    public class JTokenExtensionsTests
     {
+        [Fact]
+        public void ContainsKey_ValidKey_ReturnsTrue()
+        {
+            const bool expected = true;
+
+            JToken jToken = JToken.Parse("{\"first\":{}}");
+            bool actual = jToken.ContainsKeysTree("first");
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void ContainsKey_InvalidKey_ReturnsFalse()
+        {
+            const bool expected = false;
+
+            JToken jToken = JToken.Parse("{\"first\":{}}");
+            bool actual = jToken.ContainsKeysTree("second");
+
+            Assert.Equal(expected, actual);
+        }
+
         [Fact]
         public void ContainsKeysTree_ValidKeys_ReturnsTrue()
         {
