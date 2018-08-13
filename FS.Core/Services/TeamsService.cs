@@ -1,6 +1,7 @@
 ﻿using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
+using FS.Core.Utils;
 using Newtonsoft.Json.Linq;
 
 namespace FS.Core.Services
@@ -26,6 +27,7 @@ namespace FS.Core.Services
             Team team = teamJson.ToObject<Team>();
 
             team.Code = code;
+            team.CrestUrl = UrlUtils.HttpToHttps(team.CrestUrl);
 
             return team;
         }

@@ -52,7 +52,9 @@ namespace FS.Core.Services
                 if (teamJson == null) continue;
 
                 Team team = teamJson.ToObject<Team>();
+
                 AddCodeToTeam(team, teamJson);
+                MakeCrestUrlHttps(team, teamJson);
 
                 leagueTeams.Add(team);
             }
@@ -74,6 +76,16 @@ namespace FS.Core.Services
             {
                 team.Code = code;
             }
+        }
+
+        private static void MakeCrestUrlHttps(Team team, JToken teamJson)
+        {
+            if (teamJson == null) return;
+            if (!((JObject)teamJson).ContainsKey("crestUrl")) return;
+
+            string crestUrl = teamJson["crestUrl"].ToString();
+
+            team.CrestUrl = UrlUtils.HttpToHttps(crestUrl);
         }
     }
 }
