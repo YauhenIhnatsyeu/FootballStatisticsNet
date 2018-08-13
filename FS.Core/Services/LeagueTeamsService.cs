@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using FS.Core.Extensions;
 using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
@@ -65,9 +66,10 @@ namespace FS.Core.Services
         private static void AddCodeToTeam(Team team, JToken teamJson)
         {
             if (teamJson == null) return;
-            if (!((JObject) teamJson).ContainsKey("_links")) return;
-            if (!((JObject) teamJson["_links"]).ContainsKey("self")) return;
-            if (!((JObject) teamJson["_links"]["self"]).ContainsKey("href")) return;
+            if (!teamJson.ContainsKeysTree("_links", "self", "href"))
+            {
+                return;
+            }
 
             string teamUrl = teamJson["_links"]["self"]["href"].ToString();
             string lastPartOfTeamUrl = UrlUtils.GetLastPartOfUrl(teamUrl);
@@ -81,7 +83,7 @@ namespace FS.Core.Services
         private static void MakeCrestUrlHttps(Team team, JToken teamJson)
         {
             if (teamJson == null) return;
-            if (!((JObject)teamJson).ContainsKey("crestUrl")) return;
+            if (!((JObject) teamJson).ContainsKey("crestUrl")) return;
 
             string crestUrl = teamJson["crestUrl"].ToString();
 
