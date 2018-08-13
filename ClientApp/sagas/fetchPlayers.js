@@ -5,7 +5,7 @@ import {
     onPlayersFetchFailed,
 } from "ActionCreators";
 
-import getPlayers from "Services/playersService";
+import { fetchPlayers as getPlayers } from "Clients/footballApiClient";
 
 export default function* fetchPlayers(action) {
     try {
