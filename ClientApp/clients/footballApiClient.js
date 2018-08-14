@@ -36,6 +36,7 @@ export function fetchFixtures(teamId, dates) {
         dateToString(dates.from),
         dateToString(dates.to),
     );
+    console.log(fixturesUrl);
     return fetchFootballUrl(fixturesUrl);
 }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
@@ -15,19 +16,22 @@ namespace FS.Web.Api.Controllers
         private readonly ILeagueTeamsRepository leagueTeamsRepository;
         private readonly ITeamsRepository teamsRepository;
         private readonly IPlayersRepository playersRepository;
+        private readonly IFixturesRepository fixturesRepository;
 
         public FootballController(
             IMapper mapper,
             ILeagueTablesRepository leagueTablesRepository,
             ILeagueTeamsRepository leagueTeamsRepository,
             ITeamsRepository teamsRepository,
-            IPlayersRepository playersRepository)
+            IPlayersRepository playersRepository,
+            IFixturesRepository fixturesRepository)
         {
             this.mapper = mapper;
             this.leagueTablesRepository = leagueTablesRepository;
             this.leagueTeamsRepository = leagueTeamsRepository;
             this.teamsRepository = teamsRepository;
             this.playersRepository = playersRepository;
+            this.fixturesRepository = fixturesRepository;
         }
 
         [Route("league/{code}/tables")]
@@ -69,6 +73,17 @@ namespace FS.Web.Api.Controllers
 
             return players != null
                 ? (IActionResult)Json(players)
+                : BadRequest();
+        }
+
+        [Route("teams/{code}/fixtures/{fromDate}/{toDate}")]
+        public IActionResult GetFixtures(int code, DateTime fromDate, DateTime toDate)
+        {
+            ICollection<Fixture> fixtures = fixturesRepository.GetByTeamIdAndDates(code, fromDate, toDate);
+
+            return fixtures != null
+                ? (IActionResult)Json(
+                    mapper.Map<ICollection<Fixture>, ICollection<FixtureDTO>>(fixtures))
                 : BadRequest();
         }
     }
