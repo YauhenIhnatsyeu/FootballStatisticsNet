@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 
-import getHead2Head from "Services/head2HeadService";
+import { fetchHead2Head as getHead2Head } from "Clients/footballApiClient";
 
 import {
     onHead2HeadFetchSucceeded,

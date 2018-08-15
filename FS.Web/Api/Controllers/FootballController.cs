@@ -4,6 +4,7 @@ using AutoMapper;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Models;
 using FS.Web.Api.DTOs;
+using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FS.Web.Api.Controllers
@@ -17,6 +18,7 @@ namespace FS.Web.Api.Controllers
         private readonly ITeamsRepository teamsRepository;
         private readonly IPlayersRepository playersRepository;
         private readonly IFixturesRepository fixturesRepository;
+        private readonly IHead2HeadRepository head2HeadRepository;
 
         public FootballController(
             IMapper mapper,
@@ -24,7 +26,8 @@ namespace FS.Web.Api.Controllers
             ILeagueTeamsRepository leagueTeamsRepository,
             ITeamsRepository teamsRepository,
             IPlayersRepository playersRepository,
-            IFixturesRepository fixturesRepository)
+            IFixturesRepository fixturesRepository,
+            IHead2HeadRepository head2HeadRepository)
         {
             this.mapper = mapper;
             this.leagueTablesRepository = leagueTablesRepository;
@@ -32,6 +35,7 @@ namespace FS.Web.Api.Controllers
             this.teamsRepository = teamsRepository;
             this.playersRepository = playersRepository;
             this.fixturesRepository = fixturesRepository;
+            this.head2HeadRepository = head2HeadRepository;
         }
 
         [Route("league/{code}/tables")]
@@ -84,6 +88,16 @@ namespace FS.Web.Api.Controllers
             return fixtures != null
                 ? (IActionResult)Json(
                     mapper.Map<ICollection<Fixture>, ICollection<FixtureDTO>>(fixtures))
+                : BadRequest();
+        }
+
+        [Route("fixtures/{code}/head-to-head")]
+        public IActionResult GetHead2Head(int code)
+        {
+            Head2Head head2Head = head2HeadRepository.GetByFixtureCode(code);
+
+            return head2Head != null
+                ? (IActionResult)Json(head2Head)
                 : BadRequest();
         }
     }

@@ -20,6 +20,36 @@ namespace FS.Core.Services
             this.footballClient = footballClient;
         }
 
+        public static void AddCodeToFixture(Fixture fixture, JToken fixturesJson)
+        {
+            if (fixturesJson == null) return;
+            if (!fixturesJson.ContainsKeysTree("_links", "self", "href"))
+            {
+                return;
+            }
+
+            string fixturesUrl = fixturesJson["_links"]["self"]["href"].ToString();
+            string lastPartOfFixturesUrl = UrlUtils.GetLastPartOfUrl(fixturesUrl);
+
+            if (int.TryParse(lastPartOfFixturesUrl, out var code))
+            {
+                fixture.Code = code;
+            }
+        }
+
+        public static void AddIsFinishedToFixture(Fixture fixture, JToken fixturesJson)
+        {
+            if (fixturesJson == null) return;
+            if (!fixturesJson.ContainsKey("status"))
+            {
+                return;
+            }
+
+            string status = fixturesJson["status"].ToString();
+
+            fixture.IsFinished = status == Fixture.FixtureStatuses.Finished;
+        }
+
         public ICollection<Fixture> GetByTeamIdAndDates(int code, DateTime fromDate, DateTime toDate)
         {
             JObject json = footballClient.GetFixturesByTeamCodeAndDates(code, fromDate, toDate);
@@ -63,36 +93,6 @@ namespace FS.Core.Services
             }
 
             return fixtures;
-        }
-
-        private static void AddCodeToFixture(Fixture fixture, JToken fixturesJson)
-        {
-            if (fixturesJson == null) return;
-            if (!fixturesJson.ContainsKeysTree("_links", "self", "href"))
-            {
-                return;
-            }
-
-            string fixturesUrl = fixturesJson["_links"]["self"]["href"].ToString();
-            string lastPartOfFixturesUrl = UrlUtils.GetLastPartOfUrl(fixturesUrl);
-
-            if (int.TryParse(lastPartOfFixturesUrl, out var code))
-            {
-                fixture.Code = code;
-            }
-        }
-
-        private static void AddIsFinishedToFixture(Fixture fixture, JToken fixturesJson)
-        {
-            if (fixturesJson == null) return;
-            if (!fixturesJson.ContainsKey("status"))
-            {
-                return;
-            }
-
-            string status = fixturesJson["status"].ToString();
-
-            fixture.IsFinished = status == Fixture.FixtureStatuses.Finished;
         }
     }
 }

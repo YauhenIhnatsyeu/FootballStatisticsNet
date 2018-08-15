@@ -102,6 +102,7 @@ namespace FS.Web
             services.AddTransient<ITeamsService, TeamsService>();
             services.AddTransient<IPlayersService, PlayersService>();
             services.AddTransient<IFixturesService, FixturesService>();
+            services.AddTransient<IHead2HeadService, Head2HeadService>();
 
             services.AddTransient<IAvatarsRepository, AvatarsRepository>();
             services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
@@ -111,6 +112,7 @@ namespace FS.Web
             services.AddTransient<ITeamsRepository, TeamsRepository>();
             services.AddTransient<IPlayersRepository, PlayersRepository>();
             services.AddTransient<IFixturesRepository, FixturesRepository>();
+            services.AddTransient<IHead2HeadRepository, Head2HeadRepository>();
             services.AddTransient<IFanClubsRepository, FanClubsRepository>();
             services.AddTransient<IUsersFanClubsRepository, UsersFanClubsRepository>();
 

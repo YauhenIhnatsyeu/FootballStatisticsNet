@@ -19,5 +19,5 @@ export function createFixturesUrl(teamId, dateFrom, dateTo) {
 }
 
 export function createHead2HeadUrl(fixtureId) {
-    return `//api.football-data.org/v1/fixtures/${fixtureId}?head2head=10`;
+    return `/api/football/fixtures/${fixtureId}/head-to-head`;
 }
