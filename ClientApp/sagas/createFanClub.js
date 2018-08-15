@@ -14,11 +14,12 @@ export default function* createFanClub(action) {
     yield put(startLoading());
 
     const fanClub = action.payload;
-    const result = yield call(create, fanClub);
 
-    yield put(finishLoading());
-
-    if (!result) {
+    try {
+        yield call(create, fanClub);
+    } catch (error) {
         yield put(notify(notifications.createFanClubFailed));
     }
+
+    yield put(finishLoading());
 }

@@ -18,15 +18,15 @@ export default function* login(action) {
 
     let user = action.payload;
 
-    user = yield call(loginUser, user);
+    try {
+        user = yield call(loginUser, user);
 
-    yield put(finishLoading());
-
-    if (user) {
         yield put(onLoginSucceeded(user));
         pushToHistory(routePaths.teams);
         yield put(notify(notifications.loginSucceeded));
-    } else {
+    } catch (error) {
         yield put(notify(notifications.loginFailed));
     }
+
+    yield put(finishLoading());
 }

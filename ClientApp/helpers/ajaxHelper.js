@@ -1,4 +1,4 @@
-export async function fetchUrl(url, requestOptions) {
+export function fetchUrl(url, requestOptions) {
     if (!url) {
         return null;
     }
@@ -6,12 +6,36 @@ export async function fetchUrl(url, requestOptions) {
     return fetch(url, requestOptions);
 }
 
-export async function fetchFootballUrl(url) {
-    const fetchInit = {
-        headers: {
-            "X-Auth-Token": "22cb5922f71544ee9aea4544d3256e40",
-        },
-    };
-    const response = await fetch(url, fetchInit);
-    return response.json();
+export function fetchSucceeded(url, requestOptions) {
+    return new Promise(async (resolve, reject) => {
+        const response = await fetchUrl(url, requestOptions);
+
+        if (response.ok) {
+            resolve();
+        } else {
+            reject(response.statusText);
+        }
+    });
+}
+
+export async function fetchJson(url, requestOptions) {
+    const response = await fetchUrl(url, requestOptions);
+
+    return new Promise(async (resolve, reject) => {
+        if (response && response.ok) {
+            try {
+                const json = await response.json();
+
+                if (json) {
+                    resolve(json);
+                } else {
+                    reject();
+                }
+            } catch (error) {
+                reject(error);
+            }
+        } else {
+            reject();
+        }
+    });
 }

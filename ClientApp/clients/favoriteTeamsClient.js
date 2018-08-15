@@ -1,4 +1,4 @@
-import { fetchUrl } from "Helpers/ajaxHelper";
+import { fetchSucceeded, fetchJson } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
 import apiRoutePaths from "Constants/apiRoutePaths";
 import keys from "Constants/keys";
@@ -9,7 +9,7 @@ function getBearer() {
 }
 
 export function getFavoriteTeams() {
-    return fetchUrl(
+    return fetchJson(
         getCurrentUrl() + apiRoutePaths.getFavoriteTeams,
         {
             method: "GET",
@@ -21,7 +21,7 @@ export function getFavoriteTeams() {
 }
 
 export function addFavoriteTeam(teamId) {
-    return fetchUrl(
+    return fetchSucceeded(
         getCurrentUrl() + apiRoutePaths.addFavoriteTeam,
         {
             method: "POST",
@@ -34,8 +34,8 @@ export function addFavoriteTeam(teamId) {
     );
 }
 
-export function removeFavoriteTeam(teamId) {
-    return fetchUrl(
+export async function removeFavoriteTeam(teamId) {
+    return fetchSucceeded(
         getCurrentUrl() + apiRoutePaths.removeFavoriteTeam,
         {
             method: "DELETE",

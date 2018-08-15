@@ -1,5 +1,4 @@
 import searchTweets from "Clients/twitterClient";
-import tryExtractJsonFromResponse from "Helpers/jsonHelper";
 
 function parseSearchResult(searchResult) {
     if (!searchResult.statuses) {
@@ -17,15 +16,7 @@ function parseSearchResult(searchResult) {
 }
 
 export default async function search(query) {
-    const response = await searchTweets(query);
+    const json = await searchTweets(query);
 
-    if (response.ok) {
-        const json = await tryExtractJsonFromResponse(response);
-
-        if (json && json.searchResult) {
-            return parseSearchResult(json.searchResult);
-        }
-    }
-
-    return null;
+    return parseSearchResult(json.searchResult);
 }

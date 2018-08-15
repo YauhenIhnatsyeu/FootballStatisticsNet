@@ -28,7 +28,7 @@ export default class FanClubCreatePage extends Component {
     getTeamItems = teams => teams && teams.map(team => <TeamItem team={team} />)
 
     getComponents = (value) => {
-        const relatedTeams = this.props.teams
+        const relatedTeams = this.props.teams && this.props.teams
             .filter(team => this.valueRelatesToTeam(value, team))
             .slice(0, 5);
 
@@ -39,6 +39,7 @@ export default class FanClubCreatePage extends Component {
         if (teamComponent && teamComponent.props && teamComponent.props.team && teamComponent.props.team.name) {
             return teamComponent.props.team.name;
         }
+
         return "";
     }
 

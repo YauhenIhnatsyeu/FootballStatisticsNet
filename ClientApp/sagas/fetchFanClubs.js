@@ -8,10 +8,11 @@ import {
 } from "ActionCreators";
 
 export default function* fetchFanClubs() {
-    const fanClubs = yield call(getFanClubs);
-    if (fanClubs) {
+    try {
+        const fanClubs = yield call(getFanClubs);
+
         yield put(onFanClubsFetchSucceeded(fanClubs));
-    } else {
+    } catch (error) {
         yield put(onFanClubsFetchFailed());
     }
 }

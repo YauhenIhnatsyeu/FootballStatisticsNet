@@ -1,4 +1,4 @@
-import { fetchUrl } from "Helpers/ajaxHelper";
+import { fetchJson } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
 import apiRoutePaths from "Constants/apiRoutePaths";
 
@@ -10,7 +10,7 @@ function getAvatarRequestOptions(avatar) {
 }
 
 export default function uploadAvatar(avatar) {
-    return fetchUrl(
+    return fetchJson(
         getCurrentUrl() + apiRoutePaths.avatar,
         getAvatarRequestOptions(avatar),
     );

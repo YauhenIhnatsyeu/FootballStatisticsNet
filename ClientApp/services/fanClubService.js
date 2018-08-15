@@ -2,28 +2,18 @@ import {
     create as createFanClub,
     fetch as getFanClubs,
 } from "Clients/fanClubClient";
-
-import tryExtractJsonFromResponse from "Helpers/jsonHelper";
-
-import { fetchFunctionWithOptionalAvatar } from "Services/fetchService";
+import uploadAvatar from "Clients/avatarClient";
 
 export async function create(fanClub) {
-    return fetchFunctionWithOptionalAvatar(
-        createFanClub,
-        fanClub.avatar && fanClub.avatar[0],
-        fanClub,
-    );
+    let avatarJson;
+
+    if (fanClub.avatar && fanClub.avatar[0]) {
+        avatarJson = await uploadAvatar(fanClub.avatar[0]);
+    }
+
+    await createFanClub(fanClub, avatarJson && avatarJson.avatarId);
 }
 
 export async function fetch() {
-    const response = await getFanClubs();
-
-    if (response.ok) {
-        const json = await tryExtractJsonFromResponse(response);
-        if (json) {
-            return json;
-        }
-    }
-
-    return null;
+    return getFanClubs();
 }

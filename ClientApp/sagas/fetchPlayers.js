@@ -8,8 +8,9 @@ import {
 import { fetchPlayers as getPlayers } from "Clients/footballApiClient";
 
 export default function* fetchPlayers(action) {
+    const teamId = action.payload;
+
     try {
-        const teamId = action.payload;
         const players = yield call(getPlayers, teamId);
         yield put(onPlayersFetchSucceeded(players));
     } catch (error) {

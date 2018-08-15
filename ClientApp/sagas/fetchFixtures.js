@@ -8,11 +8,10 @@ import {
 } from "ActionCreators";
 
 export default function* fetchFixtures(action) {
+    const { teamId, dates } = action.payload;
+
     try {
-        const { teamId, dates } = action.payload;
-        console.log(getFixtures)
         const fixtures = yield call(getFixtures, teamId, dates);
-        console.log(fixtures)
         yield put(onFixturesFetchSucceeded(fixtures));
     } catch (error) {
         yield put(onFixturesFetchFailed(error));
