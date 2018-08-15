@@ -23,13 +23,11 @@ namespace FS.DataAccess.Data
         {
             string key = $"fixtures_{code}_{fromDate:yyyy-MM-dd}_{toDate:yyyy-MM-dd}";
 
-            if (cache.TryGetValue(key, out ICollection<Fixture> fixtures))
+            ICollection<Fixture> fixtures = cache.GetOrCreate(key, entry =>
             {
-                return fixtures;
-            }
-
-            fixtures = fixturesService.GetByTeamIdAndDates(code, fromDate, toDate);
-            cache.Set(key, fixtures, TimeSpan.FromMinutes(5));
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+                return fixturesService.GetByTeamIdAndDates(code, fromDate, toDate);
+            });
 
             return fixtures;
         }

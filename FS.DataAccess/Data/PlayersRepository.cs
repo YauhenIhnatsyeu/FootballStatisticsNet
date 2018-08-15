@@ -23,13 +23,11 @@ namespace FS.DataAccess.Data
         {
             string key = $"players_{code}";
 
-            if (cache.TryGetValue(key, out ICollection<Player> players))
+            ICollection<Player> players = cache.GetOrCreate(key, entry =>
             {
-                return players;
-            }
-
-            players = playersService.GetByTeamCode(code);
-            cache.Set(key, players, TimeSpan.FromMinutes(5));
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+                return playersService.GetByTeamCode(code);
+            });
 
             return players;
         }

@@ -21,13 +21,11 @@ namespace FS.DataAccess.Data
         {
             string key = $"league-teams_{code}";
 
-            if (cache.TryGetValue(key, out ICollection<Team> leagueTeams))
+            ICollection<Team> leagueTeams = cache.GetOrCreate(key, entry =>
             {
-                return leagueTeams;
-            }
-
-            leagueTeams = leagueTeamsService.GetByCode(code);
-            cache.Set(key, leagueTeams, TimeSpan.FromMinutes(5));
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+                return leagueTeamsService.GetByCode(code);
+            });
 
             return leagueTeams;
         }
