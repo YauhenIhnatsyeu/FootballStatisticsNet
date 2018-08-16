@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 
-import search from "Services/twitterService";
+import search from "Clients/tweetsClient";
 
 import {
     onTweetsSearchSucceeded,

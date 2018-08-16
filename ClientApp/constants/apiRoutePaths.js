@@ -8,8 +8,6 @@ export default {
     addFavoriteTeam: "/api/favorite-teams/add",
     removeFavoriteTeam: "/api/favorite-teams/remove",
 
-    tweets: "/api/twitter/search",
-
     createFanClub: "/api/fanclubs/create",
     fanClubsAvatar: "/api/fanclubs/avatar",
     fetchFanClubs: "/api/fanclubs/get",

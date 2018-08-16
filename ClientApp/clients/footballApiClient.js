@@ -40,8 +40,6 @@ export function fetchFixtures(teamId, dates) {
 }
 
 export function fetchHead2Head(fixtureId) {
-    console.log(fixtureId);
     const head2HeadUrl = createHead2HeadUrl(fixtureId);
-    console.log(head2HeadUrl);
     return fetchJson(head2HeadUrl);
 }

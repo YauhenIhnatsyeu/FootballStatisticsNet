@@ -36,9 +36,17 @@ namespace FS.Core.Services
                 return null;
             }
 
-            ICollection<Player> players = playersJson.ToObject<ICollection<Player>>();
+            ICollection<Player> players;
 
-            players = players.OrderBy(p => p.JerseyNumber).ToList();
+            try
+            {
+                players = playersJson.ToObject<ICollection<Player>>();
+                players = players.OrderBy(p => p.JerseyNumber).ToList();
+            }
+            catch
+            {
+                return null;
+            }
 
             return players;
         }

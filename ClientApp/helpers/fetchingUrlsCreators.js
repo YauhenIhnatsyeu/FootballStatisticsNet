@@ -14,6 +14,10 @@ export function createPlayersUrl(teamId) {
     return `/api/football/teams/${teamId}/players`;
 }
 
+export function createTweetsUrl(word) {
+    return `/api/tweets/${word}`;
+}
+
 export function createFixturesUrl(teamId, dateFrom, dateTo) {
     return `/api/football/teams/${teamId}/fixtures/${dateFrom}/${dateTo}`;
 }

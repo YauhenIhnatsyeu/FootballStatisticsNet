@@ -94,29 +94,31 @@ namespace FS.Web
             services.AddAutoMapper();
             services.AddHttpContextAccessor();
 
-            services.AddTransient<IJWTService, JWTService>();
-            services.AddTransient<ITwitterService, TwitterService>();
-            services.AddTransient<ICloudinaryService, CloudinaryService>();
-            services.AddTransient<ILeagueTablesService, LeagueTablesService>();
-            services.AddTransient<ILeagueTeamsService, LeagueTeamsService>();
-            services.AddTransient<ITeamsService, TeamsService>();
-            services.AddTransient<IPlayersService, PlayersService>();
-            services.AddTransient<IFixturesService, FixturesService>();
-            services.AddTransient<IHead2HeadService, Head2HeadService>();
-
-            services.AddTransient<IAvatarsRepository, AvatarsRepository>();
-            services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
-            services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
             services.AddTransient<ILeagueTablesRepository, LeagueTablesRepository>();
             services.AddTransient<ILeagueTeamsRepository, LeagueTeamsRepository>();
             services.AddTransient<ITeamsRepository, TeamsRepository>();
             services.AddTransient<IPlayersRepository, PlayersRepository>();
+            services.AddTransient<ITweetsRepository, TweetsRepository>();
             services.AddTransient<IFixturesRepository, FixturesRepository>();
             services.AddTransient<IHead2HeadRepository, Head2HeadRepository>();
             services.AddTransient<IFanClubsRepository, FanClubsRepository>();
+            services.AddTransient<IAvatarsRepository, AvatarsRepository>();
+            services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
+            services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
             services.AddTransient<IUsersFanClubsRepository, UsersFanClubsRepository>();
 
+            services.AddTransient<ILeagueTablesService, LeagueTablesService>();
+            services.AddTransient<ILeagueTeamsService, LeagueTeamsService>();
+            services.AddTransient<ITeamsService, TeamsService>();
+            services.AddTransient<IPlayersService, PlayersService>();
+            services.AddTransient<ITweetsService, TweetsService>();
+            services.AddTransient<IFixturesService, FixturesService>();
+            services.AddTransient<IHead2HeadService, Head2HeadService>();
+            services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
+
             services.AddTransient<IFootballClient, FootballClient>();
+            services.AddTransient<ITweetsClient, TweetsClient>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
