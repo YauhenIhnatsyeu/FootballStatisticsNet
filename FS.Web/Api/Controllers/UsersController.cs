@@ -52,7 +52,7 @@ namespace FS.Web.Api.Controllers
 
             if (userDtoParam.AvatarId != null)
             {
-                string avatarUrl = avatarsRepository.Get(userDtoParam.AvatarId);
+                string avatarUrl = avatarsRepository.GetUrlById(userDtoParam.AvatarId);
 
                 if (avatarUrl == null)
                 {

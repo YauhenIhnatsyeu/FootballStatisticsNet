@@ -2,16 +2,17 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using FS.Core.Helpers;
+using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Services;
 using Microsoft.Extensions.Configuration;
 
-namespace FS.Core.Services
+namespace FS.Core.Clients
 {
-    public class CloudinaryService : ICloudinaryService
+    public class AvatarClient : IAvatarClient
     {
         private readonly Cloudinary cloudinary;
 
-        public CloudinaryService(IConfiguration configuration)
+        public AvatarClient(IConfiguration configuration)
         {
             cloudinary = CloudinaryHelper.GetCloudinary(
                 configuration["Cloudinary:Cloud"],
@@ -20,14 +21,20 @@ namespace FS.Core.Services
             );
         }
 
-        public ImageUploadResult UploadFile(string name, Stream stream)
+        public ImageUploadResult Add(string name, Stream stream)
         {
             return cloudinary?.Upload(new ImageUploadParams {File = new FileDescription(name, stream)});
         }
 
-        public GetResourceResult GetFile(string publicId)
+        public GetResourceResult Get(string publicId)
         {
             return cloudinary?.GetResource(publicId);
+        }
+
+        public struct AddResult
+        {
+            public bool Succeeded;
+            public string AvatarId;
         }
     }
 }

@@ -1,31 +1,31 @@
 ﻿using System.IO;
 using System.Net;
 using CloudinaryDotNet.Actions;
+using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Repositories;
-using FS.Core.Interfaces.Services;
 
-namespace FS.Infrastructure.Data
+namespace FS.DataAccess.Data
 {
     public class AvatarsRepository : IAvatarsRepository
     {
-        private readonly ICloudinaryService cloudinaryService;
+        private readonly IAvatarClient avatarClient;
 
-        public AvatarsRepository(ICloudinaryService cloudinaryService)
+        public AvatarsRepository(IAvatarClient avatarClient)
         {
-            this.cloudinaryService = cloudinaryService;
+            this.avatarClient = avatarClient;
         }
 
         public string Add(string name, Stream stream)
         {
-            ImageUploadResult uploadResult = cloudinaryService.UploadFile(name, stream);
+            ImageUploadResult uploadResult = avatarClient.Add(name, stream);
             return uploadResult.StatusCode == HttpStatusCode.OK
                 ? uploadResult.PublicId
                 : null;
         }
 
-        public string Get(string id)
+        public string GetUrlById(string id)
         {
-            GetResourceResult getResourceResult = cloudinaryService.GetFile(id);
+            GetResourceResult getResourceResult = avatarClient.Get(id);
             return getResourceResult.StatusCode == HttpStatusCode.OK
                 ? getResourceResult.SecureUrl
                 : null;

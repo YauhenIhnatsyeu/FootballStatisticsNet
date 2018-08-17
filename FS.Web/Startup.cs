@@ -7,7 +7,6 @@ using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using FS.Core.Services;
 using FS.DataAccess.Data;
-using FS.Infrastructure.Data;
 using FS.Web.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -115,7 +114,7 @@ namespace FS.Web
             services.AddTransient<IFixturesService, FixturesService>();
             services.AddTransient<IHead2HeadService, Head2HeadService>();
             services.AddTransient<IJWTService, JWTService>();
-            services.AddTransient<ICloudinaryService, CloudinaryService>();
+            services.AddTransient<IAvatarClient, AvatarClient>();
 
             services.AddTransient<IFootballClient, FootballClient>();
             services.AddTransient<ITweetsClient, TweetsClient>();

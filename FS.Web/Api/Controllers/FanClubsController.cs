@@ -87,7 +87,7 @@ namespace FS.Web.Api.Controllers
 
             if (fanClubDto.AvatarId != null)
             {
-                string avatarUrl = avatarsRepository.Get(fanClubDto.AvatarId);
+                string avatarUrl = avatarsRepository.GetUrlById(fanClubDto.AvatarId);
 
                 if (avatarUrl == null)
                 {
