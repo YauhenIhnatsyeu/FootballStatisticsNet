@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FS.Core.Helpers;
 using FS.Core.Interfaces.Clients;
 using Microsoft.AspNetCore.Http;
@@ -10,10 +11,13 @@ namespace FS.Core.Clients
     public class FootballClient : IFootballClient
     {
         private readonly IConfiguration configuration;
+        private readonly string apiToken;
 
         public FootballClient(IConfiguration configuration)
         {
             this.configuration = configuration;
+
+            apiToken = configuration["Football:APIToken"];
         }
 
         public JObject GetLeagueTablesByCode(int code)
@@ -36,7 +40,8 @@ namespace FS.Core.Clients
 
         public JObject GetPlayersByTeamCode(int code)
         {
-            string url = string.Format(configuration["Football:PlayersUrl"], code);
+            string url = string.Format(configuration["Football:TeamUrl"], code);
+            // string url = string.Format(configuration["Football:PlayersUrl"], code);
             return GetByUrl(url);
         }
 
@@ -54,7 +59,12 @@ namespace FS.Core.Clients
 
         private JObject GetByUrl(string url)
         {
-            HttpHelper.HttpHelperResponse response = HttpHelper.Get(url);
+            HttpHelper.HttpHelperResponse response = HttpHelper.Get(
+                url,
+                new Dictionary<string, string>(new[]{new KeyValuePair<string, string>(
+                    "X-Auth-Token", apiToken
+                )})
+            );
 
             return response.StatusCode == StatusCodes.Status200OK
                 ? JObject.Parse(response.ResponseString)

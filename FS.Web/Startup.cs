@@ -35,9 +35,9 @@ namespace FS.Web
             var connectionString = configuration["Database:ConnectionString"];
             var secretKey = configuration["Jwt:SecretKey"];
 
-            services.AddDbContext<UsersContext>(options => options.UseNpgsql(
+            services.AddDbContext<UsersContext>(options => options.UseMySql(
                 connectionString,
-                npgsqlOptions => npgsqlOptions.MigrationsAssembly("FS.DataAccess")
+                mysqlOptions => mysqlOptions.MigrationsAssembly("FS.Web")
             ));
 
             services.AddIdentity<User, IdentityRole>()

@@ -12,7 +12,7 @@ export default class PlayerItem extends Component {
             <Item>
                 <div className="player-item">
                     <p className="player-item__title">
-                        {this.props.player.jerseyNumber
+                        {this.props.player.jerseyNumber !== 0
                             && `${this.props.player.jerseyNumber}. `}
                         {this.props.player.name}
                     </p>

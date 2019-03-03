@@ -23,15 +23,15 @@ namespace FS.Core.Services
         public static void AddCodeToFixture(Fixture fixture, JToken fixturesJson)
         {
             if (fixturesJson == null) return;
-            if (!fixturesJson.ContainsKeysTree("_links", "self", "href"))
+            if (!fixturesJson.ContainsKeysTree("id"))
             {
                 return;
             }
 
-            string fixturesUrl = fixturesJson["_links"]["self"]["href"].ToString();
-            string lastPartOfFixturesUrl = UrlUtils.GetLastPartOfUrl(fixturesUrl);
+            string codeString = fixturesJson["id"].ToString();
+            // string lastPartOfFixturesUrl = UrlUtils.GetLastPartOfUrl(fixturesUrl);
 
-            if (int.TryParse(lastPartOfFixturesUrl, out var code))
+            if (int.TryParse(codeString, out var code))
             {
                 fixture.Code = code;
             }
@@ -48,6 +48,46 @@ namespace FS.Core.Services
             string status = fixturesJson["status"].ToString();
 
             fixture.IsFinished = status == Fixture.FixtureStatuses.Finished;
+        }
+
+        public static void AddHomeAndAwayTeamNamesToFixture(Fixture fixture, JToken fixturesJson)
+        {
+            if (fixturesJson == null) return;
+            if (!fixturesJson.ContainsKeysTree("homeTeam", "name")
+                || !fixturesJson.ContainsKeysTree("awayTeam", "name"))
+            {
+                return;
+            }
+
+            fixture.HomeTeamName = fixturesJson["homeTeam"]["name"].ToString();
+            fixture.AwayTeamName = fixturesJson["awayTeam"]["name"].ToString();
+        }
+
+        public static void AddDateToFixture(Fixture fixture, JToken fixturesJson)
+        {
+            if (fixturesJson == null) return;
+            if (!fixturesJson.ContainsKeysTree("utcDate"))
+            {
+                return;
+            }
+
+            fixture.Date = fixturesJson["utcDate"].ToString();
+        }
+
+        public static void AddResultToFixture(Fixture fixture, JToken fixturesJson)
+        {
+            if (fixturesJson == null) return;
+            if (!fixturesJson.ContainsKeysTree("score", "fullTime", "homeTeam")
+                || !fixturesJson.ContainsKeysTree("score", "fullTime", "awayTeam"))
+            {
+                return;
+            }
+
+            if (int.TryParse(fixturesJson["score"]["fullTime"]["homeTeam"].ToString(), out var goalsHomeTeam)
+                && int.TryParse(fixturesJson["score"]["fullTime"]["awayTeam"].ToString(), out var goalsAwayTeam))
+            {
+                fixture.Result = new Fixture.FixtureResult { GoalsHomeTeam = goalsHomeTeam, GoalsAwayTeam = goalsAwayTeam };
+            }
         }
 
         public ICollection<Fixture> GetByTeamIdAndDates(int code, DateTime fromDate, DateTime toDate)
@@ -71,8 +111,8 @@ namespace FS.Core.Services
 
         private static JToken ExtractFixturesJson(JObject json)
         {
-            return json.ContainsKey("fixtures")
-                ? json["fixtures"]
+            return json.ContainsKey("matches")
+                ? json["matches"]
                 : null;
         }
 
@@ -88,6 +128,9 @@ namespace FS.Core.Services
 
                 AddCodeToFixture(fixture, fixtureJson);
                 AddIsFinishedToFixture(fixture, fixtureJson);
+                AddHomeAndAwayTeamNamesToFixture(fixture, fixtureJson);
+                AddDateToFixture(fixture, fixtureJson);
+                AddResultToFixture(fixture, fixtureJson);
 
                 fixtures.Add(fixture);
             }

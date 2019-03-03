@@ -48,7 +48,6 @@ export default class TeamItem extends Component {
 
     render() {
         const { onClick, team, children } = this.props;
-
         return (
             <Item onClick={onClick ? () => onClick(this) : null}>
                 <ImageWithInfo

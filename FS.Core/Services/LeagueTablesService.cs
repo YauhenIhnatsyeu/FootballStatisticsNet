@@ -39,9 +39,8 @@ namespace FS.Core.Services
 
         private static JToken ExtractLeagueTablesJson(JObject json)
         {
-            return json.ContainsKey("standing")
-                ? json["standing"]
-                : null;
+            var a = JToken.FromObject(json["standings"].Children().SelectMany(s => s["table"]));
+            return a;
         }
 
         private static ICollection<LeagueTable> ExtractLeagueTablesFromJson(JToken leagueTablesJson)
@@ -54,6 +53,7 @@ namespace FS.Core.Services
 
                 LeagueTable table = tableJson.ToObject<LeagueTable>();
                 AddCodeToTable(table, tableJson);
+                AddTeamNameToTable(table, tableJson);
 
                 leagueTables.Add(table);
             }
@@ -64,18 +64,27 @@ namespace FS.Core.Services
         private static void AddCodeToTable(LeagueTable table, JToken tableJson)
         {
             if (tableJson == null) return;
-            if (!tableJson.ContainsKeysTree("_links", "team", "href"))
+            if (!tableJson.ContainsKeysTree("team", "id"))
             {
                 return;
             }
 
-            string teamUrl = tableJson["_links"]["team"]["href"].ToString();
-            string lastPartOfTeamUrl = UrlUtils.GetLastPartOfUrl(teamUrl);
-
-            if (int.TryParse(lastPartOfTeamUrl, out var code))
-            {
+            if (int.TryParse(tableJson["team"]["id"].ToString(), out int code)) {
                 table.Code = code;
             }
+        }
+
+        private static void AddTeamNameToTable(LeagueTable table, JToken tableJson)
+        {
+            if (tableJson == null) return;
+            if (!tableJson.ContainsKeysTree("team", "name"))
+            {
+                return;
+            }
+
+            string teamName = tableJson["team"]["name"].ToString();
+
+            table.TeamName = teamName;
         }
     }
 }

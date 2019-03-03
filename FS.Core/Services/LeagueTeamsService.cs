@@ -65,17 +65,27 @@ namespace FS.Core.Services
 
         private static void AddCodeToTeam(Team team, JToken teamJson)
         {
+            // if (teamJson == null) return;
+            // if (!teamJson.ContainsKeysTree("_links", "self", "href"))
+            // {
+            //     return;
+            // }
+
+            // string teamUrl = teamJson["_links"]["self"]["href"].ToString();
+            // string lastPartOfTeamUrl = UrlUtils.GetLastPartOfUrl(teamUrl);
+
+            // if (int.TryParse(lastPartOfTeamUrl, out var code))
+            // {
+            //     team.Code = code;
+            // }
+
             if (teamJson == null) return;
-            if (!teamJson.ContainsKeysTree("_links", "self", "href"))
+            if (!teamJson.ContainsKeysTree("team", "id"))
             {
                 return;
             }
 
-            string teamUrl = teamJson["_links"]["self"]["href"].ToString();
-            string lastPartOfTeamUrl = UrlUtils.GetLastPartOfUrl(teamUrl);
-
-            if (int.TryParse(lastPartOfTeamUrl, out var code))
-            {
+            if (int.TryParse(teamJson["team"]["id"].ToString(), out int code)) {
                 team.Code = code;
             }
         }

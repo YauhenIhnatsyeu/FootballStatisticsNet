@@ -1,22 +1,22 @@
 export default [
     {
-        id: 445,
-        title: "English Premier League",
+        id: 2000,
+        title: "FIFA World Cup",
     },
     {
-        id: 452,
-        title: "German 1. Bundesliga",
+        id: 2001,
+        title: "UEFA Champions League",
     },
     {
-        id: 455,
-        title: "Spanish Primera",
+        id: 2002,
+        title: "Bundesliga",
     },
     {
-        id: 456,
+        id: 2003,
         title: "Italian Serie A",
     },
-    {
-        id: 450,
-        title: "French League 1",
-    },
+    // {
+    //     id: 2004,
+    //     title: "French League 1",
+    // }
 ];

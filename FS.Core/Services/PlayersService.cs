@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FS.Core.Extensions;
 using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
@@ -18,6 +19,19 @@ namespace FS.Core.Services
         public PlayersService(IFootballClient footballClient)
         {
             this.footballClient = footballClient;
+        }
+
+        public static void AddJerseyNumberToFixture(Player player, JToken playersJson)
+        {
+            if (playersJson == null) return;
+            if (!playersJson.ContainsKeysTree("shirtNumber"))
+            {
+                return;
+            }
+
+            if (int.TryParse(playersJson["shirtNumber"].ToString(), out var shirtNumber)) {
+                player.JerseyNumber = shirtNumber;
+            }
         }
 
         public ICollection<Player> GetByTeamCode(int code)
@@ -36,25 +50,32 @@ namespace FS.Core.Services
                 return null;
             }
 
-            ICollection<Player> players;
+            ICollection<Player> players = new List<Player>();
 
             try
             {
-                players = playersJson.ToObject<ICollection<Player>>();
-                players = players.OrderBy(p => p.JerseyNumber).ToList();
+                foreach (JToken playerJson in playersJson.Children().ToList())
+                {
+                    if (playerJson == null) continue;
+
+                    Player player = playerJson.ToObject<Player>();
+                    AddJerseyNumberToFixture(player, playerJson);
+
+                    players.Add(player);
+                }
+
+                return players.OrderBy(p => p.JerseyNumber).ToList();
             }
             catch
             {
                 return null;
             }
-
-            return players;
         }
 
         private static JToken ExtractPlayersJson(JObject json)
         {
-            return json.ContainsKey("players")
-                ? json["players"]
+            return json.ContainsKey("squad")
+                ? json["squad"]
                 : null;
         }
     }

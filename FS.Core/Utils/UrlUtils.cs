@@ -21,6 +21,8 @@
 
         public static string HttpToHttps(string url)
         {
+            if (string.IsNullOrEmpty(url)) return null;
+
             return url.StartsWith("http://") && !url.StartsWith("https://")
                 ? url.Insert(4, "s")
                 : url;

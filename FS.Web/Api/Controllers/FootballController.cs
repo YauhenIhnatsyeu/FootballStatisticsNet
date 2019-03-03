@@ -43,10 +43,12 @@ namespace FS.Web.Api.Controllers
         {
             ICollection<LeagueTable> leagueTables = leagueTablesRepository.GetByCode(code);
 
-            return leagueTables != null
+            var a = leagueTables != null
                 ? (IActionResult) Json(
                     mapper.Map<ICollection<LeagueTable>, ICollection<LeagueTableDTO>>(leagueTables))
                 : BadRequest();
+
+            return a;
         }
 
         [Route("league/{code}/teams")]
