@@ -18,6 +18,12 @@ namespace FS.DataAccess.Data
 
         public Team GetByCode(int code)
         {
+            Team dbTeam = context.Teams.FirstOrDefault(t => t.Code == code);
+
+            if (dbTeam != null) {
+                return dbTeam;
+            }
+
             Team team = FindByCode(code);
 
             if (team != null)
@@ -39,8 +45,10 @@ namespace FS.DataAccess.Data
 
         private void Add(Team item)
         {
-            context.Teams.Add(item);
-            context.SaveChanges();
+            if (!context.Teams.Any(t => t.Id == item.Id)) {
+                context.Teams.Add(item);
+                context.SaveChanges();
+            }
         }
 
         private Team FindByCode(int code)

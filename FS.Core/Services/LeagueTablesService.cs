@@ -2,6 +2,7 @@
 using System.Linq;
 using FS.Core.Extensions;
 using FS.Core.Interfaces.Clients;
+using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using FS.Core.Utils;
@@ -11,10 +12,12 @@ namespace FS.Core.Services
 {
     public class LeagueTablesService : ILeagueTablesService
     {
+        private readonly ITeamsRepository teamsRepository;
         private readonly IFootballClient footballClient;
 
-        public LeagueTablesService(IFootballClient footballClient)
+        public LeagueTablesService(ITeamsRepository teamsRepository, IFootballClient footballClient)
         {
+            this.teamsRepository = teamsRepository;
             this.footballClient = footballClient;
         }
 
@@ -43,7 +46,7 @@ namespace FS.Core.Services
             return a;
         }
 
-        private static ICollection<LeagueTable> ExtractLeagueTablesFromJson(JToken leagueTablesJson)
+        private ICollection<LeagueTable> ExtractLeagueTablesFromJson(JToken leagueTablesJson)
         {
             var leagueTables = new List<LeagueTable>();
 
@@ -61,7 +64,7 @@ namespace FS.Core.Services
             return leagueTables;
         }
 
-        private static void AddCodeToTable(LeagueTable table, JToken tableJson)
+        private void AddCodeToTable(LeagueTable table, JToken tableJson)
         {
             if (tableJson == null) return;
             if (!tableJson.ContainsKeysTree("team", "id"))
@@ -71,6 +74,13 @@ namespace FS.Core.Services
 
             if (int.TryParse(tableJson["team"]["id"].ToString(), out int code)) {
                 table.Code = code;
+                table.Id = code * code;
+
+                var team = teamsRepository.GetByCode(code);
+
+                if (team != null) {
+                    table.Team = team;
+                }
             }
         }
 
