@@ -15,7 +15,7 @@ namespace FS.Core.Models
         public string CrestUrl { get; set; }
         public string SquadMarketValue { get; set; }
 
-        public virtual LeagueTable LeagueTable { get; set; }
+        public virtual ICollection<LeagueTable> LeagueTable { get; set; }
         public virtual ICollection<FavoriteTeam> FavoriteTeams { get; set; }
         public virtual ICollection<FanClub> FanClubs { get; set; }
     }

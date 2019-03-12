@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FS.Core.Extensions;
 using FS.Core.Interfaces.Clients;
@@ -12,12 +13,12 @@ namespace FS.Core.Services
 {
     public class LeagueTablesService : ILeagueTablesService
     {
-        private readonly ITeamsRepository teamsRepository;
+        // private readonly ITeamsRepository teamsRepository;
         private readonly IFootballClient footballClient;
 
-        public LeagueTablesService(ITeamsRepository teamsRepository, IFootballClient footballClient)
+        public LeagueTablesService(/*ITeamsRepository teamsRepository, */IFootballClient footballClient)
         {
-            this.teamsRepository = teamsRepository;
+            // this.teamsRepository = teamsRepository;
             this.footballClient = footballClient;
         }
 
@@ -37,7 +38,7 @@ namespace FS.Core.Services
                 return null;
             }
 
-            return ExtractLeagueTablesFromJson(leagueTablesJson);
+            return ExtractLeagueTablesFromJson(leagueTablesJson, code);
         }
 
         private static JToken ExtractLeagueTablesJson(JObject json)
@@ -46,7 +47,7 @@ namespace FS.Core.Services
             return a;
         }
 
-        private ICollection<LeagueTable> ExtractLeagueTablesFromJson(JToken leagueTablesJson)
+        private ICollection<LeagueTable> ExtractLeagueTablesFromJson(JToken leagueTablesJson, int code)
         {
             var leagueTables = new List<LeagueTable>();
 
@@ -56,6 +57,8 @@ namespace FS.Core.Services
 
                 LeagueTable table = tableJson.ToObject<LeagueTable>();
                 AddCodeToTable(table, tableJson);
+                table.Id = Guid.NewGuid().ToString();
+                table.Code = code;
                 AddTeamNameToTable(table, tableJson);
 
                 leagueTables.Add(table);
@@ -73,14 +76,7 @@ namespace FS.Core.Services
             }
 
             if (int.TryParse(tableJson["team"]["id"].ToString(), out int code)) {
-                table.Code = code;
-                table.Id = code * code;
-
-                var team = teamsRepository.GetByCode(code);
-
-                if (team != null) {
-                    table.Team = team;
-                }
+                table.TeamCode = code;
             }
         }
 

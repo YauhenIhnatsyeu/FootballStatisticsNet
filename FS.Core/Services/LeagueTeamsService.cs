@@ -79,14 +79,21 @@ namespace FS.Core.Services
             //     team.Code = code;
             // }
 
-            if (teamJson == null) return;
-            if (!teamJson.ContainsKeysTree("team", "id"))
+            if (teamJson == null)
+            {
+                return;
+            }
+            if (!teamJson.ContainsKeysTree("id"))
             {
                 return;
             }
 
-            if (int.TryParse(teamJson["team"]["id"].ToString(), out int code)) {
+            if (int.TryParse(teamJson["id"].ToString(), out int code)) {
+                if (code == 0) {
+                    var a = 1;
+                }
                 team.Code = code;
+                team.Id = code;
             }
         }
 

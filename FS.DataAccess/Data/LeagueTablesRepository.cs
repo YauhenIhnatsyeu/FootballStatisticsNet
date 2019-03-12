@@ -28,28 +28,28 @@ namespace FS.DataAccess.Data
             ICollection<LeagueTable> leagueTables = cache.GetOrCreate(key, entry =>
             {
                 entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+    
+                // ICollection<LeagueTable> lTs = leagueTablesService.GetByCode(code);
 
-                ICollection<LeagueTable> lTs = leagueTablesService.GetByCode(code);
+                // Add(lTs);
 
-                Add(lTs);
-
-                return lTs;
+                return context.LeagueTables.Where(lt => lt.Code == code).ToList();
             });
 
             return leagueTables;
         }
 
-        private void Add(IEnumerable<LeagueTable> items)
-        {
-            foreach (IGrouping<int, LeagueTable> leagueTableGrouping in items.GroupBy(lt => lt.Id))
-            {
-                if (!context.LeagueTables.Any(lt => lt.Id == leagueTableGrouping.Key))
-                {
-                    context.LeagueTables.Add(leagueTableGrouping.First());
-                }
-            }
+        // private void Add(IEnumerable<LeagueTable> items)
+        // {
+        //     foreach (IGrouping<int, LeagueTable> leagueTableGrouping in items.GroupBy(lt => lt.Id))
+        //     {
+        //         if (!context.LeagueTables.Any(lt => lt.Id == leagueTableGrouping.Key))
+        //         {
+        //             context.LeagueTables.Add(leagueTableGrouping.First());
+        //         }
+        //     }
 
-            context.SaveChanges();
-        }
+        //     context.SaveChanges();
+        // }
     }
 }

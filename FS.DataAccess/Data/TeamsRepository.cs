@@ -1,59 +1,74 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FS.DataAccess.Data
 {
     public class TeamsRepository : ITeamsRepository
     {
         private readonly UsersContext context;
+        private readonly IMemoryCache cache;
         private readonly ITeamsService teamsService;
 
-        public TeamsRepository(UsersContext context, ITeamsService teamsService)
+        public TeamsRepository(UsersContext context, IMemoryCache cache, ITeamsService teamsService)
         {
             this.context = context;
+            this.cache = cache;
             this.teamsService = teamsService;
         }
 
         public Team GetByCode(int code)
         {
-            Team dbTeam = context.Teams.FirstOrDefault(t => t.Code == code);
+            string key = $"team_{code}";
 
-            if (dbTeam != null) {
-                return dbTeam;
-            }
-
-            Team team = FindByCode(code);
-
-            if (team != null)
+            Team team = cache.GetOrCreate(key, entry =>
             {
-                return team;
-            }
+                entry.SetAbsoluteExpiration(TimeSpan.FromMinutes(5));
+    
+                return context.Teams.FirstOrDefault(t => t.Code == code);
+            });
 
-            team = teamsService.GetByCode(code);
+            return team;
 
-            if (team != null)
-            {
-                Add(team);
+            // Team dbTeam = context.Teams.FirstOrDefault(t => t.Code == code);
 
-                return FindByCode(code);
-            }
+            // if (dbTeam != null) {
+            //     return dbTeam;
+            // }
 
-            return null;
+            // Team team = FindByCode(code);
+
+            // if (team != null)
+            // {
+            //     return team;
+            // }
+
+            // team = teamsService.GetByCode(code);
+
+            // if (team != null)
+            // {
+            //     Add(team);
+
+            //     return FindByCode(code);
+            // }
+
+            // return null;
         }
 
-        private void Add(Team item)
-        {
-            if (!context.Teams.Any(t => t.Id == item.Id)) {
-                context.Teams.Add(item);
-                context.SaveChanges();
-            }
-        }
+        // private void Add(Team item)
+        // {
+        //     if (!context.Teams.Any(t => t.Id == item.Id)) {
+        //         context.Teams.Add(item);
+        //         context.SaveChanges();
+        //     }
+        // }
 
-        private Team FindByCode(int code)
-        {
-            return context.Teams.FirstOrDefault(t => t.Code == code);
-        }
+        // private Team FindByCode(int code)
+        // {
+        //     return context.Teams.FirstOrDefault(t => t.Code == code);
+        // }
     }
 }

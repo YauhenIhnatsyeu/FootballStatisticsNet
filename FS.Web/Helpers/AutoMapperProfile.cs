@@ -12,7 +12,7 @@ namespace FS.Web.Helpers
             CreateMap<User, UserToClientDTO>();
 
             CreateMap<LeagueTable, LeagueTableDTO>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Code));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.TeamCode));
             // CreateMap<Team, TeamDTO>()
             //     .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Code));
             CreateMap<Fixture, FixtureDTO>()

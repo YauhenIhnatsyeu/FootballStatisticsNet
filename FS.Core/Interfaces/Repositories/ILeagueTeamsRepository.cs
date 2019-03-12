@@ -5,6 +5,6 @@ namespace FS.Core.Interfaces.Repositories
 {
     public interface ILeagueTeamsRepository
     {
-        ICollection<Team> GetByCode(int code);
+        ICollection<Team> GetByCode(int code/*, bool forInitialization = false*/);
     }
 }
