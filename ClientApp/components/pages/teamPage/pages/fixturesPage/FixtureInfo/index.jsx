@@ -6,6 +6,7 @@ import { fromStringToDateString } from "Utilities/castDate";
 
 export default class FixtureItem extends Component {
     render() {
+        console.log(this.props.fixture)
         return (
             <React.Fragment>
                 <p>

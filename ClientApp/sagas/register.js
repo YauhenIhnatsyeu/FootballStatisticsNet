@@ -16,14 +16,15 @@ export default function* register(action) {
     yield put(startLoading());
 
     const user = action.payload;
-    const result = yield call(registerUser, user);
 
-    yield put(finishLoading());
+    try {
+        yield call(registerUser, user);
 
-    if (result) {
         pushToHistory(routePaths.login);
         yield put(notify(notifications.registerSucceeded));
-    } else {
+    } catch (error) {
         yield put(notify(notifications.registerFailed));
     }
+
+    yield put(finishLoading());
 }

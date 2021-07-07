@@ -1,4 +1,4 @@
-import { fetchUrl } from "Helpers/ajaxHelper";
+import { fetchUrl, fetchSucceeded, fetchJson } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
 import apiRoutePaths from "Constants/apiRoutePaths";
 
@@ -17,14 +17,14 @@ function getRegisterRequestOptions(userParam, avatarId) {
 }
 
 export function register(user, avatarId) {
-    return fetchUrl(
+    return fetchSucceeded(
         getCurrentUrl() + apiRoutePaths.register,
         getRegisterRequestOptions(user, avatarId),
     );
 }
 
 export function login(user) {
-    return fetchUrl(
+    return fetchJson(
         getCurrentUrl() + apiRoutePaths.login,
         getLoginRequestOptions(user),
     );

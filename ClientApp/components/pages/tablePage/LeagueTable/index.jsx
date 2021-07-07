@@ -42,10 +42,13 @@ export default class LeagueTable extends Component {
 
     getHeader = () => teamProperties.map(({ caption }) => caption);
 
-    getRows = () => this.props.league.map(team =>
-        teamProperties.map(({ key }) => (key === "teamName"
-            ? <Link to={createTeamUrl(team.id)}>{team[key]}</Link>
-            : team[key])))
+    getRows = () => this.props.league.map(team => {
+        console.log(team)
+        return teamProperties.map(({ key }) => (key === "teamName"
+        ? <Link to={createTeamUrl(team.id)}>{team[key]}</Link>
+        : team[key]))
+    })
+        
 
     render() {
         if (this.props.leagueFetchingErrorOccured) {
@@ -55,6 +58,8 @@ export default class LeagueTable extends Component {
         if (!this.props.league) {
             return <Spinner />;
         }
+
+        console.log(this.props.league)
 
         return (
             <MountAnimation>

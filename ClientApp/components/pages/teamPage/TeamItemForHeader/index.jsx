@@ -25,17 +25,6 @@ export default class TeamItemForHeader extends Component {
                     />
                 </div>
             </TeamItem>
-            // <Item>
-            //     <div className="team-item-for-header__team">
-            //         <img src={this.props.team.crestUrl} className="team-item-for-header__img" alt="" />
-            //         <div className="team-item__info-container">
-            //             <p className="team-item-for-header__name">{this.props.team.name}</p>
-            //             <p>Short name: {this.props.team.shortName}</p>
-            //         </div>
-            //     </div>
-
-                
-            // </Item>
         );
     }
 }

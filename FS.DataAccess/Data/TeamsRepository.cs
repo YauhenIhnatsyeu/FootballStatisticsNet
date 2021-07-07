@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FS.Core.Interfaces.Repositories;
+using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 
 namespace FS.DataAccess.Data
@@ -8,42 +8,52 @@ namespace FS.DataAccess.Data
     public class TeamsRepository : ITeamsRepository
     {
         private readonly UsersContext context;
+        private readonly ITeamsService teamsService;
 
-        public TeamsRepository(UsersContext context)
+        public TeamsRepository(UsersContext context, ITeamsService teamsService)
         {
             this.context = context;
+            this.teamsService = teamsService;
         }
 
-        public IReadOnlyList<Team> Get()
+        public Team GetByCode(int code)
         {
-            return context.Teams.ToList();
-        }
+            Team dbTeam = context.Teams.FirstOrDefault(t => t.Code == code);
 
-        public Team GetByTeam(Team item)
-        {
-            return Get().FirstOrDefault(team => team.Code == item.Code);
-        }
-
-        public void Add(Team item)
-        {
-            if (Contains(item))
-            {
-                return;
+            if (dbTeam != null) {
+                return dbTeam;
             }
 
-            context.Teams.Add(item);
-            context.SaveChanges();
+            Team team = FindByCode(code);
+
+            if (team != null)
+            {
+                return team;
+            }
+
+            team = teamsService.GetByCode(code);
+
+            if (team != null)
+            {
+                Add(team);
+
+                return FindByCode(code);
+            }
+
+            return null;
         }
 
-        public void Remove(Team item)
+        private void Add(Team item)
         {
-            context.Teams.Remove(item);
-            context.SaveChanges();
+            if (!context.Teams.Any(t => t.Id == item.Id)) {
+                context.Teams.Add(item);
+                context.SaveChanges();
+            }
         }
 
-        public bool Contains(Team item)
+        private Team FindByCode(int code)
         {
-            return GetByTeam(item) != null;
+            return context.Teams.FirstOrDefault(t => t.Code == code);
         }
     }
 }

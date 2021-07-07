@@ -1,6 +1,6 @@
-import { call, put } from "redux-saga/effects";
+import { call, put, all } from "redux-saga/effects";
 
-import getTeams from "Services/teamsService";
+import { fetchTeams as getTeams } from "Clients/footballApiClient";
 
 import {
     onTeamsFetchSucceeded,
@@ -8,9 +8,16 @@ import {
 } from "ActionCreators";
 
 export default function* fetchTeams(action) {
+    const leaguesIds = action.payload;
+
     try {
-        const leaguesIds = action.payload;
-        const teams = yield call(getTeams, leaguesIds);
+        console.log(action.payload)
+        const arraysOfTeams =
+            yield all(leaguesIds.map(leagueId => call(getTeams, leagueId)));
+        console.log(arraysOfTeams)
+        const teams = [].concat(...arraysOfTeams);
+        console.log(teams)
+
         yield put(onTeamsFetchSucceeded(teams));
     } catch (error) {
         yield put(onTeamsFetchFailed(error));

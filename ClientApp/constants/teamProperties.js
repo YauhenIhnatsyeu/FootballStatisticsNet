@@ -13,19 +13,19 @@ export default [
     },
     {
         caption: "W",
-        key: "wins",
+        key: "won",
     },
     {
         caption: "D",
-        key: "draws",
+        key: "draw",
     },
     {
         caption: "L",
-        key: "losses",
+        key: "lost",
     },
     {
         caption: "GS",
-        key: "goals",
+        key: "goalsFor",
     },
     {
         caption: "GC",

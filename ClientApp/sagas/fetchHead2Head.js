@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 
-import getHead2Head from "Services/head2HeadService";
+import { fetchHead2Head as getHead2Head } from "Clients/footballApiClient";
 
 import {
     onHead2HeadFetchSucceeded,
@@ -8,8 +8,9 @@ import {
 } from "ActionCreators";
 
 export default function* fetchHead2Head(action) {
+    const fixtureId = action.payload;
+
     try {
-        const fixtureId = action.payload;
         const head2Head = yield call(getHead2Head, fixtureId);
         yield put(onHead2HeadFetchSucceeded(head2Head));
     } catch (error) {

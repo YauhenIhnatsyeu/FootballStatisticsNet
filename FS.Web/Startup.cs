@@ -1,11 +1,12 @@
 ﻿using System.Text;
 using AutoMapper;
+using FS.Core.Clients;
+using FS.Core.Interfaces.Clients;
 using FS.Core.Interfaces.Repositories;
 using FS.Core.Interfaces.Services;
 using FS.Core.Models;
 using FS.Core.Services;
 using FS.DataAccess.Data;
-using FS.Infrastructure.Data;
 using FS.Web.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,10 @@ namespace FS.Web
             var connectionString = configuration["Database:ConnectionString"];
             var secretKey = configuration["Jwt:SecretKey"];
 
-            services.AddDbContext<UsersContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<UsersContext>(options => options.UseMySql(
+                connectionString,
+                mysqlOptions => mysqlOptions.MigrationsAssembly("FS.Web")
+            ));
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<UsersContext>()
@@ -60,6 +64,8 @@ namespace FS.Web
                 options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
                 options.HttpsPort = 5001;
             });
+
+            services.AddMemoryCache();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -87,16 +93,31 @@ namespace FS.Web
             services.AddAutoMapper();
             services.AddHttpContextAccessor();
 
-            services.AddTransient<IJWTService, JWTService>();
-            services.AddTransient<ITwitterService, TwitterService>();
-            services.AddTransient<ICloudinaryService, CloudinaryService>();
-
+            services.AddTransient<ILeagueTablesRepository, LeagueTablesRepository>();
+            services.AddTransient<ILeagueTeamsRepository, LeagueTeamsRepository>();
+            services.AddTransient<ITeamsRepository, TeamsRepository>();
+            services.AddTransient<IPlayersRepository, PlayersRepository>();
+            services.AddTransient<ITweetsRepository, TweetsRepository>();
+            services.AddTransient<IFixturesRepository, FixturesRepository>();
+            services.AddTransient<IHead2HeadRepository, Head2HeadRepository>();
+            services.AddTransient<IFanClubsRepository, FanClubsRepository>();
             services.AddTransient<IAvatarsRepository, AvatarsRepository>();
             services.AddTransient<IUsersRepository<User>, UsersRepository<User>>();
             services.AddTransient<IFavoriteTeamsRepository, FavoriteTeamsRepository>();
-            services.AddTransient<ITeamsRepository, TeamsRepository>();
-            services.AddTransient<IFanClubsRepository, FanClubsRepository>();
             services.AddTransient<IUsersFanClubsRepository, UsersFanClubsRepository>();
+
+            services.AddTransient<ILeagueTablesService, LeagueTablesService>();
+            services.AddTransient<ILeagueTeamsService, LeagueTeamsService>();
+            services.AddTransient<ITeamsService, TeamsService>();
+            services.AddTransient<IPlayersService, PlayersService>();
+            services.AddTransient<ITweetsService, TweetsService>();
+            services.AddTransient<IFixturesService, FixturesService>();
+            services.AddTransient<IHead2HeadService, Head2HeadService>();
+            services.AddTransient<IJWTService, JWTService>();
+            services.AddTransient<IAvatarClient, AvatarClient>();
+
+            services.AddTransient<IFootballClient, FootballClient>();
+            services.AddTransient<ITweetsClient, TweetsClient>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

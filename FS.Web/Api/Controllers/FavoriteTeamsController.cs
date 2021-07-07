@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FS.Web.Api.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Route("api/teams")]
+    [Route("api/favorite-teams")]
     public class FavoriteTeamsController : Controller
     {
         private readonly IFavoriteTeamsRepository favoriteTeamsRepository;
@@ -43,7 +43,6 @@ namespace FS.Web.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("add")]
         public IActionResult AddTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
@@ -52,24 +51,29 @@ namespace FS.Web.Api.Controllers
                 return BadRequest();
             }
 
-            var teamToSave = new Team {Code = favoriteTeamDto.TeamId};
-            teamsRepository.Add(teamToSave);
-
             User loggedInUser = usersRepository.GetLoggedInUser();
 
-            var favoriteTeamToSave = new FavoriteTeam
+            if (loggedInUser == null)
             {
-                User = loggedInUser,
-                Team = teamsRepository.GetByTeam(teamToSave)
-            };
+                return BadRequest();
+            }
 
-            favoriteTeamsRepository.Add(favoriteTeamToSave);
+            Team team = teamsRepository.GetByCode(favoriteTeamDto.TeamId);
+
+            if (team == null)
+            {
+                return BadRequest();
+            }
+
+            if (favoriteTeamsRepository.GetByUserAndTeam(loggedInUser, team) == null)
+            {
+                favoriteTeamsRepository.Add(new FavoriteTeam {User = loggedInUser, Team = team});
+            }
 
             return Ok();
         }
 
         [HttpDelete]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("remove")]
         public IActionResult RemoveTeam([FromBody] FavoriteTeamDTO favoriteTeamDto)
         {
@@ -78,22 +82,26 @@ namespace FS.Web.Api.Controllers
                 return BadRequest();
             }
 
-            var team = new Team {Code = favoriteTeamDto.TeamId};
+            User loggedInUser = usersRepository.GetLoggedInUser();
 
-            if (!teamsRepository.Contains(team))
+            if (loggedInUser == null)
             {
                 return BadRequest();
             }
 
-            User loggedInUser = usersRepository.GetLoggedInUser();
+            Team team = teamsRepository.GetByCode(favoriteTeamDto.TeamId);
 
-            var favoriteTeamToRemove = new FavoriteTeam
+            if (team == null)
             {
-                User = loggedInUser,
-                Team = teamsRepository.GetByTeam(team)
-            };
+                return BadRequest();
+            }
 
-            favoriteTeamsRepository.Remove(favoriteTeamToRemove);
+            var favoriteTeam = favoriteTeamsRepository.GetByUserAndTeam(loggedInUser, team);
+
+            if (favoriteTeam != null)
+            {
+                favoriteTeamsRepository.Remove(favoriteTeam);
+            }
 
             return Ok();
         }

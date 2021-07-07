@@ -10,33 +10,33 @@ import {
 import notifications from "Constants/notifications";
 
 export function* getTeamsFromFavorites() {
-    const teams = yield call(getFromFavorites);
+    try {
+        const teams = yield call(getFromFavorites);
 
-    if (teams) {
         yield put(onGetTeamsFromFavoritesSucceeded(teams));
-    } else {
+    } catch (error) {
         yield put(notify(notifications.getFavoriteTeamsFailed));
     }
 }
 
 export function* addTeamToFavorites(action) {
     const team = action.payload;
-    const result = yield call(addToFavorites, team);
 
-    if (result) {
+    try {
+        yield call(addToFavorites, team);
         yield call(getTeamsFromFavorites);
-    } else {
+    } catch (error) {
         yield put(notify(notifications.addTeamToFavoritesFailed));
     }
 }
 
 export function* removeTeamFromFavorites(action) {
     const team = action.payload;
-    const result = yield call(removeFromFavorites, team);
 
-    if (result) {
+    try {
+        yield call(removeFromFavorites, team);
         yield call(getTeamsFromFavorites);
-    } else {
+    } catch (error) {
         yield put(notify(notifications.removeTeamFromFavoritesFailed));
     }
 }

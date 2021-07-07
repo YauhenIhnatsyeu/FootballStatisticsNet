@@ -1,6 +1,6 @@
 import { call, put } from "redux-saga/effects";
 
-import getFixtures from "Services/fixturesService";
+import { fetchFixtures as getFixtures } from "Clients/footballApiClient";
 
 import {
     onFixturesFetchSucceeded,
@@ -8,8 +8,9 @@ import {
 } from "ActionCreators";
 
 export default function* fetchFixtures(action) {
+    const { teamId, dates } = action.payload;
+
     try {
-        const { teamId, dates } = action.payload;
         const fixtures = yield call(getFixtures, teamId, dates);
         yield put(onFixturesFetchSucceeded(fixtures));
     } catch (error) {

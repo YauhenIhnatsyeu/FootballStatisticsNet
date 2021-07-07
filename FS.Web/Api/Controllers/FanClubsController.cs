@@ -82,19 +82,12 @@ namespace FS.Web.Api.Controllers
                 return BadRequest();
             }
 
-            var teamToSave = new Team {Code = fanClubDto.TeamId};
-            teamsRepository.Add(teamToSave);
-
-            var fanClub = new FanClub
-            {
-                Name = fanClubDto.Name,
-                Description = fanClubDto.Description,
-                Team = teamsRepository.GetByTeam(teamToSave)
-            };
+            var fanClub = mapper.Map<FanClubToServerDTO, FanClub>(fanClubDto);
+            fanClub.Team = teamsRepository.GetByCode(fanClubDto.TeamId);
 
             if (fanClubDto.AvatarId != null)
             {
-                string avatarUrl = avatarsRepository.Get(fanClubDto.AvatarId);
+                string avatarUrl = avatarsRepository.GetUrlById(fanClubDto.AvatarId);
 
                 if (avatarUrl == null)
                 {
@@ -140,7 +133,7 @@ namespace FS.Web.Api.Controllers
 
             usersFanClubsRepository.Add(new UserFanClub
             {
-                User = usersRepository.GetLoggedInUser(),
+                User = usersRepository.FindById(userFanClubDto.UserId),
                 FanClub = fanClubsRepository.FindById(userFanClubDto.FanClubId),
                 MemberStatus = MemberStatus.Requested,
                 UserIsCreator = false

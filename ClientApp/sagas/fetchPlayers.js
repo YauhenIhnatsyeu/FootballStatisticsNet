@@ -5,12 +5,13 @@ import {
     onPlayersFetchFailed,
 } from "ActionCreators";
 
-import getPlayers from "Services/playersService";
+import { fetchPlayers as getPlayers } from "Clients/footballApiClient";
 
 export default function* fetchPlayers(action) {
+    const teamId = action.payload;
+
     try {
-        const playersUrl = action.payload;
-        const players = yield call(getPlayers, playersUrl);
+        const players = yield call(getPlayers, teamId);
         yield put(onPlayersFetchSucceeded(players));
     } catch (error) {
         yield put(onPlayersFetchFailed(error));

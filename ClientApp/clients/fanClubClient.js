@@ -1,4 +1,4 @@
-import { fetchUrl } from "Helpers/ajaxHelper";
+import { fetchUrl, fetchJson } from "Helpers/ajaxHelper";
 import getCurrentUrl from "Helpers/currentUrlHelper";
 import apiRoutePaths from "Constants/apiRoutePaths";
 import keys from "Constants/keys";
@@ -27,5 +27,5 @@ export function create(fanClub, avatarId) {
 }
 
 export function fetch() {
-    return fetchUrl(getCurrentUrl() + apiRoutePaths.fetchFanClubs);
+    return fetchJson(getCurrentUrl() + apiRoutePaths.fetchFanClubs);
 }

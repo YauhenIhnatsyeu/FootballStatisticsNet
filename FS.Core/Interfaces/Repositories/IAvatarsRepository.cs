@@ -5,6 +5,6 @@ namespace FS.Core.Interfaces.Repositories
     public interface IAvatarsRepository
     {
         string Add(string name, Stream stream);
-        string Get(string id);
+        string GetUrlById(string id);
     }
 }

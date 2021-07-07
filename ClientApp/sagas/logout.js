@@ -8,7 +8,13 @@ import { startLoading, finishLoading } from "ActionCreators";
 
 export default function* logout() {
     yield put(startLoading());
-    yield call(logoutUser);
+
+    try {
+        yield call(logoutUser);
+    } catch (error) {
+        // TODO
+    }
+
     yield put(finishLoading());
 
     pushToHistory(routePaths.table);
